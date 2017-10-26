@@ -17,10 +17,10 @@ public class TestASN1Mapped {
 		ASN1ChoiceType choice = ASN1Module.name("test").choice("TestChoice");
 		choice.addTypeString("boolean", "ASN1BooleanType");
 		choice.addTypeString("integer", "ASN1IntegerType");
-		ASN1Module.name("test").sequenceMappingClass("TestSequence", ASN1TestModel.class)
+		ASN1Module.name("test").sequenceMappingClass("TestChoiceSequence", ASN1TestModel.class)
 			.addTypeString("testSlot1", "TestChoice");
 
-		ASN1Type type = (ASN1Type) ASN1Module.name("test").find("TestSequence");
+		ASN1Type type = (ASN1Type) ASN1Module.name("test").find("TestChoiceSequence");
 		byte[] bytes = new byte[] {48, 3, 1, 1, (byte)255};
 		ASN1TestModel explicit = (ASN1TestModel)ASN1InputStream.decode(bytes, type);
 		assertTrue(explicit instanceof ASN1TestModel);

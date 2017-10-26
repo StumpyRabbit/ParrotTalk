@@ -9,7 +9,7 @@ import club.callistohouse.asn1.ASN1OutputStream;
 
 public class ASN1RealType extends ASN1BasicType {
 
-	public ASN1RealType() { super("ASN1IntegerType"); }
+	public ASN1RealType() { super("ASN1RealType"); }
 
 	public boolean isTypeFor(Object obj) {
 		return obj instanceof Float | obj instanceof Double;
