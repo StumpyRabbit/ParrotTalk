@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.utils.transport;
+package club.callistohouse.utils;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -41,6 +41,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import club.callistohouse.utils.events.Listener;
+import club.callistohouse.utils.transport.NIOConnection;
+import club.callistohouse.utils.transport.NIOServer;
 import club.callistohouse.utils.transport.NIOConnection.ClientConnected;
 import club.callistohouse.utils.transport.NIOConnection.ConnectionConnected;
 import club.callistohouse.utils.transport.NIOConnection.ConnectionDisconnected;

@@ -27,16 +27,56 @@ public class ASN1RealType extends ASN1BasicType {
 
 	@Override
 	public void encodeValue(Object obj, ASN1OutputStream derStream) throws IOException {
-		Double doubleObj = 0.0;            
 		if(obj instanceof Float) {
-			doubleObj = ((Float)obj).doubleValue();
+			encodeFloatValue((Float) obj, derStream);
 		} else {
-			doubleObj = (Double) obj;
+			encodeDoubleValue((Double) obj, derStream);
 		}
-		long bits = Double.doubleToLongBits(doubleObj);
+	}
+	public void encodeFloatValue(Float floatObj, ASN1OutputStream derStream) throws IOException {
+		if(floatObj == 0) {return; }
+		if(floatObj == Float.POSITIVE_INFINITY) { derStream.write(0x40); return; }
+		if(floatObj == Float.NEGATIVE_INFINITY) { derStream.write(0x41); return; }
+		int bits = Float.floatToIntBits(floatObj);
+		long mantissa = (bits & 0x000fffffffffffffL);
+		int exponent = Integer.valueOf(Long.valueOf(((bits & 0x7FF0000000000000L) >> 52) - 1023).toString());
+		int base = 2;
+		byte signByte = (byte) (((bits & 0x8000000000000000L) > 1) ? 0x40 : 0x00);
+		ASN1OutputStream exponentStream = derStream.newStream();
+		new ASN1IntegerType().encodeValue(exponent, exponentStream);
+		byte[] exponentBytes = exponentStream.toByteArray();
+		switch(exponentBytes.length) {
+			case 1: 
+				derStream.write(0x80 | (byte) signByte | 0x00);
+				break;
+			case 2:
+				derStream.write(0x80 | (byte) signByte | 0x01);
+				break;
+			case 3:
+				derStream.write(0x80 | (byte) signByte | 0x02);
+				break;
+			default:
+				derStream.write(0x80 | (byte) signByte | 0x03);
+				derStream.write(exponentBytes.length);
+				break;
+		}
+		derStream.write(exponentBytes);
+
+		byte[] leftBytes = Long.toUnsignedString(mantissa, 2).getBytes();
+		int length = leftBytes.length;
+		byte[] mantissaBytes = new byte[length];
+		for(int i = 0; i < length; i++) {
+			mantissaBytes[i] = leftBytes[length - i - 1];
+		}
+		for(byte b : mantissaBytes) {
+			derStream.write(b);
+		}
+	}
+	public void encodeDoubleValue(Double doubleObj, ASN1OutputStream derStream) throws IOException {
 		if(doubleObj == 0) {return; }
-		if(doubleObj == Float.POSITIVE_INFINITY) { derStream.write(0x40); return; }
-		if(doubleObj == Float.NEGATIVE_INFINITY) { derStream.write(0x41); return; }
+		if(doubleObj == Double.POSITIVE_INFINITY) { derStream.write(0x40); return; }
+		if(doubleObj == Double.NEGATIVE_INFINITY) { derStream.write(0x41); return; }
+		long bits = Double.doubleToLongBits(doubleObj);
 		long mantissa = (bits & 0x000fffffffffffffL);
 		int exponent = Integer.valueOf(Long.valueOf(((bits & 0x7FF0000000000000L) >> 52) - 1023).toString());
 		int base = 2;

@@ -34,7 +34,7 @@
  *         Tyler Close 
  *         Kevin Reid
  *******************************************************************************/
-package club.callistohouse.utils.events;
+package club.callistohouse.utils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,6 +43,10 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Test;
+
+import club.callistohouse.utils.events.EventEngine;
+import club.callistohouse.utils.events.Listener;
+import club.callistohouse.utils.events.ThreadedEventEngine;
 
 public class TestEventEngine {
 
