@@ -32,12 +32,22 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.omg.CORBA_2_3.portable.InputStream;
+
 import club.callistohouse.utils.ArrayUtil;
 import club.callistohouse.utils.IntUtil;
 
 public class Frame {
 	public static int specificationSize() { return 8; }
 	public static Frame onFrameSpecification(byte[] bytes) { return new Frame().initOnSpecification(bytes); }
+	public static Frame readFromStream(ByteArrayInputStream stream) throws IOException {
+		Frame frame = new Frame();
+		byte[] spec = new byte[8];
+		stream.read(spec);
+		frame.initOnSpecification(spec);
+		frame.readRemainderFrom(stream);
+		return frame;
+	}
 
 	private Frame initOnSpecification(byte[] bytes) {
 		if(bytes.length != specificationSize()) {

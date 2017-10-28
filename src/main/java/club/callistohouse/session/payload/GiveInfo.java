@@ -28,7 +28,9 @@
 
 package club.callistohouse.session.payload;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 
 import club.callistohouse.session.SessionIdentity;
 
@@ -36,7 +38,7 @@ public class GiveInfo extends PhaseHeader {
 
 	private String vatId;
 	private String domain;
-	private PublicKey publicKey;
+	private RSAPublicKey publicKey;
 
 	public GiveInfo() {}
 	public GiveInfo(SessionIdentity localId) {
@@ -45,15 +47,26 @@ public class GiveInfo extends PhaseHeader {
 	public GiveInfo(String vatId, String domain, PublicKey publicKey) {
 		this.vatId = vatId;
 		this.domain = domain;
-		this.publicKey = publicKey;
+		setPublicKeyImpl(publicKey);
 	}
 
 	public String getVatId() { return vatId; }
     public String getDomain() { return domain; }
-    public PublicKey getPublicKey() { return publicKey; }
+    public RSAPublicKey getPublicKey() { return publicKey; }
+    public PublicKey getPublicKeyImpl() {
+    	try {
+			return publicKey.asImpl();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
     public void setVatId(String vatId) { this.vatId = vatId; }
 	public void setDomain(String domain) { this.domain = domain; }
-    public void setPublicKey(PublicKey publicKey) { this.publicKey = publicKey; }
+    public void setPublicKey(RSAPublicKey publicKey) { this.publicKey = publicKey; }
+    public void setPublicKeyImpl(PublicKey publicKey) { this.publicKey = new RSAPublicKey((java.security.interfaces.RSAPublicKey) publicKey); }
 
 	public MessageEnum getType() { return MessageEnum.GIVE_INFO; }
 

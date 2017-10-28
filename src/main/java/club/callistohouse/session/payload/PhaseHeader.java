@@ -62,9 +62,7 @@ public abstract class PhaseHeader {
 
 	private Frame frame;
 
-	public PhaseHeader() {
-	}
-
+	public PhaseHeader() {}
 	public PhaseHeader(Frame frame) { this.frame = frame; }
 
 	public Integer getId() { int i = getType().getId(); return i; }
@@ -72,32 +70,31 @@ public abstract class PhaseHeader {
 
 	public int getHeaderSize() { return toByteArray().length; }
 
-	public String description() {
-		return getType().description();
-	}
+	public String description() { return getType().description(); }
 
 	public Frame getFrame() { return frame; }
 	public void setFrame(Frame frame) { this.frame = frame; }
 
-	public static Class<?> headerClassForType(int headerType) {
-		return headerClasses.get(headerType);
-	}
+	public static Class<?> headerClassForType(int headerType) { return headerClasses.get(headerType); }
 
 	public Frame toFrame() { return (frame != null) ? frame : new Frame(this); }
 
 	public byte[] toByteArray() {
 		ASN1Type type = (ASN1Type) ASN1Module.name("Session").find("PhaseHeader");
-		try(ASN1OutputStream outStream = new ASN1OutputStream()) {
-				return outStream.encode(this, type);
+		try (ASN1OutputStream outStream = new ASN1OutputStream()) {
+			return outStream.encode(this, type);
 		} catch (IOException e1) {
 			throw new RuntimeException(e1.getMessage());
 		}
 	}
 
-	public static PhaseHeader readFrom(ByteArrayInputStream byteArrayInputStream) throws InstantiationException, IllegalAccessException, IOException {
+	public static PhaseHeader readFrom(ByteArrayInputStream inStream)
+			throws InstantiationException, IllegalAccessException, IOException {
 		ASN1Type type = (ASN1Type) ASN1Module.name("Session").find("PhaseHeader");
-		try(ASN1InputStream inStream = new ASN1InputStream(byteArrayInputStream)) {
-			return (PhaseHeader) inStream.decode(type);
+		byte[] bytes = new byte[inStream.available()];
+		inStream.read(bytes);
+		try (ASN1InputStream derStream = new ASN1InputStream(bytes)) {
+			return (PhaseHeader) derStream.decode(type);
 		}
 	}
 }

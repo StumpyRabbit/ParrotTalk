@@ -230,7 +230,7 @@ public class SessionOperations extends ThunkLayer {
     		isIncoming = false;
     		securityOps.setIsIncoming(false);
     		getRemoteIdentity().setVatId(body.getVatId());
-    		getRemoteIdentity().setPublicKey(body.getPublicKey());
+    		getRemoteIdentity().setPublicKey(body.getPublicKeyImpl());
     		session.fire(new Identified());
     		stateMachine.fire(Trigger.ReceivedIAm);
     	} else {
@@ -242,7 +242,7 @@ public class SessionOperations extends ThunkLayer {
 		securityOps.addRemoteMessage(body.toFrame().toByteArray());
     	if(stateMachine.isInState(State.StartupReceiveGiveInfo)) {
     		getRemoteIdentity().setVatId(body.getVatId());
-    		getRemoteIdentity().setPublicKey(body.getPublicKey());
+    		getRemoteIdentity().setPublicKey(body.getPublicKeyImpl());
     		session.fire(new Identified());
     		stateMachine.fire(Trigger.ReceivedGiveInfo);
     	} else {

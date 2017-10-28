@@ -10,6 +10,7 @@ public class SessionASN1Bootstrap {
 
 	public static void bootstrap() {
 		ASN1Module.name("Session");
+		defineASN1RSAPublicKey();
 		defineASN1ProtocolOffered();
 		defineASN1ProtocolAccepted();
 		defineASN1Encoded();
@@ -27,6 +28,12 @@ public class SessionASN1Bootstrap {
 		defineASN1InternalChangeEncryption();
 		defineASN1PhaseHeaderChoice();
 	}
+	private static void defineASN1RSAPublicKey() {
+		ASN1MappedSequenceType<RSAPublicKey> type = ASN1Module.name("Session").sequenceMappingClass("RSAPublicKey", RSAPublicKey.class);
+		type.addTypeString("exponent", "ASN1BigIntegerType");
+		type.addTypeString("modulo", "ASN1BigIntegerType");
+	}
+	
 	private static void defineASN1ProtocolOffered() {
 		ASN1MappedSequenceType<ProtocolOffered> type = ASN1Module.name("Session").sequenceMappingClass("ProtocolOffered", ProtocolOffered.class);
 		type.addTypeString("offered", "ASN1UTF8StringType");
