@@ -30,8 +30,8 @@ public class SessionASN1Bootstrap {
 	}
 	private static void defineASN1RSAPublicKey() {
 		ASN1MappedSequenceType<RSAPublicKey> type = ASN1Module.name("Session").sequenceMappingClass("RSAPublicKey", RSAPublicKey.class);
-		type.addTypeString("exponent", "ASN1BigIntegerType");
 		type.addTypeString("modulo", "ASN1BigIntegerType");
+		type.addTypeString("exponent", "ASN1BigIntegerType");
 	}
 	
 	private static void defineASN1ProtocolOffered() {
