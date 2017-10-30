@@ -3,6 +3,7 @@ package club.callistohouse.session;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CipherThunkMaker implements Cloneable {
 	public int blockSize = 8;
 	public boolean hasIvParameter = false;
 	private SecretKeySpec secretKeySpec;
-	private byte[] iv;
+	List<byte[]> ivHolder = new ArrayList<byte[]>(1);
 
 	public CipherThunkMaker(String shortName, String fullName, int keySize, int blockSize, boolean hasIv) {
 		this.shortCryptoProtocol = shortName;
@@ -36,17 +37,17 @@ public class CipherThunkMaker implements Cloneable {
 		this.keySize = keySize;
 		this.blockSize = blockSize;
 		this.hasIvParameter = hasIv;
+		ivHolder.add(new byte[0]);
 	}
 	public CipherThunkMaker newMaker() throws CloneNotSupportedException { return (CipherThunkMaker) clone(); }
 
 	public Thunk makeThunk(List<byte[]> secretBytesHolder, boolean incoming) {
 		Cipher downCipher = buildCipher(secretBytesHolder.get(0), incoming, Cipher.ENCRYPT_MODE);
 		Cipher upCipher = buildCipher(secretBytesHolder.get(0), incoming, Cipher.DECRYPT_MODE);
-		secretBytesHolder.set(0, null);
 
 		return new Thunk() {
 			public Object downThunk(Frame frame) {
-				iv = downCipher.getIV();
+				ivHolder.set(0, downCipher.getIV());
 				byte[] encryptedBytes = new byte[0];
 				try {
 					encryptedBytes = downCipher.doFinal(frame.toByteArray());
@@ -79,7 +80,7 @@ public class CipherThunkMaker implements Cloneable {
 //				upCipher decrypt: frame payload ];
 				byte[] encryptedBytes = (byte[]) frame.getPayload();
 				if(hasIvParameter) {
-					IvParameterSpec ivSpec = new IvParameterSpec(((Encrypted)frame.getHeader()).getIVSequence());
+					IvParameterSpec ivSpec = new IvParameterSpec(((Encrypted)frame.getHeader()).getIvSequence());
 					try {
 						upCipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec);
 					} catch (InvalidKeyException e) {
@@ -107,7 +108,7 @@ public class CipherThunkMaker implements Cloneable {
 				//log.debug("decrypt results: " + Hex.encodeHexString(unencryptedBytes));
 				return unencryptedBytes;
 			}
-			public PhaseHeader getHeader(Frame frame) { return new Encrypted(iv); }
+			public PhaseHeader getHeader(Frame frame) { return new Encrypted(ivHolder.get(0)); }
 		};
 	}
 
@@ -129,35 +130,12 @@ public class CipherThunkMaker implements Cloneable {
 			e.printStackTrace();
 		}
 		if(hasIvParameter) {
-			IvParameterSpec ivSpec = null;
-			byte[] hash = new byte[blockSize * 2]; 
-			for(int count = 0; count < (blockSize * 2) / 16; count++) {
-				byte bump = (byte) ((count * 0x33) & 0xFF);
-				byte padByte = (byte) ((0x33 + bump) & 0xFF);
-				try {
-					hash = ArrayUtil.concatAll(hash, SecurityOps.padAndHash(new byte[] { padByte }, secretBytes));
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
-				}
-			}
-			if (incoming) {
-				if (cryptMode == Cipher.ENCRYPT_MODE) {
-					ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, blockSize, blockSize * 2));
-				} else {
-					ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, 0, blockSize));
-				}
-			} else {
-				if (cryptMode == Cipher.ENCRYPT_MODE) {
-					ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, 0, blockSize));
-				} else {
-					ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, blockSize, blockSize * 2));
-				}
-			}
 			try {
-				cipher.init(cryptMode, secretKeySpec, ivSpec);
-			} catch (InvalidKeyException e) {
-				e.printStackTrace();
+					cipher.init(cryptMode, secretKeySpec, computeIVSpec(secretBytes, incoming, cryptMode));
 			} catch (InvalidAlgorithmParameterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			}
 		} else {
@@ -168,5 +146,36 @@ public class CipherThunkMaker implements Cloneable {
 			}
 		}
 		return cipher;
+	}
+	private IvParameterSpec computeIVSpec(byte[] secretBytes, boolean incoming, int cryptMode) {
+		IvParameterSpec ivSpec = null;
+		byte[] hash = computeIVHash(secretBytes);
+		if (incoming) {
+			if (cryptMode == Cipher.ENCRYPT_MODE) {
+				ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, blockSize, blockSize * 2));
+			} else {
+				ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, 0, blockSize));
+			}
+		} else {
+			if (cryptMode == Cipher.ENCRYPT_MODE) {
+				ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, 0, blockSize));
+			} else {
+				ivSpec = new IvParameterSpec(Arrays.copyOfRange(hash, blockSize, blockSize * 2));
+			}
+		}
+		return ivSpec;
+	}
+	private byte[] computeIVHash(byte[] secretBytes) {
+		byte[] hash = new byte[blockSize * 2]; 
+		for(int count = 0; count < (blockSize * 2) / 16; count++) {
+			byte bump = (byte) ((count * 0x33) & 0xFF);
+			byte padByte = (byte) ((0x33 + bump) & 0xFF);
+			try {
+				hash = ArrayUtil.concatAll(hash, SecurityOps.padAndHash(new byte[] { padByte }, secretBytes));
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+		}
+		return hash;
 	}
 }

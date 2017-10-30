@@ -35,8 +35,8 @@ public class Encrypted extends PhaseHeader {
 	public Encrypted() { this(new byte[0]); }
 	public Encrypted(byte[] iv) { this.ivSequence = iv; }
 
-	public byte[] getIVSequence() { return ivSequence; }
-	public void setIVSequence(byte[] iv) { ivSequence = iv; }
+	public byte[] getIvSequence() { return ivSequence; }
+	public void setIvSequence(byte[] iv) { ivSequence = iv; }
 
 	public MessageEnum getType() { return MessageEnum.ENCRYPTED_DATA; }
 

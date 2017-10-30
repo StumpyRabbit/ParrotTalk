@@ -311,7 +311,7 @@ public class SecurityOps implements Cloneable {
 			}
 
 			public Frame upThunk(Frame frame) {
-				stack.propertyAtPut("ReadMAC", ((MAC) frame.getHeader()).getMAC());
+				stack.propertyAtPut("ReadMAC", ((MAC) frame.getHeader()).getMac());
 				return frame;
 			}
 

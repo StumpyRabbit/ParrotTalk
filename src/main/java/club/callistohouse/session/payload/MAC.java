@@ -37,7 +37,8 @@ public class MAC extends PhaseHeader {
 		this.mac = mac;
 	}
 
-	public byte[] getMAC() { return mac; }
+	public byte[] getMac() { return mac; }
+	public void setMac(byte[] mac) { this.mac = mac; }
 
 	public MessageEnum getType() { return MessageEnum.MAC_DATA; }
 

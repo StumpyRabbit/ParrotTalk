@@ -203,7 +203,9 @@ public class SessionOperations extends ThunkLayer {
     	}
 	}
 	public void handleMessage(MAC body) {
-    	if(!stateMachine.isInState(State.EncryptedConnected)) {
+    	if(stateMachine.isInState(State.EncryptedConnected)) {
+    		stack.upcall(body.toFrame(), this);
+    	} else {
     		log.debug("Terminal in wrong connection state for EncryptedConnected trigger; in state: " + stateMachine.getState());
     		throw new RuntimeException("Terminal in wrong connection state for ReceivedProtocolAccepted trigger; in state: " + stateMachine.getState() + "; expecting: CallReceiveProtocolAccepted");
     	}
