@@ -41,10 +41,13 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import club.callistohouse.session.CipherThunkMaker;
+import club.callistohouse.session.EncoderThunk;
 import club.callistohouse.session.Session;
 import club.callistohouse.session.SessionAgentMap;
 import club.callistohouse.session.SessionIdentity;
@@ -250,72 +253,22 @@ public class SecurityOps implements Cloneable {
 		return new SecurityOps("null");
 	}
 
-	private static List<CipherThunkMaker> cryptoProtocols = new ArrayList<CipherThunkMaker>();
-
-	public static CipherThunkMaker lookupCryptoProtocol(String proto) {
-		for (CipherThunkMaker crypto : cryptoProtocols) {
-			if (crypto.shortCryptoProtocol.equals(proto))
-				return crypto;
-		}
-		return null;
+	public CipherThunkMaker lookupCryptoProtocol(String proto) {
+		return map.lookupCryptoProtocol(proto);
 	}
 
-	public static List<String> getCryptoProtocols() {
-		List<String> list = new ArrayList<String>();
-		for (CipherThunkMaker crypto : cryptoProtocols) {
-			list.add(crypto.shortCryptoProtocol);
-		}
-		return list;
+	public List<String> getCryptoProtocols() {
+		return map.getProtocolNames();
 	}
 
-	private static List<EncoderThunkMaker> dataEncoders = new ArrayList<EncoderThunkMaker>();
-
-	public static EncoderThunkMaker lookupDataEncoder(String proto) {
-		for (EncoderThunkMaker encoder : dataEncoders) {
-			if (encoder.encoderName.equals(proto))
-				return encoder;
-		}
-		return null;
+	public EncoderThunk lookupDataEncoder(String proto) {
+		return map.lookupDataEncoder(proto);
 	}
 
-	public static List<String> getDataEncoders() {
-		List<String> list = new ArrayList<String>();
-		for (EncoderThunkMaker encoder : dataEncoders) {
-			list.add(encoder.encoderName);
-		}
-		return list;
+	public List<String> getDataEncoders() {
+		return map.getDataEncoderNames();
 	}
 
-	static {
-		cryptoProtocols.add(new CipherThunkMaker("AESede", "AES/CBC/PKCS5Padding", 32, 16, true));
-		cryptoProtocols.add(new CipherThunkMaker("DESede", "DESede/CBC/PKCS5Padding", 24, 8, true));
-		dataEncoders.add(new EncoderThunkMaker("asn1der") {
-
-			@Override
-			public Object preSerializeThunk(Frame frame) throws IOException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Object postSerializeThunk(Object frame) throws IOException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Object preMaterializeThunk(Frame frame) throws IOException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Object postMaterializeThunk(Object frame) throws IOException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
-	}
 
 	public void installOn(Session session, ThunkStack stack, boolean incoming) {
 		stack.pop(); // session
@@ -368,7 +321,7 @@ public class SecurityOps implements Cloneable {
 		};
 	}
 
-	private Thunk makeEncoderThunk(ThunkStack stack, SessionIdentity farKey) {
+	private EncoderThunk makeEncoderThunk(ThunkStack stack, SessionIdentity farKey) {
 		return map.buildEncoder(farKey).makeThunk();
 	}
 
@@ -381,5 +334,25 @@ public class SecurityOps implements Cloneable {
 	public void clearSensitiveInfo() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String matchBestCryptoProtocol(List<String> cryptoProtocols) {
+		List<String> list = map.getProtocolNames();
+		for(int i = 0; i < list.size(); i++) {
+			if(cryptoProtocols.contains(list.get(i))) {
+				return list.get(i);
+			}
+		}
+		return "";
+	}
+
+	public String matchBestDataEncoder(List<String> dataEncoders) {
+		List<String> list = map.getDataEncoderNames();
+		for(int i = 0; i < list.size(); i++) {
+			if(dataEncoders.contains(list.get(i))) {
+				return list.get(i);
+			}
+		}
+		return "";
 	}
 }

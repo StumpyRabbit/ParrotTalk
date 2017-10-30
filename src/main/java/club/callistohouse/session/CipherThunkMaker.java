@@ -1,4 +1,4 @@
-package club.callistohouse.session.protocol;
+package club.callistohouse.session;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -17,6 +17,8 @@ import javax.crypto.spec.SecretKeySpec;
 import club.callistohouse.session.payload.Encrypted;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.PhaseHeader;
+import club.callistohouse.session.protocol.SecurityOps;
+import club.callistohouse.session.protocol.Thunk;
 import club.callistohouse.utils.ArrayUtil;
 
 public class CipherThunkMaker implements Cloneable {
@@ -26,6 +28,7 @@ public class CipherThunkMaker implements Cloneable {
 	public int blockSize = 8;
 	public boolean hasIvParameter = false;
 	private SecretKeySpec secretKeySpec;
+	private byte[] iv;
 
 	public CipherThunkMaker(String shortName, String fullName, int keySize, int blockSize, boolean hasIv) {
 		this.shortCryptoProtocol = shortName;
@@ -40,13 +43,10 @@ public class CipherThunkMaker implements Cloneable {
 		Cipher downCipher = buildCipher(secretBytesHolder.get(0), incoming, Cipher.ENCRYPT_MODE);
 		Cipher upCipher = buildCipher(secretBytesHolder.get(0), incoming, Cipher.DECRYPT_MODE);
 		secretBytesHolder.set(0, null);
-		List<byte[]> ivHolder = new ArrayList<byte[]>(1);
 
 		return new Thunk() {
 			public Object downThunk(Frame frame) {
-				ivHolder.set(0, downCipher.getIV());
-				//log.debug("vector: " + Hex.encodeHexString(ivHolder.get(0)));
-				//log.debug("encrypting unencrypted: " + Hex.encodeHexString(frame.toByteArray()));
+				iv = downCipher.getIV();
 				byte[] encryptedBytes = new byte[0];
 				try {
 					encryptedBytes = downCipher.doFinal(frame.toByteArray());
@@ -107,14 +107,14 @@ public class CipherThunkMaker implements Cloneable {
 				//log.debug("decrypt results: " + Hex.encodeHexString(unencryptedBytes));
 				return unencryptedBytes;
 			}
-			public PhaseHeader getHeader(Frame frame) { return new Encrypted(ivHolder.get(0)); }
+			public PhaseHeader getHeader(Frame frame) { return new Encrypted(iv); }
 		};
 	}
 
 	private Cipher buildCipher(byte[] secretBytes, boolean incoming, int cryptMode) {
 		byte[] keyBytes;
-		if(secretBytes.length == keySize) {
-			keyBytes = secretBytes;
+		if(secretBytes.length >= keySize) {
+			keyBytes = Arrays.copyOf(secretBytes, keySize);
 		} else {
 			keyBytes = Arrays.copyOf(secretBytes, keySize);
 			Arrays.fill(keyBytes, secretBytes.length, keySize, (byte) 0x98); 

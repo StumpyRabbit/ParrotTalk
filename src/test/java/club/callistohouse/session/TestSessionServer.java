@@ -30,6 +30,7 @@ package club.callistohouse.session;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
@@ -37,9 +38,12 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
+import club.callistohouse.asn1.ASN1InputStream;
+import club.callistohouse.asn1.ASN1OutputStream;
 import club.callistohouse.session.Session;
 import club.callistohouse.session.SessionAgent;
 import club.callistohouse.session.SessionIdentity;
+import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.Listener;
 
@@ -74,7 +78,7 @@ public class TestSessionServer {
 
 		try {
 			term1 = server1.connect(server2Identity);
-			Thread.sleep(14000);
+			Thread.sleep(11111);
 			assertTrue(term1Connected);
 			assertTrue(term2Connected);
 			assertTrue(term1Identified);
@@ -102,9 +106,35 @@ public class TestSessionServer {
 		}
 	}
 
+	public SessionAgentMap buildServer1Map() {
+/**
+ * 		Protocols.add(new CipherThunkMaker("DESede", "DESede/CBC/PKCS5Padding", 24, 8, true));
+		Protocols.add(new CipherThunkMaker("DES", "DES/CBC/PKCS5Padding", 8, 8, true));
+ */
+		return new SessionAgentMap(
+				new CipherThunkMaker("AESede", "AES/CBC/PKCS5Padding", 32, 16, true),
+				new EncoderThunk("Bytes") {
+					public Object serializeThunk(Object chunk) {
+						return chunk;
+					}
+					public Object materializeThunk(Object chunk) {
+						return chunk;
+					}});
+	}
+	public SessionAgentMap buildServer2Map() {
+		return new SessionAgentMap(
+				new CipherThunkMaker("AESede", "AES/CBC/PKCS5Padding", 32, 16, true),
+				new EncoderThunk("Bytes") {
+					public Object serializeThunk(Object chunk) {
+						return chunk;
+					}
+					public Object materializeThunk(Object chunk) {
+						return chunk;
+					}});
+	}
 	private void startServers() {
 		try {
-			server1 = new SessionAgent(server1Identity);
+			server1 = new SessionAgent(server1Identity, buildServer1Map());
 			server1.addListener(new Listener<SessionAgent.Started>(SessionAgent.Started.class) {
 				protected void handle(SessionAgent.Started event) {
 					server1Started = true;
@@ -124,7 +154,7 @@ public class TestSessionServer {
 				}});
 			server1.start();
 
-			server2 = new SessionAgent(server2Identity);
+			server2 = new SessionAgent(server2Identity, buildServer2Map());
 			server2.addListener(new Listener<SessionAgent.Started>(SessionAgent.Started.class) {
 				protected void handle(SessionAgent.Started event) {
 					server2Started = true;

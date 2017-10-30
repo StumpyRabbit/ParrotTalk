@@ -35,12 +35,15 @@ public class GoToo extends PhaseHeader {
     private byte[] diffieHellmanParam;
     private byte[] signature;
 
-	public GoToo() {}
-    public GoToo(String cryptoProtocol, byte[] dhParam, byte[] signature) {
-    	this.cryptoProtocol = cryptoProtocol;
-    	this.diffieHellmanParam = dhParam;
-    	this.signature = signature;
-    }
+	public GoToo() {
+	}
+
+	public GoToo(String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
+		this.cryptoProtocol = defaultAlgorithm;
+		this.dataEncoder = defaultEncoder;
+		this.diffieHellmanParam = dhParam;
+		this.signature = signature;
+	}
 
     public String getCryptoProtocol() { return cryptoProtocol; }
     public String getDataEncoder() { return dataEncoder; }
