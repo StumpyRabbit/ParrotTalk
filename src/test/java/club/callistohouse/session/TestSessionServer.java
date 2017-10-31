@@ -92,10 +92,10 @@ public class TestSessionServer {
 			log.info("message received: " + msg);
 
 			if(term1 != null) { term1.stop(); }
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			assertTrue(term1Disconnected);
 			if(term2 != null) { term2.stop(); }
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			assertTrue(term2Disconnected);
 			server1.stop();
 			assertTrue(server1Stopped);

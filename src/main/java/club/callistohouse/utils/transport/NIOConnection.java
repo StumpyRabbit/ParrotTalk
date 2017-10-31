@@ -78,7 +78,7 @@ public class NIOConnection extends EventEngine {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		} 
-		}
+	}
 
 	public static class ClientConnected {
 		public NIOConnection connection;
