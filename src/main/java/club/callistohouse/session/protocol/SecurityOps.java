@@ -256,7 +256,7 @@ public class SecurityOps implements Cloneable {
 
 			public Object upThunk(Frame frame) {
 				try {
-					if (!(hmac.computeMAC((byte[]) frame.getPayload()).equals(stack.propertyAt("ReadMAC")))) {
+					if (!Arrays.equals(hmac.computeMAC((byte[]) frame.getPayload()), (byte[]) stack.propertyAt("ReadMAC"))) {
 						throw new RuntimeException("customs failed MAC verification");
 					}
 				} catch (IOException e) {

@@ -108,6 +108,8 @@ public class Session extends ThunkLayer implements EventEngineInterface {
 
 	public SessionIdentity getNearKey() { return agent.getNearKey(); }
     public SessionIdentity getFarKey() { return farKey; }
+	public boolean doesPop() { return false; }
+	public boolean doesPush() { return false; }
 
 	public void start() throws IOException {
         connection.start();
