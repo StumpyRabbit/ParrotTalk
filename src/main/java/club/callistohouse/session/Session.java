@@ -43,6 +43,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.InternalChangeEncryption;
+import club.callistohouse.session.payload.MAC;
+import club.callistohouse.session.payload.MessageEnum;
 import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.RawData;
 import club.callistohouse.session.protocol.FrameBuffer;
@@ -110,6 +112,14 @@ public class Session extends ThunkLayer implements EventEngineInterface {
     public SessionIdentity getFarKey() { return farKey; }
 	public boolean doesPop() { return false; }
 	public boolean doesPush() { return false; }
+	public Object upThunk(Frame frame) {
+		if(frame.getHeaderType() != MessageEnum.RAW_DATA.getCode()) {
+    		throw new RuntimeException("bad protocol header");
+		} else {
+			handleFrame(frame);
+		}
+		return null;
+	}
 
 	public void start() throws IOException {
         connection.start();

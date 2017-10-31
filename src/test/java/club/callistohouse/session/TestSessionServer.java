@@ -219,7 +219,7 @@ public class TestSessionServer {
 		term.addListener(new Listener<Session.DataReceived>(Session.DataReceived.class) {
 			protected void handle(Session.DataReceived event) {
 				dataReceived = true;
-				msg = new String((String) event.data);
+				msg = new String((byte[]) event.data);
 				term2MsgReceived++;
 			}});
 	}
