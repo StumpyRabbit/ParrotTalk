@@ -41,7 +41,7 @@ public class SocketThunk extends ThunkLayer {
 	}
 
 	public void downcall(Frame frame) {
-		log.debug("socket sending: " + frame);
+//		log.debug("socket sending: " + frame);
 		try {
 			connection.send((byte[]) frame.toByteArray());
 		} catch (InterruptedException e) {

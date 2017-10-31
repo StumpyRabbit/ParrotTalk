@@ -32,8 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.omg.CORBA_2_3.portable.InputStream;
-
+import club.callistohouse.asn1.ASN1InputStream;
 import club.callistohouse.utils.ArrayUtil;
 import club.callistohouse.utils.IntUtil;
 
@@ -90,7 +89,7 @@ public class Frame {
 	public int getHeaderType() { return (frameSpecification[3] & 0xF8) >>> 3; }
 	public void setHeaderType(int type) { frameSpecification[3] = (byte) ((frameSpecification[3] & 0x07) | ((type & 0x1F) << 3)); 	}
 	public int getMessageSize() { return IntUtil.byteArrayToInt(Arrays.copyOfRange(frameSpecification, 4, 8)); }
-	public void setMessageSize(int size) { System.arraycopy(IntUtil.intToByteArray(size), 0, frameSpecification		, 4, 4); }
+	public void setMessageSize(int size) { System.arraycopy(IntUtil.intToByteArray(size), 0, frameSpecification, 4, 4); }
 
 	public PhaseHeader getHeader() { return header; }
 	public void setHeader(PhaseHeader header) {
@@ -99,11 +98,18 @@ public class Frame {
 		recomputeSpec();
 	}
 	public Object getPayload() { return payload; }
-	public void setPayload(Object payload) { this.payload = payload; recomputeSpec(); }
+	public void setPayload(Object payload) {
+		this.payload = payload;
+		recomputeSpec();
+	}
 
 	public byte[] toByteArray() {
 		byte[] hdrBytes = getHeader().toByteArray();
-		return ArrayUtil.concatAll(frameSpecification, hdrBytes, ((payload instanceof byte[]) ? (byte[]) payload : new byte[0]));
+		byte[] payloadBytes = new byte[0];
+		if(payload instanceof byte[]) {
+			payloadBytes = (byte[]) payload;
+		}
+		return ArrayUtil.concatAll(frameSpecification, hdrBytes, payloadBytes);
 	}
 
 	public int getSpecSize() { return specificationSize(); }
@@ -118,11 +124,15 @@ public class Frame {
 	}
 	private int computePayloadSize() { return (payload instanceof byte[]) ? ((byte[]) payload).length : 0; }
 
-	public void readRemainderFrom(ByteArrayInputStream byteArrayInputStream) throws IOException {
+	public void readRemainderFrom(ByteArrayInputStream baiStream) throws IOException {
 		try {
-			this.setHeader(PhaseHeader.readFrom(byteArrayInputStream));
-			byte[] bytes = new byte[getPayloadSize()];
-			byteArrayInputStream.read(bytes);
+			byte[] bytes = new byte[baiStream.available()];
+			baiStream.read(bytes);
+			ByteArrayInputStream shortStream = new ByteArrayInputStream(bytes);
+			this.header = PhaseHeader.readFrom(shortStream);
+			header.setFrame(this);
+			bytes = new byte[getPayloadSize()];
+			shortStream.read(bytes);
 			setPayload(bytes);
 		} catch (IOException e) {
 			e.printStackTrace();

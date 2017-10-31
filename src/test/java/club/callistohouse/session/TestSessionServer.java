@@ -87,7 +87,7 @@ public class TestSessionServer {
 			assertTrue(term2Encrypted);
 
 			term1.send("hello world".getBytes());
-			Thread.sleep(200);
+			Thread.sleep(500);
 			assertTrue(dataReceived);
 			log.info("message received: " + msg);
 

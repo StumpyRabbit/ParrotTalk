@@ -91,9 +91,7 @@ public abstract class PhaseHeader {
 	public static PhaseHeader readFrom(ByteArrayInputStream inStream)
 			throws InstantiationException, IllegalAccessException, IOException {
 		ASN1Type type = (ASN1Type) ASN1Module.name("Session").find("PhaseHeader");
-		byte[] bytes = new byte[inStream.available()];
-		inStream.read(bytes);
-		try (ASN1InputStream derStream = new ASN1InputStream(bytes)) {
+		try (ASN1InputStream derStream = new ASN1InputStream(inStream)) {
 			return (PhaseHeader) derStream.decode(type);
 		}
 	}

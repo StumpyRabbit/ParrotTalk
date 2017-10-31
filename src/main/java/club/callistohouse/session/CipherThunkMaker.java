@@ -131,11 +131,12 @@ public class CipherThunkMaker implements Cloneable {
 		}
 		if(hasIvParameter) {
 			try {
-					cipher.init(cryptMode, secretKeySpec, computeIVSpec(secretBytes, incoming, cryptMode));
+				cipher.init(cryptMode, secretKeySpec, computeIVSpec(secretBytes, incoming, cryptMode));
 			} catch (InvalidAlgorithmParameterException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidKeyException e) {
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
 		} else {
@@ -147,7 +148,7 @@ public class CipherThunkMaker implements Cloneable {
 		}
 		return cipher;
 	}
-	private IvParameterSpec computeIVSpec(byte[] secretBytes, boolean incoming, int cryptMode) {
+	private IvParameterSpec computeIVSpec(byte[] secretBytes, boolean incoming, int cryptMode) throws NoSuchAlgorithmException {
 		IvParameterSpec ivSpec = null;
 		byte[] hash = computeIVHash(secretBytes);
 		if (incoming) {
@@ -165,17 +166,18 @@ public class CipherThunkMaker implements Cloneable {
 		}
 		return ivSpec;
 	}
-	private byte[] computeIVHash(byte[] secretBytes) {
-		byte[] hash = new byte[blockSize * 2]; 
-		for(int count = 0; count < (blockSize * 2) / 16; count++) {
-			byte bump = (byte) ((count * 0x33) & 0xFF);
-			byte padByte = (byte) ((0x33 + bump) & 0xFF);
-			try {
-				hash = ArrayUtil.concatAll(hash, SecurityOps.padAndHash(new byte[] { padByte }, secretBytes));
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
+	private byte[] computeIVHash(byte[] secretBytes) throws NoSuchAlgorithmException {
+		byte[] opsHash = SecurityOps.padAndHash(new byte[] { 0x33 }, secretBytes);
+		int opsLength = opsHash.length;
+		while((blockSize * 2) > opsHash.length) {
+			byte[] bytes = new byte[opsHash.length + opsLength];
+			System.arraycopy(opsHash, 0, bytes, 0, opsHash.length);
+			opsLength = opsHash.length;
+			opsHash = SecurityOps.padAndHash(new byte[] { 0x33 }, secretBytes);
+			System.arraycopy(opsHash, 0, bytes, opsLength, opsHash.length);
+			opsLength = opsHash.length;
+			opsHash = bytes;
 		}
-		return hash;
+		return opsHash;
 	}
 }

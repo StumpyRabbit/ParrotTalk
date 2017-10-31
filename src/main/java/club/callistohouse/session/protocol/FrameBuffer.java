@@ -25,7 +25,8 @@ public class FrameBuffer extends ThunkLayer {
 			if(bufferStream.size() < remainingFrameSize) { return; }
 
 			try {
-				readFrame.readRemainderFrom(new ByteArrayInputStream(bufferStream.next(remainingFrameSize)));
+				byte[] bytes = bufferStream.next(remainingFrameSize);
+				readFrame.readRemainderFrom(new ByteArrayInputStream(bytes));
 				if (readFrame.getFrameVersion() == 1) {
 					stack.upcall(readFrame, this);
 					readFrame = null;

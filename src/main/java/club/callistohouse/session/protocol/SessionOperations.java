@@ -72,7 +72,7 @@ public class SessionOperations extends ThunkLayer {
 	}
 
 	synchronized void send(PhaseHeader header) {
-		log.debug("session msg sending: " + header);
+//		log.debug("session msg sending: " + header);
 		stack.downcall(header.toFrame(), this); }
 
 	void sendProtocolOffered() {
@@ -154,7 +154,7 @@ public class SessionOperations extends ThunkLayer {
 	}
 
 	public void handleHeader(PhaseHeader header) { 
-		log.debug("session msg received: " + header);
+//		log.debug("session msg received: " + header);
 		if(ClassUtil.isAssignableFrom(header, ProtocolOffered.class)) {
 			handleMessage((ProtocolOffered) header);
 		} else if(ClassUtil.isAssignableFrom(header, ProtocolAccepted.class)) {

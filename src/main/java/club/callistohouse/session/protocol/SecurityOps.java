@@ -200,43 +200,6 @@ public class SecurityOps implements Cloneable {
 						padAndHash(new byte[] { (byte) 0xBB }, sharedKey),
 						padAndHash(new byte[] { (byte) 0xCC }, sharedKey))));
 	}
-	/*
-	 * private void generateIvSequences(int vectorSize, byte[] sharedKey) throws
-	 * NoSuchAlgorithmException { byte[] bytes = null; byte[] hash = new byte[0];
-	 * for(int count = 0; count < ((vectorSize * 2) / 16); count++) { byte bump =
-	 * (byte) ((count * 0x33) & 0xFF); byte padByte = (byte) ((0x33 + bump) & 0xFF);
-	 * hash = ArrayUtil.concatAll(hash, padAndHash(new byte[] { padByte },
-	 * sharedKey)); }
-	 * 
-	 * log.debug("composite IV sequence: " + Hex.encodeHexString(hash)); if
-	 * (isIncoming) { bytes = Arrays.copyOfRange(hash, 0, vectorSize); receiveIv =
-	 * new IvParameterSpec(bytes); bytes = Arrays.copyOfRange(hash, vectorSize,
-	 * vectorSize * 2); sendIv = new IvParameterSpec(bytes); } else { bytes =
-	 * Arrays.copyOfRange(hash, 0, vectorSize); sendIv = new IvParameterSpec(bytes);
-	 * bytes = Arrays.copyOfRange(hash, vectorSize, vectorSize * 2); receiveIv = new
-	 * IvParameterSpec(bytes); } }
-	 * 
-	 * private Cipher getCipher(int mode) throws InvalidKeyException,
-	 * NoSuchAlgorithmException, NoSuchPaddingException,
-	 * InvalidAlgorithmParameterException { SecretKeySpec keySpec = buildKeySpec();
-	 * log.debug("Cipher key: " + Hex.encodeHexString(keySpec.getEncoded())); Cipher
-	 * cipher = Cipher.getInstance(getFullCryptoProtocol());
-	 * if(cryptoProtocol.hasIvParameter) { IvParameterSpec ivSpec; if (mode ==
-	 * Cipher.ENCRYPT_MODE) { ivSpec = sendIv; } else { ivSpec = receiveIv; }
-	 * cipher.init(mode, keySpec, ivSpec); } else { cipher.init(mode, keySpec); }
-	 * return cipher; }
-	 * 
-	 * private SecretKeySpec buildKeySpec() { if(secretKeySpec != null) { return
-	 * secretKeySpec; }
-	 * 
-	 * byte[] sharedKey = getDiffieHellman().getSharedKey(); if (sharedKey == null)
-	 * return null; byte[] keyBytes; if(sharedKey.length == cryptoProtocol.keySize)
-	 * { keyBytes = sharedKey; } else { keyBytes = Arrays.copyOf(sharedKey,
-	 * cryptoProtocol.keySize); if(sharedKey.length < cryptoProtocol.keySize) {
-	 * Arrays.fill(keyBytes, sharedKey.length, cryptoProtocol.keySize, (byte) 0x66);
-	 * } } secretKeySpec = new SecretKeySpec(keyBytes,
-	 * cryptoProtocol.fullCryptoProtocol.split("/")[0]); return secretKeySpec; }
-	 */
 
 	public static byte[] md5Hash(byte[] sourceBytes) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
@@ -282,7 +245,7 @@ public class SecurityOps implements Cloneable {
 	private Thunk makeCustomsThunk(ThunkStack stack) {
 		HmacSHA1 hmac = getHmac();
 		return new Thunk(false, false) {
-			public Frame downThunk(Frame frame) {
+			public Object downThunk(Frame frame) {
 				try {
 					stack.propertyAtPut("WriteMAC", hmac.computeMAC((byte[]) frame.getPayload()));
 				} catch (IOException e) {
@@ -291,7 +254,7 @@ public class SecurityOps implements Cloneable {
 				return frame;
 			}
 
-			public Frame upThunk(Frame frame) {
+			public Object upThunk(Frame frame) {
 				try {
 					if (!(hmac.computeMAC((byte[]) frame.getPayload()).equals(stack.propertyAt("ReadMAC")))) {
 						throw new RuntimeException("customs failed MAC verification");
@@ -306,13 +269,13 @@ public class SecurityOps implements Cloneable {
 
 	private Thunk makeImmigrationThunk(ThunkStack stack) {
 		return new Thunk() {
-			public Frame downThunk(Frame frame) {
-				return frame;
+			public Object downThunk(Frame frame) {
+				return frame.toByteArray();
 			}
 
-			public Frame upThunk(Frame frame) {
+			public Object upThunk(Frame frame) {
 				stack.propertyAtPut("ReadMAC", ((MAC) frame.getHeader()).getMac());
-				return frame;
+				return frame.getPayload();
 			}
 
 			public PhaseHeader getHeader(Frame frame) {
