@@ -271,6 +271,7 @@ public class SessionOperations extends ThunkLayer {
 	public void handleMessage(Go body) {
     	if(stateMachine.isInState(State.IdentifiedStartupReceiveGo)) {
     		byte[] sig = body.getSignature();
+    		body.setSignature(new byte[0]);
     		try {
 				byte[] dhParam = securityOps.getDhParam();
 			} catch (NoSuchAlgorithmException e2) {
@@ -307,10 +308,17 @@ public class SessionOperations extends ThunkLayer {
 
 	public void handleMessage(GoToo body) {
     	if(stateMachine.isInState(State.IdentifiedStartupReceiveGoToo)) {
+    		byte[] sig = body.getSignature();
+    		body.setSignature(new byte[0]);
+    		try {
+				byte[] dhParam = securityOps.getDhParam();
+			} catch (NoSuchAlgorithmException e2) {
+				e2.printStackTrace();
+			}
     		securityOps.addRemoteFrame(body.toFrame());
     		byte[] msgBytes = securityOps.getRemoteMessagesBytes();
     		try {
-    			getRemoteIdentity().verifySignature(msgBytes, body.getSignature());
+    			getRemoteIdentity().verifySignature(msgBytes, sig);
     		} catch (SignatureException e) {
     			stateMachine.fire(Trigger.SendBye);
     			return;
