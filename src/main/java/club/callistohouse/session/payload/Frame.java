@@ -35,6 +35,7 @@ import java.util.Arrays;
 import club.callistohouse.asn1.ASN1InputStream;
 import club.callistohouse.utils.ArrayUtil;
 import club.callistohouse.utils.IntUtil;
+import club.callistohouse.utils.events.Listener;
 
 public class Frame {
 	public static int specificationSize() { return 8; }
@@ -95,6 +96,10 @@ public class Frame {
 	public void setHeader(PhaseHeader header) {
 		this.header = header;
 		header.setFrame(this);
+		header.addListener(new Listener<String>(String.class) {
+			protected void handle(String event) {
+				recomputeSpec();
+			}});
 		recomputeSpec();
 	}
 	public Object getPayload() { return payload; }

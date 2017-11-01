@@ -115,12 +115,12 @@ public class SecurityOps implements Cloneable {
 		messageLogger = new MessageLogger.NullMessageLogger();
 	}
 
-	public void addLocalMessage(byte[] msg) {
-		messageLogger.addLocalMessage(msg);
+	public void addLocalFrame(Frame frame) {
+		messageLogger.addLocalMessage(frame.getHeader().toByteArray());
 	}
 
-	public void addRemoteMessage(byte[] msg) {
-		messageLogger.addRemoteMessage(msg);
+	public void addRemoteFrame(Frame frame) {
+		messageLogger.addRemoteMessage(frame.getHeader().toByteArray());
 	}
 
 	public String getDefaultAlgorithm() {

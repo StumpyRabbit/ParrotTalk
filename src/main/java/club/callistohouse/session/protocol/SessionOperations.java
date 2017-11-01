@@ -77,37 +77,37 @@ public class SessionOperations extends ThunkLayer {
 
 	void sendProtocolOffered() {
 		PhaseHeader header = new ProtocolOffered("Whisper-1", "Whisper-1");
-		securityOps.addLocalMessage(header.toFrame().toByteArray());
+		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectProtocolAccepted);
 		send(header);
 	}
 	void sendProtocolAccepted() {
 		PhaseHeader header = new ProtocolAccepted("Whisper-1");
-		securityOps.addLocalMessage(header.toFrame().toByteArray());
+		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIWant);
 		send(header);
 	}
 	void sendIWant() {
 		PhaseHeader header = new IWant(getRemoteIdentity().getVatId());
-		securityOps.addLocalMessage(header.toFrame().toByteArray());
+		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIAm);
 		send(header);
 	}
 	void sendIAm() {
 		PhaseHeader header = new IAm(getLocalIdentity());
-		securityOps.addLocalMessage(header.toFrame().toByteArray());
+		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectGiveInfo);
 		send(header);
 	}
 	void sendGiveInfo() {
 		PhaseHeader header = new GiveInfo(getLocalIdentity());
-		securityOps.addLocalMessage(header.toFrame().toByteArray());
+		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectReplyInfo);
     	send(header);
 	}
 	void sendReplyInfo() {
 		PhaseHeader header = new ReplyInfo(securityOps.getSessionAgentMap().getProtocolNames(), securityOps.getSessionAgentMap().getDataEncoderNames());
-		securityOps.addLocalMessage(header.toFrame().toByteArray());
+		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectGo);
 		send(header);
 	}
@@ -115,7 +115,8 @@ public class SessionOperations extends ThunkLayer {
 		try {
 			byte[] signature = null;
 			byte[] dhParam = securityOps.getDhParam();
-			securityOps.addLocalMessage(dhParam);
+			Go go = new Go(securityOps.map.getSelectedProtocolName(), securityOps.map.getSelectedEncoderName(), dhParam, new byte[0]);
+			securityOps.addLocalFrame(go.toFrame());
 			byte[] msgBytes = securityOps.getLocalMessagesBytes();
 			try {
 				signature = getLocalIdentity().getSignatureBytes(msgBytes);
@@ -124,8 +125,9 @@ public class SessionOperations extends ThunkLayer {
 				stateMachine.fire(Trigger.SendBye);
 				return;
 			}
+			go.setSignature(signature);
+	    	send(go);
 			stateMachine.fire(Trigger.ExpectGoToo);
-	    	send(new Go(securityOps.map.getSelectedProtocolName(), securityOps.map.getSelectedEncoderName(), dhParam, signature));
 		} catch (NoSuchAlgorithmException e1) {
 			e1.printStackTrace();
 		}
@@ -134,7 +136,8 @@ public class SessionOperations extends ThunkLayer {
 		try {
 			byte[] signature = null;
 			byte[] dhParam = securityOps.getDhParam();
-			securityOps.addLocalMessage(dhParam);
+			GoToo goToo = new GoToo(securityOps.map.getSelectedProtocolName(), securityOps.map.getSelectedEncoderName(), dhParam, new byte[0]);
+			securityOps.addLocalFrame(goToo.toFrame());
 			byte[] msgBytes = securityOps.getLocalMessagesBytes();
 			try {
 				signature = getLocalIdentity().getSignatureBytes(msgBytes);
@@ -143,7 +146,8 @@ public class SessionOperations extends ThunkLayer {
 				stateMachine.fire(Trigger.SendBye);
 				return;
 			}
-	    	send(new GoToo(securityOps.map.getSelectedProtocolName(), securityOps.map.getSelectedEncoderName(), dhParam, signature));
+			goToo.setSignature(signature);
+	    	send(goToo);
 		} catch (NoSuchAlgorithmException e1) {
 			e1.printStackTrace();
 		}
@@ -186,7 +190,7 @@ public class SessionOperations extends ThunkLayer {
 
 	public void handleMessage(ProtocolOffered body) {
     	if(stateMachine.isInState(State.AnswerReceiveProtocolOffered)) {
-    		securityOps.addRemoteMessage(body.toFrame().toByteArray());
+    		securityOps.addRemoteFrame(body.toFrame());
     		stateMachine.fire(Trigger.ReceivedProtocolOffered);
     	} else {
     		log.debug("Terminal in wrong connection state for ReceivedProtocolOffered trigger; in state: " + stateMachine.getState() + "; expecting: AnswerReceiveProtocolOffered");
@@ -195,7 +199,7 @@ public class SessionOperations extends ThunkLayer {
 	}
 	public void handleMessage(ProtocolAccepted body) {
     	if(stateMachine.isInState(State.CallReceiveProtocolAccepted)) {
-    		securityOps.addRemoteMessage(body.toFrame().toByteArray());
+    		securityOps.addRemoteFrame(body.toFrame());
     		stateMachine.fire(Trigger.ReceivedProtocolAccepted);
     	} else {
     		log.debug("Terminal in wrong connection state for ReceivedProtocolAccepted trigger; in state: " + stateMachine.getState() + "; expecting: CallReceiveProtocolAccepted");
@@ -212,7 +216,7 @@ public class SessionOperations extends ThunkLayer {
 	}
 
 	public void handleMessage(IWant body) {
-		securityOps.addRemoteMessage(body.toFrame().toByteArray());
+		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveIWant)) {
     		isIncoming = true;
     		securityOps.setIsIncoming(true);
@@ -227,7 +231,7 @@ public class SessionOperations extends ThunkLayer {
     	}
 	}
 	public void handleMessage(IAm body) {
-		securityOps.addRemoteMessage(body.toFrame().toByteArray());
+		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveIAm)) {
     		isIncoming = false;
     		securityOps.setIsIncoming(false);
@@ -241,7 +245,7 @@ public class SessionOperations extends ThunkLayer {
     	}
 	}
 	public void handleMessage(GiveInfo body) {
-		securityOps.addRemoteMessage(body.toFrame().toByteArray());
+		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveGiveInfo)) {
     		getRemoteIdentity().setVatId(body.getVatId());
     		getRemoteIdentity().setPublicKey(body.getPublicKeyImpl());
@@ -253,7 +257,7 @@ public class SessionOperations extends ThunkLayer {
     	}
 	}
 	public void handleMessage(ReplyInfo body) {
-		securityOps.addRemoteMessage(body.toFrame().toByteArray());
+		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.IdentifiedStartupReceiveReplyInfo)) {
 			securityOps.map.setSelectedProtocolName(securityOps.matchBestCryptoProtocol(body.getCryptoProtocols()));
 			securityOps.map.setSelectedEncoderName(securityOps.matchBestDataEncoder(body.getDataEncoders()));
@@ -272,7 +276,7 @@ public class SessionOperations extends ThunkLayer {
 			} catch (NoSuchAlgorithmException e2) {
 				e2.printStackTrace();
 			}
-    		securityOps.addRemoteMessage(body.getDiffieHellmanParam());
+    		securityOps.addRemoteFrame(body.toFrame());
     		try {
     			getRemoteIdentity().verifySignature(securityOps.getRemoteMessagesBytes(), sig);
     		} catch (SignatureException e) {
@@ -303,7 +307,7 @@ public class SessionOperations extends ThunkLayer {
 
 	public void handleMessage(GoToo body) {
     	if(stateMachine.isInState(State.IdentifiedStartupReceiveGoToo)) {
-    		securityOps.addRemoteMessage(body.getDiffieHellmanParam());
+    		securityOps.addRemoteFrame(body.toFrame());
     		byte[] msgBytes = securityOps.getRemoteMessagesBytes();
     		try {
     			getRemoteIdentity().verifySignature(msgBytes, body.getSignature());

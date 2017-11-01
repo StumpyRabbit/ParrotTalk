@@ -37,8 +37,9 @@ import club.callistohouse.asn1.ASN1InputStream;
 import club.callistohouse.asn1.ASN1Module;
 import club.callistohouse.asn1.ASN1OutputStream;
 import club.callistohouse.asn1.types.ASN1Type;
+import club.callistohouse.utils.events.EventEngine;
 
-public abstract class PhaseHeader {
+public abstract class PhaseHeader extends EventEngine {
 
 	private static Map<Integer, Class<?>> headerClasses = new HashMap<Integer, Class<?>>();
 
@@ -74,10 +75,13 @@ public abstract class PhaseHeader {
 
 	public Frame getFrame() { return frame; }
 	public void setFrame(Frame frame) { this.frame = frame; }
+	public Frame toFrame() { return (frame != null) ? frame : new Frame(this); }
+
+	public void recomputeSpec() {
+		fire("recomputeSpec");
+	}
 
 	public static Class<?> headerClassForType(int headerType) { return headerClasses.get(headerType); }
-
-	public Frame toFrame() { return (frame != null) ? frame : new Frame(this); }
 
 	public byte[] toByteArray() {
 		ASN1Type type = (ASN1Type) ASN1Module.name("Session").find("PhaseHeader");

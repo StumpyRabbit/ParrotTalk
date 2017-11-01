@@ -52,7 +52,7 @@ public class GoToo extends PhaseHeader {
     public void setCryptoProtocol(String s) { this.cryptoProtocol = s; }
     public void setDataEncoder(String s) { this.dataEncoder = s; }
     public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
-    public void setSignature(byte[] bytes) { this.signature = bytes; }
+    public void setSignature(byte[] bytes) { this.signature = bytes; recomputeSpec(); }
 
 	public MessageEnum getType() { return MessageEnum.GO_TOO; }
 
