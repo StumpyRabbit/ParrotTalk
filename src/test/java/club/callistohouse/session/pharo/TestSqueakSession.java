@@ -30,7 +30,6 @@ package club.callistohouse.session.pharo;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -40,8 +39,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
-import club.callistohouse.asn1.ASN1InputStream;
-import club.callistohouse.asn1.ASN1OutputStream;
 import club.callistohouse.session.CipherThunkMaker;
 import club.callistohouse.session.EncoderThunk;
 import club.callistohouse.session.Session;
@@ -49,120 +46,115 @@ import club.callistohouse.session.SessionAgent;
 import club.callistohouse.session.SessionAgentMap;
 import club.callistohouse.session.SessionIdentity;
 import club.callistohouse.session.TestSessionServer;
-import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.Listener;
 
-public class TestPharoSession {
+public class TestSqueakSession {
 	private static Logger log = Logger.getLogger(TestSessionServer.class);
 
 	SessionIdentity server1Identity;
 	SessionIdentity server2Identity;
-	SessionAgent server1 = null, server2 = null;
+	SessionAgent server2 = null;
 	Session term1 = null, term2 = null;
-	boolean server1Started = false, server1Stopped = false;
-	boolean term1Connected = false, term1Disconnected = false, term1Identified = false, term1Encrypted = false;
+	boolean server2Started = false, server2Stopped = false;
+	boolean term2Connected = false, term2Disconnected = false, term2Identified = false, term2Encrypted = false;
 	boolean dataReceived = false;
 	String msg = "";
-	int term1MsgReceived = 0;
+	int term2MsgReceived = 0;
 
 	@Before
 	public void setup() throws UnknownHostException {
 		PropertyConfigurator.configure("log4j.properties");
-		server1Identity = new SessionIdentity("first", 10101);
-		server2Identity = new SessionIdentity("second", new InetSocketAddress(InetAddress.getByAddress(new byte[] {127, 0, 0, 1}), 12222));
+		server1Identity = new SessionIdentity("first", new InetSocketAddress(InetAddress.getByAddress(new byte[] {127, 0, 0, 1}), 10011));
+		server2Identity = new SessionIdentity("second", 10001);
 		SessionASN1Bootstrap.bootstrap();
 	}
 
-	@Test(timeout=25000)
+	@Test(timeout=250000)
 	public void test2ServersWithSingleConnect() {
-		startServer1();
-		assertTrue(server1Started);
+		startServer2();
+		assertTrue(server2Started);
 
 		try {
-			term1 = server1.connect(server2Identity);
-			Thread.sleep(14000);
-			assertTrue(term1Connected);
-			assertTrue(term1Identified);
-			assertTrue(term1Encrypted);
+			Thread.sleep(140000);
+			assertTrue(term2Connected);
+			assertTrue(term2Identified);
+			assertTrue(term2Encrypted);
 
-			term1.send("hello world".getBytes());
 			Thread.sleep(500);
 			assertTrue(dataReceived);
 			log.info("message received: " + msg);
 
 			if(term1 != null) { term1.stop(); }
 			Thread.sleep(1000);
-			assertTrue(term1Disconnected);
-			server1.stop();
-			assertTrue(server1Stopped);
+			assertTrue(term2Disconnected);
+			server2.stop();
+			assertTrue(server2Stopped);
 		} catch (Exception e) {
 			assertTrue(false);
 		}
 	}
 
-	public SessionAgentMap buildServer1Map() {
+	public SessionAgentMap buildServer2Map() {
 /**
  * 		Protocols.add(new CipherThunkMaker("DESede", "DESede/CBC/PKCS5Padding", 24, 8, true));
 		Protocols.add(new CipherThunkMaker("DES", "DES/CBC/PKCS5Padding", 8, 8, true));
  */
 		return new SessionAgentMap(
 				new CipherThunkMaker("AESede", "AES/CBC/PKCS5Padding", 32, 16, true),
-				new EncoderThunk("String") {
+				new EncoderThunk("Bytes") {
 					public Object serializeThunk(Object chunk) {
 						return chunk;
 					}
 					public Object materializeThunk(Object chunk) {
-						return new String((byte[]) chunk);
+						return chunk;
 					}});
 	}
 
-	private void startServer1() {
+	private void startServer2() {
 		try {
-			server1 = new SessionAgent(server1Identity, buildServer1Map());
-			server1.addListener(new Listener<SessionAgent.Started>(SessionAgent.Started.class) {
+			server2 = new SessionAgent(server2Identity, buildServer2Map());
+			server2.addListener(new Listener<SessionAgent.Started>(SessionAgent.Started.class) {
 				protected void handle(SessionAgent.Started event) {
-					server1Started = true;
+					server2Started = true;
 				}});
-			server1.addListener(new Listener<SessionAgent.Stopped>(SessionAgent.Stopped.class) {
+			server2.addListener(new Listener<SessionAgent.Stopped>(SessionAgent.Stopped.class) {
 				protected void handle(SessionAgent.Stopped event) {
-					server1Stopped = true;
+					server2Stopped = true;
 				}});
-			server1.addListener(new Listener<Session.Connected>(Session.Connected.class) {
+			server2.addListener(new Listener<Session.Connected>(Session.Connected.class) {
 				protected void handle(Session.Connected event) {
-					setupListenersOnTerminal1(event.terminal);
-					term1Connected = true;
+					setupListenersOnTerminal2(event.terminal);
+					term2Connected = true;
 				}});
-			server1.addListener(new Listener<Session.Disconnected>(Session.Disconnected.class) {
+			server2.addListener(new Listener<Session.Disconnected>(Session.Disconnected.class) {
 				protected void handle(Session.Disconnected event) {
-					term1Disconnected = true;
+					term2Disconnected = true;
 				}});
-			server1.start();
+			server2.start();
 		} catch (Exception e) { assertTrue(false); }
 	}
 
-	private void setupListenersOnTerminal1(Session term) {
+	private void setupListenersOnTerminal2(Session term) {
 		term.addListener(new Listener<Session.Connected>(Session.Connected.class) {
 			protected void handle(Session.Connected event) {
-				term1Connected = true;
+				term2Connected = true;
 			}});
 		term.addListener(new Listener<Session.Disconnected>(Session.Disconnected.class) {
 			protected void handle(Session.Disconnected event) {
-				term1Disconnected = true;
+				term2Disconnected = true;
 			}});
 		term.addListener(new Listener<Session.Encrypted>(Session.Encrypted.class) {
 			protected void handle(Session.Encrypted event) {
-				term1Encrypted = true;
+				term2Encrypted = true;
 			}});
 		term.addListener(new Listener<Session.Identified>(Session.Identified.class) {
 			protected void handle(Session.Identified event) {
-				term1Identified = true;
+				term2Identified = true;
 			}});
 		term.addListener(new Listener<Session.DataReceived>(Session.DataReceived.class) {
 			protected void handle(Session.DataReceived event) {
-				dataReceived = true;
-				msg = (String) event.data;
-				term1MsgReceived++;
+				term2MsgReceived++;
 			}});
 	}
 }

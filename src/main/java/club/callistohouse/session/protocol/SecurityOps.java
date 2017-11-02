@@ -187,22 +187,30 @@ public class SecurityOps implements Cloneable {
 	}
 
 	private void generateMacKey(byte[] sharedKey) throws NoSuchAlgorithmException {
-		macBytes = md5Hash(ArrayUtil.concatAll(padAndHash(new byte[] { 0x11 }, sharedKey),
-				padAndHash(new byte[] { 0x22 }, sharedKey), padAndHash(new byte[] { 0x33 }, sharedKey),
-				padAndHash(new byte[] { 0x44 }, sharedKey)));
-		macBytes = ArrayUtil.concatAll(macBytes,
-				md5Hash(ArrayUtil.concatAll(padAndHash(new byte[] { 0x55 }, sharedKey),
-						padAndHash(new byte[] { 0x66 }, sharedKey), padAndHash(new byte[] { 0x77 }, sharedKey),
-						padAndHash(new byte[] { (byte) 0x88 }, sharedKey))));
-		macBytes = ArrayUtil.concatAll(macBytes,
-				md5Hash(ArrayUtil.concatAll(padAndHash(new byte[] { (byte) 0x99 }, sharedKey),
-						padAndHash(new byte[] { (byte) 0xAA }, sharedKey),
-						padAndHash(new byte[] { (byte) 0xBB }, sharedKey),
-						padAndHash(new byte[] { (byte) 0xCC }, sharedKey))));
+		macBytes = md5Hash(ArrayUtil.concatAll(
+				padAndHash(new byte[] { (byte)0xCC }, sharedKey),
+				padAndHash(new byte[] { (byte)0xBB }, sharedKey),
+				padAndHash(new byte[] { (byte)0xAA }, sharedKey),
+				padAndHash(new byte[] { (byte)0x99 }, sharedKey)));
+		macBytes = ArrayUtil.concatAll(macBytes, md5Hash(ArrayUtil.concatAll(
+				padAndHash(new byte[] { (byte)0x88 }, sharedKey),
+				padAndHash(new byte[] { 0x77 }, sharedKey),
+				padAndHash(new byte[] { 0x66 }, sharedKey),
+				padAndHash(new byte[] { 0x55 }, sharedKey))));
+		macBytes = ArrayUtil.concatAll(macBytes, md5Hash(ArrayUtil.concatAll(
+				padAndHash(new byte[] { 0x44 }, sharedKey),
+				padAndHash(new byte[] { 0x33 }, sharedKey),
+				padAndHash(new byte[] { 0x22 }, sharedKey),
+				padAndHash(new byte[] { 0x11 }, sharedKey))));
 	}
 
 	public static byte[] md5Hash(byte[] sourceBytes) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
+		return md.digest(sourceBytes);
+	}
+
+	public static byte[] sha1Hash(byte[] sourceBytes) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA1");
 		return md.digest(sourceBytes);
 	}
 

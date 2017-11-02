@@ -35,9 +35,11 @@ public enum MessageEnum implements Serializable {
 		public String description() { return "protocol-offered"; } },
 	PROTOCOL_ACCEPTED(3) { 
 		public String description() { return "protocol-accepted"; } },
-    ENCODED_DATA(59) {
+	RAW_DATA(4) {
+		public String description() { return "raw-data"; }},
+    ENCODED_DATA(5) {
 		public String description() { return "encoded-data"; }},
-    ENCRYPTED_DATA(62) {
+    ENCRYPTED_DATA(6) {
 		public String description() { return "encrypted-data"; }},
 	MAC_DATA(7) {
 		public String description() { return "mac-data"; } },
@@ -57,8 +59,6 @@ public enum MessageEnum implements Serializable {
 		public String description() { return "duplicate-connection"; }},
     NOT_ME(15) {
 			public String description() { return "not-me"; }},
-    RAW_DATA(30) {
-		public String description() { return "raw-data"; }},
 	INTERNAL_CHANGE_ENCRYPTION(31) {
 		public boolean isInternalChange() { return true; }
 		public String description() { return "internal change encryption"; } };
