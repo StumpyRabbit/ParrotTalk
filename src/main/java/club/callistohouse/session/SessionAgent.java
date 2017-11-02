@@ -147,12 +147,10 @@ public class SessionAgent extends EventEngine {
 	}
 
 	protected void handleConnectionDisconnected(NIOConnection connection) {
-		if(connection == null){
-			return;
-		}
+		if(connection == null) { return; }
 		SessionIdentity sessionId = new SessionIdentity(connection.getSocketAddress());
-		if (sessionTable.containsKey(sessionId)) {
-			Session term = sessionTable.get(sessionId);
+		if (sessionTable.containsKey(sessionId.getSocketAddress())) {
+			Session term = sessionTable.get(sessionId.getSocketAddress());
 			sessionTable.remove(sessionId.getSocketAddress());
 			Session.Disconnected termDisconnected = new Session.Disconnected(term); 
 			fire(termDisconnected);

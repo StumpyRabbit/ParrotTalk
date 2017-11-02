@@ -76,13 +76,13 @@ public class SessionOperations extends ThunkLayer {
 		stack.downcall(header.toFrame(), this); }
 
 	void sendProtocolOffered() {
-		PhaseHeader header = new ProtocolOffered("Whisper-1", "Whisper-1");
+		PhaseHeader header = new ProtocolOffered("ParrotTalk-3.6", "ParrotTalk-3.6");
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectProtocolAccepted);
 		send(header);
 	}
 	void sendProtocolAccepted() {
-		PhaseHeader header = new ProtocolAccepted("Whisper-1");
+		PhaseHeader header = new ProtocolAccepted("ParrotTalk-3.6");
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIWant);
 		send(header);
