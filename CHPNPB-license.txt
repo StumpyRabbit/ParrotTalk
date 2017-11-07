@@ -19,7 +19,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
+ 
 All use and study and learning of said software system, as well as any modifications 
 thereof, are used for NON-PROFIT ACTIVITES, without charge.
 
@@ -40,6 +40,7 @@ We would like to thank the following individuals:
 ******************************************************************************
 murmur/whisper/hubbub/ParrotTalk would not be possible without the ideas, 
 implementation, brilliance and passion of the Squeak/Pharo communities and the 
-cryptography team, which are this software's implementation foundation. Thanks. 
+cryptography team and the virtual machine team, which are this software's 
+implementation foundation. Thank you. 
 '..' 
 ******************************************************************************
