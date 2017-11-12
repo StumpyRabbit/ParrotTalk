@@ -41,7 +41,6 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -293,7 +292,7 @@ public class SecurityOps implements Cloneable {
 	}
 
 	private EncoderThunk makeEncoderThunk(ThunkStack stack, SessionIdentity farKey) {
-		return map.buildEncoder(farKey).makeThunk();
+		return map.buildEncoder(farKey).makeThunkOnFarKey(farKey);
 	}
 
 	private Thunk makeCipherThunk(ThunkStack stack, boolean incoming) {

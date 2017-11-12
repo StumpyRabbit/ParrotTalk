@@ -39,7 +39,7 @@ public class SessionAgentMap {
 		return null;
 	}
 	public EncoderThunk buildEncoder(SessionIdentity farKey) {
-		return lookupDataEncoder(selectedEncoderName).makeThunk();
+		return lookupDataEncoder(selectedEncoderName);
 	}
 
 	public CipherThunkMaker lookupCryptoProtocol(String proto) {

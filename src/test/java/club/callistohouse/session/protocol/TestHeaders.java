@@ -1,6 +1,6 @@
 package club.callistohouse.session.protocol;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import club.callistohouse.asn1.ASN1Module;
 import club.callistohouse.asn1.ASN1OutputStream;
 import club.callistohouse.asn1.types.ASN1Type;
 import club.callistohouse.session.payload.Frame;
-import club.callistohouse.session.payload.IAm;
 import club.callistohouse.session.payload.ProtocolOffered;
 import club.callistohouse.session.payload.SessionASN1Bootstrap;
 

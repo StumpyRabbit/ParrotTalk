@@ -1,13 +1,8 @@
 package club.callistohouse.session;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
 import club.callistohouse.session.payload.Encoded;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.RawData;
-import club.callistohouse.session.protocol.Thunk;
-import club.callistohouse.session.protocol.ThunkFinishedException;
 import club.callistohouse.session.protocol.ThunkRoot;
 
 public abstract class EncoderThunk extends ThunkRoot implements Cloneable {
@@ -29,7 +24,7 @@ public abstract class EncoderThunk extends ThunkRoot implements Cloneable {
 		frame.setHeader(new RawData());
 	}
 
-	public EncoderThunk makeThunk() {
+	public EncoderThunk makeThunkOnFarKey(SessionIdentity farKey) {
 		try {
 			return (EncoderThunk) clone();
 		} catch (CloneNotSupportedException e) {

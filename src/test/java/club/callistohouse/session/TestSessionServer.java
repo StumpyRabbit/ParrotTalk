@@ -30,9 +30,6 @@ package club.callistohouse.session;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
@@ -40,18 +37,11 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
-import club.callistohouse.asn1.ASN1InputStream;
-import club.callistohouse.asn1.ASN1OutputStream;
-import club.callistohouse.session.Session;
-import club.callistohouse.session.SessionAgent;
-import club.callistohouse.session.SessionIdentity;
-import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.SessionASN1Bootstrap;
-import club.callistohouse.session.pharo.TestPharoSession;
 import club.callistohouse.utils.events.Listener;
 
 public class TestSessionServer {
-	private static Logger log = Logger.getLogger(TestPharoSession.class);
+	private static Logger log = Logger.getLogger(TestSessionServer.class);
 
 	SessionIdentity server1Identity;
 	SessionIdentity server2Identity;
