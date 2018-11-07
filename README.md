@@ -1,5 +1,11 @@
 # ParrotTalk
 
+INSTALL
+
+To install ParrotTalk in Java, first clone the ASN1 project, then the ParrotTalk project. Link the ASN1 project into ParrotTalk and run the ParrotTalk tests.
+
+OVERVIEW
+
 ParrotTalk is an encrypted connection framework. Currently allowing anonymous 2048-bit key negotiation to establish user-provided encryption cipher and user-provided encoding and decoding, both through a provided SessionAgentMap to a starting SessionAgent server. Please look in the test case ThunkHelloWorldTest for building these maps and running a connection iwth data passing after encryption is established. There is a 4-way negotiation, from ProtocolOffered/Accepted to Go/GoToo. In using RSA 2048 signature validation and DH 2048 primes to establish the key used within the selected Cipher. The Cipher and Encoder are selected by name through the negotiation protocol. Currently three Ciphers are selectable, AESede, DESede, and DES. There are two encoders tested, asn1der, and Bytes. This protocol is described here, in this document.
 
 https://github.com/ZiroZimbarra/callistohouse/blob/master/docs/ParrotTalkFrameDesign-3.5.pdf
