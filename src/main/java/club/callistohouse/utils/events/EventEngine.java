@@ -42,7 +42,7 @@ public class EventEngine implements EventEngineInterface {
                 	((Listener<GEvent>)listener).handleGenericEvent(event);
             } catch (EventNotHandledException notHandledEx) {
             } catch (Exception handleException) {
-            	System.out.println("error: " + handleException.getLocalizedMessage());
+            	System.out.println("event engine fire error: " + getClass().getSimpleName() + ": " + handleException.getLocalizedMessage());
             }
         }
     }

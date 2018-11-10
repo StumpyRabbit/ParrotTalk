@@ -71,7 +71,7 @@ public class TestSessionServer {
 
 		try {
 			term1 = server1.connect(server2Identity);
-			Thread.sleep(14000);
+			Thread.sleep(7000);
 			assertTrue(term1Connected);
 			assertTrue(term2Connected);
 			assertTrue(term1Identified);

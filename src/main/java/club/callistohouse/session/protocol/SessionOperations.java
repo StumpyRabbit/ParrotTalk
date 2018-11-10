@@ -313,6 +313,7 @@ public class SessionOperations extends ThunkLayer {
     		try {
 				byte[] dhParam = securityOps.getDhParam();
 			} catch (NoSuchAlgorithmException e2) {
+	    		log.debug("NoSuchAlgorithmException");
 				e2.printStackTrace();
 			}
     		securityOps.addRemoteFrame(body.toFrame());
@@ -328,6 +329,7 @@ public class SessionOperations extends ThunkLayer {
 				securityOps.map.setSelectedProtocolName(body.getCryptoProtocol());
 				securityOps.map.setSelectedEncoderName(body.getDataEncoder());
 			} catch (NoSuchAlgorithmException e1) {
+	    		log.debug("NoSuchAlgorithmException");
 				e1.printStackTrace();
 			}
     		stateMachine.fire(Trigger.ReceivedGoToo);
@@ -337,6 +339,7 @@ public class SessionOperations extends ThunkLayer {
     			secrets.makeNullLogging();
     			session.fire(new InternalChangeEncryption(secrets));
     		} catch (CloneNotSupportedException e) {
+	    		log.debug("CloneNotSupportedException");
     			e.printStackTrace();
     		}
     	} else {

@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
+import club.callistohouse.session.TestSessionServer;
 import club.callistohouse.session.marshmuck.DiffieHellman;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.GiveInfo;
@@ -30,6 +32,8 @@ import club.callistohouse.session.payload.ReplyInfo;
 import club.callistohouse.session.payload.SessionASN1Bootstrap;
 
 public class TestASN1HeaderEncoding {
+	private static Logger log = Logger.getLogger(TestASN1HeaderEncoding.class);
+
 	@Before
 	public void setup() throws UnknownHostException {
 		PropertyConfigurator.configure("log4j.properties");
@@ -118,6 +122,8 @@ public class TestASN1HeaderEncoding {
 		hdr.setSignature(dhBytes);
 		Frame frame = hdr.toFrame();
 		byte[] bytes = frame.toByteArray();
+		log.info("check bytes size: " + encodedBytes.length + " last byte: " + encodedBytes[encodedBytes.length - 1]);
+		log.info("encoded bytes size: " + bytes.length + " last byte: " + bytes[bytes.length - 1]);
 		assertTrue(Arrays.equals(encodedBytes, bytes));
 		Frame newFrame = Frame.readFromStream(new ByteArrayInputStream(bytes));
 		Go in = (Go) newFrame.getHeader();

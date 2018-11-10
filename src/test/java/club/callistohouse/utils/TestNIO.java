@@ -109,8 +109,8 @@ public class TestNIO {
 		assertTrue(server2Stopped);
 	}
 
-	private InetSocketAddress getServer1ISA() throws UnknownHostException { return new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), 10001); }
-	private InetSocketAddress getServer2ISA() throws UnknownHostException { return new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), 10002); }
+	private InetSocketAddress getServer1ISA() throws UnknownHostException { return new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), 11001); }
+	private InetSocketAddress getServer2ISA() throws UnknownHostException { return new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), 11002); }
 
 	private void startServers() {
 		try {

@@ -1,15 +1,7 @@
-package club.callistohouse.session;
+	package club.callistohouse.session;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import club.callistohouse.asn1.ASN1InputStream;
-import club.callistohouse.asn1.ASN1OutputStream;
-import club.callistohouse.session.marshmuck.AbstractScope;
-import club.callistohouse.session.marshmuck.DummyScope;
-import club.callistohouse.session.payload.Frame;
 
 public class SessionAgentMap {
 
