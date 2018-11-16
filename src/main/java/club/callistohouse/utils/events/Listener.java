@@ -28,16 +28,15 @@
 
 package club.callistohouse.utils.events;
 
-import javax.xml.bind.annotation.XmlTransient;
+import java.io.IOException;
 
-@XmlTransient
 public abstract class Listener<GEvent> {
     private final Class<GEvent> eventClazz;
 
 	public Listener(final Class<GEvent> eventClazz) { this.eventClazz = eventClazz; }
 
 	@SuppressWarnings("unchecked")
-	public void handleGenericEvent(final Object event) {
+	public void handleGenericEvent(final Object event) throws ClassNotFoundException, IOException {
     	if(canHandle(event)) {
     		handle((GEvent)event);
     	} else {
@@ -50,13 +49,19 @@ public abstract class Listener<GEvent> {
     	return eventClazz.isAssignableFrom(event.getClass()) && match((GEvent)event);
     }
 
-	protected abstract void handle(GEvent event);
+	protected abstract void handle(GEvent event) throws ClassNotFoundException, IOException;
 	protected boolean match(final GEvent event) { return true; };
 
 	public Runnable getRunnable(final Object event) {
 		return new Runnable() { 
 			public void run() { 
-				handleGenericEvent(event); }};
+				try {
+					handleGenericEvent(event);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} }};
 	}
 
 	// private and protected static methods

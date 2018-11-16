@@ -1,5 +1,7 @@
 package club.callistohouse.session;
 
+import java.io.IOException;
+
 import club.callistohouse.session.payload.Encoded;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.RawData;
@@ -12,15 +14,25 @@ public abstract class EncoderThunk extends ThunkRoot implements Cloneable {
 
 	public String getEncoderName() { return encoderName; }
 
-	public abstract Object serializeThunk(Object chunk);
-	public abstract Object materializeThunk(Object chunk);
+	public abstract Object serializeThunk(Object chunk) throws IOException;
+	public abstract Object materializeThunk(Object chunk) throws IOException, ClassNotFoundException;
 
 	public void downcall(Frame frame) {
-		frame.setPayload(serializeThunk(frame.getPayload()));
+		try {
+			frame.setPayload(serializeThunk(frame.getPayload()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame.setHeader(new Encoded());
 	}
 	public void upcall(Frame frame) {
-		frame.setPayload(materializeThunk(frame.getPayload()));
+		try {
+			frame.setPayload(materializeThunk(frame.getPayload()));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame.setHeader(new RawData());
 	}
 

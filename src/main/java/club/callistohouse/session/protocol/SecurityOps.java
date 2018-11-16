@@ -240,7 +240,7 @@ public class SecurityOps implements Cloneable {
 	}
 
 
-	public void installOn(Session session, ThunkStack stack, boolean incoming) {
+	public void installOn(Session session, ThunkStack stack, boolean incoming) throws IOException {
 		ThunkStack poppedStack = stack.popStackUpTo(session); // session
 		SendFramesBuffer buffer = (SendFramesBuffer) stack.pop();
 		stack.push(makeImmigrationThunk(stack));

@@ -1,5 +1,7 @@
 package club.callistohouse.session.protocol;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 
 import club.callistohouse.session.payload.Frame;
@@ -18,7 +20,7 @@ public class SocketThunk extends ThunkLayer {
 		this.connection = conn;
 		connection.addListener(new Listener<DataReceived>(DataReceived.class) {
 			@Override
-			protected void handle(DataReceived event) {
+			protected void handle(DataReceived event) throws ClassNotFoundException, IOException {
 				upcall(new Frame(new RawData(), event.data));
 			}
 		});

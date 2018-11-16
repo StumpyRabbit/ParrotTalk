@@ -1,5 +1,6 @@
 package club.callistohouse.session.protocol;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 
@@ -71,7 +72,7 @@ public class SessionOperations extends ThunkLayer {
 		return null;
 	}
 
-	synchronized void send(PhaseHeader header) {
+	synchronized void send(PhaseHeader header) throws IOException {
 //		log.debug("session msg sending: " + header);
 		stack.downcall(header.toFrame(), this); }
 
@@ -79,37 +80,61 @@ public class SessionOperations extends ThunkLayer {
 		PhaseHeader header = new ProtocolOffered("ParrotTalk-3.6", "ParrotTalk-3.6");
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectProtocolAccepted);
-		send(header);
+		try {
+			send(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	void sendProtocolAccepted() {
 		PhaseHeader header = new ProtocolAccepted("ParrotTalk-3.6");
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIWant);
-		send(header);
+		try {
+			send(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	void sendIWant() {
 		PhaseHeader header = new IWant(getRemoteIdentity().getVatId());
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIAm);
-		send(header);
+		try {
+			send(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	void sendIAm() {
 		PhaseHeader header = new IAm(getLocalIdentity());
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectGiveInfo);
-		send(header);
+		try {
+			send(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	void sendGiveInfo() {
 		PhaseHeader header = new GiveInfo(getLocalIdentity());
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectReplyInfo);
-    	send(header);
+    	try {
+			send(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	void sendReplyInfo() {
 		PhaseHeader header = new ReplyInfo(securityOps.getSessionAgentMap().getProtocolNames(), securityOps.getSessionAgentMap().getDataEncoderNames());
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectGo);
-		send(header);
+		try {
+			send(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	void sendGo() {
 		try {
@@ -130,6 +155,8 @@ public class SessionOperations extends ThunkLayer {
 			stateMachine.fire(Trigger.ExpectGoToo);
 		} catch (NoSuchAlgorithmException e1) {
 			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	void sendGoToo() {
@@ -150,11 +177,17 @@ public class SessionOperations extends ThunkLayer {
 	    	send(goToo);
 		} catch (NoSuchAlgorithmException e1) {
 			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	void sendNotMe() {
 		stateMachine.fire(Trigger.Disconnect);
-		send(new NotMe());
+		try {
+			send(new NotMe());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void handleHeader(PhaseHeader header) { 
@@ -299,7 +332,9 @@ public class SessionOperations extends ThunkLayer {
     			session.fire(new InternalChangeEncryption(secrets));
     		} catch (CloneNotSupportedException e) {
     			e.printStackTrace();
-    		}
+    		} catch (IOException e) {
+				e.printStackTrace();
+			}
        	} else {
     		log.debug("Terminal in wrong connection state for Go msg; in state: " + stateMachine.getState() + "; expecting: IdentifiedStartupReceiveGo");
     		throw new RuntimeException("Terminal in wrong connection state for Go msg; in state: " + stateMachine.getState() + "; expecting: IdentifiedStartupReceiveGo");
@@ -339,15 +374,18 @@ public class SessionOperations extends ThunkLayer {
     			secrets.makeNullLogging();
     			session.fire(new InternalChangeEncryption(secrets));
     		} catch (CloneNotSupportedException e) {
-	    		log.debug("CloneNotSupportedException");
+	    		log.debug("CloneNotSupportedException in startupSuccessful");
     			e.printStackTrace();
-    		}
+    		} catch (IOException e) {
+	    		log.debug("IOException in startupSuccessful");
+				e.printStackTrace();
+			}
     	} else {
     		log.debug("Terminal in wrong connection state for GoToo msg; in state: " + stateMachine.getState() + "; expecting: IdentifiedStartupReceiveGoToo");
     		throw new RuntimeException("Terminal in wrong connection state for GoToo msg; in state: " + stateMachine.getState() + "; expecting: IdentifiedStartupReceiveGoToo");
     	}
 	}
-	private void startupSuccessful(boolean isIncoming2) {
+	private void startupSuccessful(boolean isIncoming2) throws IOException {
 		securityOps.installOn(session, stack, isIncoming2);
 		securityOps.clearSensitiveInfo();
 	}

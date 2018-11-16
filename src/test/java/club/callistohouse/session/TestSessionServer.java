@@ -71,7 +71,7 @@ public class TestSessionServer {
 
 		try {
 			term1 = server1.connect(server2Identity);
-			Thread.sleep(7000);
+			Thread.sleep(15000);
 			assertTrue(term1Connected);
 			assertTrue(term2Connected);
 			assertTrue(term1Identified);
@@ -91,8 +91,10 @@ public class TestSessionServer {
 			Thread.sleep(1000);
 			assertTrue(term2Disconnected);
 			server1.stop();
+			Thread.sleep(1000);
 			assertTrue(server1Stopped);
 			server2.stop();
+			Thread.sleep(1000);
 			assertTrue(server2Stopped);
 		} catch (Exception e) {
 			assertTrue(false);
@@ -107,7 +109,7 @@ public class TestSessionServer {
 		try {
 			term1 = server1.connect(server2Identity);
 			term1.send("hello world".getBytes());
-			Thread.sleep(10000);
+			Thread.sleep(15000);
 			assertTrue(term1Connected);
 			assertTrue(term2Connected);
 			assertTrue(term1Identified);
@@ -125,8 +127,10 @@ public class TestSessionServer {
 			Thread.sleep(1000);
 			assertTrue(term2Disconnected);
 			server1.stop();
+			Thread.sleep(1000);
 			assertTrue(server1Stopped);
 			server2.stop();
+			Thread.sleep(1000);
 			assertTrue(server2Stopped);
 		} catch (Exception e) {
 			assertTrue(false);

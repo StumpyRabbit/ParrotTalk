@@ -144,11 +144,13 @@ public class Session extends ThunkLayer implements EventEngineInterface {
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void send(PhaseHeader msg) { sendFrame(msg.toFrame()); }
-	void sendFrame(Frame frame) { stack.downcall(frame, this); }
+	public void send(PhaseHeader msg) throws IOException { sendFrame(msg.toFrame()); }
+	void sendFrame(Frame frame) throws IOException { stack.downcall(frame, this); }
 
 	void handleFrame(Frame frame) {
     	if(ClassUtil.isAssignableFrom(frame.getHeader(), RawData.class) && isEncrypted) {

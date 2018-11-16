@@ -35,7 +35,6 @@ public class ReceivingFrameBuffer extends ThunkLayer {
 					throw new IOException("bad frame version");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
