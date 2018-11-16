@@ -42,6 +42,7 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
+import club.callistohouse.session.payload.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.EventEngine;
 import club.callistohouse.utils.events.Listener;
 import club.callistohouse.utils.transport.NIOConnection;
@@ -81,6 +82,7 @@ public class SessionAgent extends EventEngine {
 	public SessionAgent(SessionIdentity id, SessionAgentMap map) {
 		this.nearKey = id;
 		this.map = map;
+		SessionASN1Bootstrap.bootstrap();
 		transportServer = new NIOServer(nearKey.getPort(), nearKey.getDomain());
 		setupListenersOnTransportServer();
 	}

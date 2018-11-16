@@ -73,7 +73,7 @@ import club.callistohouse.utils.transport.NIOConnection;
  *
  */
 public class Session extends ThunkLayer implements EventEngineInterface {
-//	private static Logger log = Logger.getLogger(SessionTerminal.class);
+//	private static Logger log = Logger.getLogger(Session.class);
 
 	private SessionIdentity farKey;
 	private SessionAgent agent;

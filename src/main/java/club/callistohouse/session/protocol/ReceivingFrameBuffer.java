@@ -7,6 +7,7 @@ import club.callistohouse.session.payload.Frame;
 import club.callistohouse.utils.BufferStream;
 
 public class ReceivingFrameBuffer extends ThunkLayer {
+
 	private ThunkStack stack;
 	private Frame readFrame;
 	private BufferStream bufferStream = new BufferStream(0);

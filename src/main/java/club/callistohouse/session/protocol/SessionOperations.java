@@ -34,7 +34,7 @@ import club.callistohouse.session.payload.ReplyInfo;
 import club.callistohouse.utils.ClassUtil;
 
 public class SessionOperations extends ThunkLayer {
-	private static Logger log = Logger.getLogger(SessionOperations.class);
+	public static Logger log = Logger.getLogger(SessionOperations.class);
 
 	private ThunkStack stack; 
 	private Session session; 
@@ -73,7 +73,6 @@ public class SessionOperations extends ThunkLayer {
 	}
 
 	synchronized void send(PhaseHeader header) throws IOException {
-//		log.debug("session msg sending: " + header);
 		stack.downcall(header.toFrame(), this); }
 
 	void sendProtocolOffered() {
@@ -191,7 +190,6 @@ public class SessionOperations extends ThunkLayer {
 	}
 
 	public void handleHeader(PhaseHeader header) { 
-//		log.debug("session msg received: " + header);
 		if(ClassUtil.isAssignableFrom(header, ProtocolOffered.class)) {
 			handleMessage((ProtocolOffered) header);
 		} else if(ClassUtil.isAssignableFrom(header, ProtocolAccepted.class)) {
