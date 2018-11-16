@@ -98,6 +98,40 @@ public class TestSessionServer {
 			assertTrue(false);
 		}
 	}
+	@Test(timeout=250000)
+	public void test2ServersWithSingleConnectSendBuffered() {
+		startServers();
+		assertTrue(server1Started);
+		assertTrue(server2Started);
+
+		try {
+			term1 = server1.connect(server2Identity);
+			term1.send("hello world".getBytes());
+			Thread.sleep(10000);
+			assertTrue(term1Connected);
+			assertTrue(term2Connected);
+			assertTrue(term1Identified);
+			assertTrue(term2Identified);
+			assertTrue(term1Encrypted);
+			assertTrue(term2Encrypted);
+
+			assertTrue(dataReceived);
+			log.info("message received: " + msg);
+
+			if(term1 != null) { term1.stop(); }
+			Thread.sleep(1000);
+			assertTrue(term1Disconnected);
+			if(term2 != null) { term2.stop(); }
+			Thread.sleep(1000);
+			assertTrue(term2Disconnected);
+			server1.stop();
+			assertTrue(server1Stopped);
+			server2.stop();
+			assertTrue(server2Stopped);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
+	}
 
 	public SessionAgentMap buildServer1Map() {
 /**

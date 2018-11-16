@@ -14,8 +14,7 @@ public class SocketThunk extends ThunkLayer {
 	private ThunkStack stack;
 	private NIOConnection connection;
 
-	public SocketThunk(ThunkStack stack, NIOConnection conn) {
-		this.stack = stack;
+	public SocketThunk(NIOConnection conn) {
 		this.connection = conn;
 		connection.addListener(new Listener<DataReceived>(DataReceived.class) {
 			@Override
@@ -25,6 +24,7 @@ public class SocketThunk extends ThunkLayer {
 		});
 	}
 
+	public void setStack(ThunkStack aStack) { stack = aStack;}
 	public boolean isConnected() {
 		return connection != null;
 	}

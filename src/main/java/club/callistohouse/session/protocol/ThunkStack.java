@@ -17,10 +17,32 @@ public class ThunkStack extends Stack<ThunkRoot> {
 	public ThunkRoot tail() { return lastElement(); }
 	public boolean isConnected() { return tail().isConnected(); }
 	@Override
-	public ThunkRoot pop() { return super.pop(); }
+	public ThunkRoot pop() { ThunkRoot thunk = super.pop(); thunk.setStack(null); return thunk; }
 	@Override
-	public ThunkRoot push(ThunkRoot g) { return super.push(g); }
-
+	public ThunkRoot push(ThunkRoot g) { g.setStack(this); return super.push(g); }
+	public ThunkStack popStackUpTo(ThunkRoot layer) {
+		ThunkStack poppedStack = new ThunkStack();
+		while(!isEmpty()) {
+			ThunkRoot popLayer = pop();
+			if(popLayer == null) { return poppedStack.reverse(); }
+			poppedStack.push(popLayer);
+			if(popLayer == layer) { return poppedStack.reverse(); }
+		}
+		return poppedStack.reverse();
+	}
+	public void pushStack(ThunkStack sourceStack) {
+		ThunkStack reverseStack = sourceStack.reverse();
+		while(!reverseStack.isEmpty()) {
+			push(reverseStack.pop());
+		}
+	}
+	public ThunkStack reverse() {
+		ThunkStack reverseStack = new ThunkStack();
+		while(!isEmpty()) {
+			reverseStack.push(pop());
+		}
+		return reverseStack;
+	}
 	public void install() {
 		for(ThunkRoot g:this) { 
 			g.install();

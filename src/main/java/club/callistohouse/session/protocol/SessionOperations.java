@@ -41,13 +41,13 @@ public class SessionOperations extends ThunkLayer {
 	StateMachine<State, Trigger> stateMachine;
 	boolean isIncoming = false;
 
-	public SessionOperations(ThunkStack stack, Session session, SessionAgentMap map) {
+	public SessionOperations(Session session, SessionAgentMap map) {
 		super();
-		this.stack = stack;
 		this.session = session;
 		this.securityOps = new SecurityOps(map);
     	this.stateMachine = new StateMachine<State, Trigger>(State.Initial, buildStateMachineConfig());
 	}
+	public void setStack(ThunkStack aStack) { stack = aStack;}
 	public void call() {
 		stateMachine.fire(Trigger.Calling);
 	}

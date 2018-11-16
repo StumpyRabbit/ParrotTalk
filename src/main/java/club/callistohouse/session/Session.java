@@ -43,11 +43,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.InternalChangeEncryption;
-import club.callistohouse.session.payload.MAC;
 import club.callistohouse.session.payload.MessageEnum;
 import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.RawData;
-import club.callistohouse.session.protocol.FrameBuffer;
+import club.callistohouse.session.protocol.ReceivingFrameBuffer;
+import club.callistohouse.session.protocol.SendFramesBuffer;
 import club.callistohouse.session.protocol.SessionOperations;
 import club.callistohouse.session.protocol.SocketThunk;
 import club.callistohouse.session.protocol.ThunkLayer;
@@ -78,7 +78,7 @@ public class Session extends ThunkLayer implements EventEngineInterface {
 	private SessionIdentity farKey;
 	private SessionAgent agent;
 	private SessionAgentMap map;
-	private ThunkStack stack = new ThunkStack();
+	private ThunkStack stack;
 
     private NIOConnection connection;
 	protected BlockingQueue<byte[]> outgoingMessageQueue = new LinkedBlockingQueue<byte[]>();
@@ -108,6 +108,7 @@ public class Session extends ThunkLayer implements EventEngineInterface {
     	setConnection(conn);
 	}
 
+	public void setStack(ThunkStack aStack) { stack = aStack;}
 	public SessionIdentity getNearKey() { return agent.getNearKey(); }
     public SessionIdentity getFarKey() { return farKey; }
 	public boolean doesPop() { return false; }
@@ -156,11 +157,13 @@ public class Session extends ThunkLayer implements EventEngineInterface {
 
     void setConnection(NIOConnection connection) {
     	this.connection = connection;
-    	SessionOperations ops = new SessionOperations(stack, this, map);
-		stack.push(new SocketThunk(stack, connection));
-		stack.push(new FrameBuffer(stack));
+    	SessionOperations ops = new SessionOperations(this, map);
+    	ThunkStack stack = new ThunkStack();
+		stack.push(new SocketThunk(connection));
+		stack.push(new ReceivingFrameBuffer());
 		stack.push(ops);
 		stack.propertyAtPut("Ops", ops);
+		stack.push(new SendFramesBuffer());
 		stack.push(this);
 		stack.install();
     }

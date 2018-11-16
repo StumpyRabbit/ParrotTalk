@@ -8,6 +8,7 @@ import club.callistohouse.session.payload.PhaseHeader;
 
 public class ThunkRoot {
 
+	public ThunkRoot() { super(); }
 	public boolean isConnected() { return true; }
 
 	public void close() { flush(); }
@@ -15,6 +16,8 @@ public class ThunkRoot {
 	public void install() { }
 	public void run() {}
 	public void shutdown() { }
+
+	public void setStack(ThunkStack aStack) {}
 
 	public void downcall(Frame frame) {
 		if(doesPush()) {

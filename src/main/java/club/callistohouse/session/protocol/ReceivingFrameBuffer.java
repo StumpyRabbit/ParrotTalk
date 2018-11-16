@@ -6,14 +6,15 @@ import java.io.IOException;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.utils.BufferStream;
 
-public class FrameBuffer extends ThunkLayer {
+public class ReceivingFrameBuffer extends ThunkLayer {
 	private ThunkStack stack;
 	private Frame readFrame;
 	private BufferStream bufferStream = new BufferStream(0);
 
-	public FrameBuffer(ThunkStack stack) {
-		this.stack = stack;
-	}
+	public ReceivingFrameBuffer() { super(); }
+	
+	public void setStack(ThunkStack aStack) { stack = aStack;}
+
 	public void drainBuffer() {
 		int frameSpecSize = Frame.specificationSize();
 		int remainingFrameSize = 0;

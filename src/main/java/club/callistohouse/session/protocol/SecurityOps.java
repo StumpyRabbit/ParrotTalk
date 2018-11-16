@@ -241,12 +241,17 @@ public class SecurityOps implements Cloneable {
 
 
 	public void installOn(Session session, ThunkStack stack, boolean incoming) {
-		stack.pop(); // session
+		ThunkStack poppedStack = stack.popStackUpTo(session); // session
+		SendFramesBuffer buffer = (SendFramesBuffer) stack.pop();
 		stack.push(makeImmigrationThunk(stack));
 		stack.push(makeCipherThunk(stack, incoming));
 		stack.push(makeCustomsThunk(stack));
 		stack.push(makeEncoderThunk(stack, session.getFarKey()));
-		stack.push(session);
+		stack.pushStack(poppedStack);
+		List<Frame> bufferList = buffer.bufferList();
+		for(Frame frame : bufferList) {
+			stack.downcall(frame, session);
+		}
 	}
 
 	private Thunk makeCustomsThunk(ThunkStack stack) {
