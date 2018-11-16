@@ -138,30 +138,26 @@ public class TestSessionServer {
 	}
 
 	public SessionAgentMap buildServer1Map() {
-/**
- * 		Protocols.add(new CipherThunkMaker("DESede", "DESede/CBC/PKCS5Padding", 24, 8, true));
-		Protocols.add(new CipherThunkMaker("DES", "DES/CBC/PKCS5Padding", 8, 8, true));
- */
 		return new SessionAgentMap(
 				new CipherThunkMaker("AESede", "AES/CBC/PKCS5Padding", 32, 16, true),
-				new EncoderThunk("Bytes") {
+				new EncoderThunkMaker("Bytes", new EncoderThunk("Bytes") {
 					public Object serializeThunk(Object chunk) {
 						return chunk;
 					}
 					public Object materializeThunk(Object chunk) {
 						return chunk;
-					}});
+					}}));
 	}
 	public SessionAgentMap buildServer2Map() {
 		return new SessionAgentMap(
 				new CipherThunkMaker("AESede", "AES/CBC/PKCS5Padding", 32, 16, true),
-				new EncoderThunk("Bytes") {
+				new EncoderThunkMaker("Bytes", new EncoderThunk("Bytes") {
 					public Object serializeThunk(Object chunk) {
 						return chunk;
 					}
 					public Object materializeThunk(Object chunk) {
 						return chunk;
-					}});
+					}}));
 	}
 	private void startServers() {
 		try {

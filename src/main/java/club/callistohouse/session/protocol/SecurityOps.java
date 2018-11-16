@@ -47,6 +47,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import club.callistohouse.session.CipherThunkMaker;
 import club.callistohouse.session.EncoderThunk;
+import club.callistohouse.session.EncoderThunkMaker;
 import club.callistohouse.session.Session;
 import club.callistohouse.session.SessionAgentMap;
 import club.callistohouse.session.SessionIdentity;
@@ -231,7 +232,7 @@ public class SecurityOps implements Cloneable {
 		return map.getProtocolNames();
 	}
 
-	public EncoderThunk lookupDataEncoder(String proto) {
+	public EncoderThunkMaker lookupDataEncoder(String proto) {
 		return map.lookupDataEncoder(proto);
 	}
 

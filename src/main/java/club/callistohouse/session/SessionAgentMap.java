@@ -8,16 +8,16 @@ public class SessionAgentMap {
 	private String selectedProtocolName;
 	private String selectedEncoderName;
 	private List<CipherThunkMaker> cryptoProtocols = new ArrayList<CipherThunkMaker>();
-	private List<EncoderThunk> dataEncoders = new ArrayList<EncoderThunk>();
+	private List<EncoderThunkMaker> dataEncoders = new ArrayList<EncoderThunkMaker>();
 
 	public SessionAgentMap() {
-		this(new ArrayList(), new ArrayList());
+		this(new ArrayList<CipherThunkMaker>(), new ArrayList<EncoderThunkMaker>());
 	}
-	public SessionAgentMap(CipherThunkMaker cipherThunk, EncoderThunk encoderThunk) {
-		cryptoProtocols.add(cipherThunk);
-		dataEncoders.add(encoderThunk);
+	public SessionAgentMap(CipherThunkMaker cipherThunkMaker, EncoderThunkMaker encoderThunkMaker) {
+		cryptoProtocols.add(cipherThunkMaker);
+		dataEncoders.add(encoderThunkMaker);
 	}
-	public SessionAgentMap(List<CipherThunkMaker> cipherThunks, List<EncoderThunk> encoderThunks) {
+	public SessionAgentMap(List<CipherThunkMaker> cipherThunks, List<EncoderThunkMaker> encoderThunks) {
 		this.cryptoProtocols = cipherThunks;
 		this.dataEncoders = encoderThunks;
 	}
@@ -31,7 +31,7 @@ public class SessionAgentMap {
 		return null;
 	}
 	public EncoderThunk buildEncoder(SessionIdentity farKey) {
-		return lookupDataEncoder(selectedEncoderName);
+		return lookupDataEncoder(selectedEncoderName).makeThunkOnFarKey(farKey);
 	}
 
 	public CipherThunkMaker lookupCryptoProtocol(String proto) {
@@ -42,10 +42,10 @@ public class SessionAgentMap {
 		return null;
 	}
 
-	public EncoderThunk lookupDataEncoder(String proto) {
-		for (EncoderThunk encoder : dataEncoders) {
-			if (encoder.getEncoderName().equals(proto))
-				return encoder;
+	public EncoderThunkMaker lookupDataEncoder(String proto) {
+		for (EncoderThunkMaker encoderMaker : dataEncoders) {
+			if (encoderMaker.getEncoderName().equals(proto))
+				return encoderMaker;
 		}
 		return null;
 	}
@@ -59,8 +59,8 @@ public class SessionAgentMap {
 	}
 	public List<String> getDataEncoderNames() {
 		List<String> list = new ArrayList<String>();
-		for (EncoderThunk encoder : dataEncoders) {
-			list.add(encoder.getEncoderName());
+		for (EncoderThunkMaker encoderMaker : dataEncoders) {
+			list.add(encoderMaker.getEncoderName());
 		}
 		return list;
 	}
