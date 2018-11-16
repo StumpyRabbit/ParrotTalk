@@ -43,7 +43,7 @@ public class ReceivingFrameBuffer extends ThunkLayer {
 		if(bufferStream.size() == 0) {bufferStream.reset(); }
 	}
 
-	protected boolean doesPush() { return false; }
+	protected boolean doesPop() { return false; }
 	public Object upThunk(Frame frame) {
 		bufferStream.nextPutAll((byte[]) frame.getPayload());
 		drainBuffer();
