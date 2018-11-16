@@ -108,6 +108,7 @@ public class Session extends ThunkLayer implements EventEngineInterface {
     	setConnection(conn);
 	}
 
+	public ThunkStack getStack() { return stack; }
 	public void setStack(ThunkStack aStack) { stack = aStack;}
 	public SessionIdentity getNearKey() { return agent.getNearKey(); }
     public SessionIdentity getFarKey() { return farKey; }
