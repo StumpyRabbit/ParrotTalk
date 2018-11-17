@@ -1,12 +1,10 @@
 package club.callistohouse.session.protocol;
 
 public abstract class Thunk extends ThunkRoot {
-	public boolean doesPop = true;
-	public boolean doesPush = true;
+	public boolean isFrameEmbedded = true;
 
-	public Thunk() { this(true, true); }
-	public Thunk(boolean push, boolean pop) { super(); this.doesPush = push; this.doesPop = pop; }
+	public Thunk() { this(true); }
+	public Thunk(boolean frameEmbedding) { super(); this.isFrameEmbedded = frameEmbedding; }
 
-	protected boolean doesPush() { return doesPush; }
-	protected boolean doesPop() { return doesPop; }
+	protected boolean doesFrameEmbedding() { return isFrameEmbedded; }
 }

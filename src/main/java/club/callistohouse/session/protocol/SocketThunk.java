@@ -2,8 +2,6 @@ package club.callistohouse.session.protocol;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
-
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.RawData;
 import club.callistohouse.utils.events.Listener;
@@ -11,7 +9,7 @@ import club.callistohouse.utils.transport.NIOConnection;
 import club.callistohouse.utils.transport.NIOConnection.DataReceived;
 
 public class SocketThunk extends ThunkLayer {
-	private static Logger log = Logger.getLogger(SocketThunk.class);
+//	private static Logger log = Logger.getLogger(SocketThunk.class);
 
 	private ThunkStack stack;
 	private NIOConnection connection;

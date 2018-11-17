@@ -10,8 +10,6 @@ public class SendFramesBuffer extends ThunkLayer {
 
 	public SendFramesBuffer() {}
 	public List<Frame> bufferList() { return frameList; }
-	protected boolean doesPush() { return false; }
-	protected boolean doesPop() { return false; }
 	@Override
 	protected Object downThunk(Frame frame) { frameList.add(frame); throw new ThunkFinishedException(); }
 }

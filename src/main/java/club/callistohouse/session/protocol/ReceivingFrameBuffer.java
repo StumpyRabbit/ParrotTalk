@@ -17,6 +17,7 @@ public class ReceivingFrameBuffer extends ThunkLayer {
 	public ReceivingFrameBuffer() { super(); }
 	
 	public void setStack(ThunkStack aStack) { stack = aStack;}
+	protected boolean doesFrameEmbedding() { return true; }
 
 	public void drainBuffer() {
 		int frameSpecSize = Frame.specificationSize();

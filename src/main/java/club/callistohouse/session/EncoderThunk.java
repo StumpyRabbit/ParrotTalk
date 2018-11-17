@@ -17,24 +17,25 @@ public abstract class EncoderThunk extends ThunkRoot implements Cloneable {
 
 	public abstract Object serializeThunk(Object chunk) throws IOException;
 	public abstract Object materializeThunk(Object chunk) throws IOException, ClassNotFoundException;
+	protected boolean doesFrameEmbedding() { return true; }
 
 	public void downcall(Frame frame) {
 		try {
 			frame.setPayload(serializeThunk(frame.getPayload()));
+			frame.setHeader(new Encoded());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		frame.setHeader(new Encoded());
 	}
 	public void upcall(Frame frame) {
 		try {
 			frame.setPayload(materializeThunk(frame.getPayload()));
+			frame.setHeader(new RawData());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		frame.setHeader(new RawData());
 	}
 
 	public EncoderThunk makeThunkOnFarKey(SessionIdentity farKey) {

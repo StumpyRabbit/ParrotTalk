@@ -59,8 +59,6 @@ public class SessionOperations extends ThunkLayer {
 	SessionIdentity getLocalIdentity() { return session.getNearKey(); }
 	SessionIdentity getRemoteIdentity() { return session.getFarKey(); }
 
-	public boolean doesPop() { return false; }
-	public boolean doesPush() { return false; }
 	public Object upThunk(Frame frame) {
 		if(frame.getHeaderType() != MessageEnum.MAC_DATA.getCode()) {
 //			log.debug("handling: " + frame.getHeader());

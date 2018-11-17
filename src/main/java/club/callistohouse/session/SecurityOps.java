@@ -254,7 +254,7 @@ public class SecurityOps implements Cloneable {
 
 	private Thunk makeCustomsThunk(ThunkStack stack) {
 		HmacSHA1 hmac = getHmac();
-		return new Thunk(false, false) {
+		return new Thunk(false) {
 			public Object downThunk(Frame frame) {
 				try {
 					stack.propertyAtPut("WriteMAC", hmac.computeMAC((byte[]) frame.getPayload()));

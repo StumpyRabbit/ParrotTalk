@@ -111,8 +111,7 @@ public class Session extends ThunkLayer implements EventEngineInterface {
 	public void setStack(ThunkStack aStack) { stack = aStack;}
 	public SessionIdentity getNearKey() { return agent.getNearKey(); }
     public SessionIdentity getFarKey() { return farKey; }
-	public boolean doesPop() { return false; }
-	public boolean doesPush() { return false; }
+
 	public Object upThunk(Frame frame) {
 		if(frame.getHeaderType() != MessageEnum.RAW_DATA.getCode()) {
     		throw new RuntimeException("bad protocol header");

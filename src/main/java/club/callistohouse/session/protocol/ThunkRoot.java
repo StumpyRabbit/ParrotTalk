@@ -20,7 +20,7 @@ public class ThunkRoot {
 	public void setStack(ThunkStack aStack) {}
 
 	public void downcall(Frame frame) {
-		if(doesPush()) {
+		if(doesFrameEmbedding()) {
 			frame.setPayload(downThunk(frame));
 			frame.setHeader(getHeader(frame));
 		} else {
@@ -28,7 +28,7 @@ public class ThunkRoot {
 		}
 	}
 	public void upcall(Frame frame) {
-		if(doesPop()) {
+		if(doesFrameEmbedding()) {
 			try {
 				frame.readFrom(new ByteArrayInputStream((byte[]) upThunk(frame)));
 			} catch (IOException e) {
@@ -41,6 +41,5 @@ public class ThunkRoot {
 	protected PhaseHeader getHeader(Frame frame) { return frame.getHeader(); }
 	protected Object downThunk(Frame frame) { return frame.toByteArray(); }
 	protected Object upThunk(Frame frame) { return frame.getPayload(); }
-	protected boolean doesPush() { return true; }
-	protected boolean doesPop() { return true; }
+	protected boolean doesFrameEmbedding() { return false; }
 }
