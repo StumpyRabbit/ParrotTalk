@@ -14,8 +14,8 @@ public class ThunkStack extends Stack<ThunkRoot> {
 
 	public ThunkStack() { }
 
-	public ThunkRoot head() { return firstElement(); }
-	public ThunkRoot tail() { return lastElement(); }
+	public ThunkRoot head() { return lastElement(); }
+	public ThunkRoot tail() { return firstElement(); }
 	public boolean isConnected() { return tail().isConnected(); }
 	@Override
 	public ThunkRoot pop() { ThunkRoot thunk = super.pop(); thunk.setStack(null); return thunk; }
