@@ -20,7 +20,7 @@ Here is a diagram of the protocol stack
 
 Here is a log of the 2-vat test in Java:
 
-![](https://gist.github.com/RobWithers/2b428ff541bfdc9d85699c8c1729f34c)
+https://gist.github.com/RobWithers/2b428ff541bfdc9d85699c8c1729f34c
 
 For as to use cases, this encrypted connection has no third party, man-in-the-middle situation by not using Certificates. As such, this is a tight implementation of NSA-proof encryption without explicit authorization beyond knowledge of a host:port. The use cases involve any communication desired to be encrypted with such high encryption. The support will last my lifetime, so we have a settled solution, here in the third version, provided here. It requires version 115 of Cryptography, as a prerequisite. Both run on Squeak and Pharo.
 
