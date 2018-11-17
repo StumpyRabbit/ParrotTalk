@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import club.callistohouse.session.payload.Frame;
+import club.callistohouse.session.payload.PhaseHeader;
+import club.callistohouse.session.payload.RawData;
 import club.callistohouse.utils.BufferStream;
 
 public class ReceivingFrameBuffer extends ThunkLayer {
@@ -43,7 +45,7 @@ public class ReceivingFrameBuffer extends ThunkLayer {
 		if(bufferStream.size() == 0) {bufferStream.reset(); }
 	}
 
-	protected boolean doesPop() { return false; }
+	protected PhaseHeader getHeader(Frame frame) { return new RawData(); }
 	public Object upThunk(Frame frame) {
 		bufferStream.nextPutAll((byte[]) frame.getPayload());
 		drainBuffer();

@@ -60,7 +60,6 @@ public class TestSessionServer {
 		PropertyConfigurator.configure("log4j.properties");
 		server1Identity = new SessionIdentity("first", 10001);
 		server2Identity = new SessionIdentity("second", 10002);
-		SessionASN1Bootstrap.bootstrap();
 	}
 
 	@Test(timeout=250000)

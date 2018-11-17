@@ -48,7 +48,6 @@ import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.RawData;
 import club.callistohouse.session.protocol.ReceivingFrameBuffer;
 import club.callistohouse.session.protocol.SendFramesBuffer;
-import club.callistohouse.session.protocol.SessionOperations;
 import club.callistohouse.session.protocol.SocketThunk;
 import club.callistohouse.session.protocol.ThunkLayer;
 import club.callistohouse.session.protocol.ThunkStack;

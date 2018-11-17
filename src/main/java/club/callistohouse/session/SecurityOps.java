@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol;
+package club.callistohouse.session;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,18 +45,15 @@ import java.util.List;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import club.callistohouse.session.CipherThunkMaker;
-import club.callistohouse.session.EncoderThunk;
-import club.callistohouse.session.EncoderThunkMaker;
-import club.callistohouse.session.Session;
-import club.callistohouse.session.SessionAgentMap;
-import club.callistohouse.session.SessionIdentity;
 import club.callistohouse.session.marshmuck.DiffieHellman;
 import club.callistohouse.session.marshmuck.HmacSHA1;
 import club.callistohouse.session.marshmuck.MessageLogger;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.MAC;
 import club.callistohouse.session.payload.PhaseHeader;
+import club.callistohouse.session.protocol.SendFramesBuffer;
+import club.callistohouse.session.protocol.Thunk;
+import club.callistohouse.session.protocol.ThunkStack;
 import club.callistohouse.utils.ArrayUtil;
 
 public class SecurityOps implements Cloneable {

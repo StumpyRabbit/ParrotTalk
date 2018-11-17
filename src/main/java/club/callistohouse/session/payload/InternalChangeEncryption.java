@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-import club.callistohouse.session.protocol.SecurityOps;
+import club.callistohouse.session.SecurityOps;
 
 public class InternalChangeEncryption extends PhaseHeader {
 

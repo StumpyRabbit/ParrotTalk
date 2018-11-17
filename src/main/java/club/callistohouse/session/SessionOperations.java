@@ -1,4 +1,4 @@
-package club.callistohouse.session.protocol;
+package club.callistohouse.session;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -10,10 +10,7 @@ import com.github.oxo42.stateless4j.StateMachine;
 import com.github.oxo42.stateless4j.StateMachineConfig;
 import com.github.oxo42.stateless4j.delegates.Action;
 
-import club.callistohouse.session.Session;
 import club.callistohouse.session.Session.Identified;
-import club.callistohouse.session.SessionAgentMap;
-import club.callistohouse.session.SessionIdentity;
 import club.callistohouse.session.marshmuck.State;
 import club.callistohouse.session.marshmuck.Trigger;
 import club.callistohouse.session.payload.DuplicateConnection;
@@ -31,6 +28,9 @@ import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.ProtocolAccepted;
 import club.callistohouse.session.payload.ProtocolOffered;
 import club.callistohouse.session.payload.ReplyInfo;
+import club.callistohouse.session.protocol.ThunkFinishedException;
+import club.callistohouse.session.protocol.ThunkLayer;
+import club.callistohouse.session.protocol.ThunkStack;
 import club.callistohouse.utils.ClassUtil;
 
 public class SessionOperations extends ThunkLayer {

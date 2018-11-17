@@ -18,7 +18,6 @@ import javax.crypto.spec.SecretKeySpec;
 import club.callistohouse.session.payload.Encrypted;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.PhaseHeader;
-import club.callistohouse.session.protocol.SecurityOps;
 import club.callistohouse.session.protocol.Thunk;
 import club.callistohouse.utils.ArrayUtil;
 
