@@ -16,7 +16,7 @@ https://github.com/CallistoHouseLtd/ParrotTalk/blob/master/docs/draft-withers-pa
 
 Here is a diagram of the protocol stack
 
-https://github.com/CallistoHouseLtd/ParrotTalk/blob/master/docs/a%20Transceiver.jpeg
+![Protocol Stack](https://github.com/CallistoHouseLtd/ParrotTalk/blob/master/docs/a%20Transceiver.jpeg)
 
 For as to use cases, this encrypted connection has no third party, man-in-the-middle situation by not using Certificates. As such, this is a tight implementation of NSA-proof encryption without explicit authorization beyond knowledge of a host:port. The use cases involve any communication desired to be encrypted with such high encryption. The support will last my lifetime, so we have a settled solution, here in the third version, provided here. It requires version 115 of Cryptography, as a prerequisite. Both run on Squeak and Pharo.
 
