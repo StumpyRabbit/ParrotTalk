@@ -5,6 +5,9 @@ import club.callistohouse.asn1.types.basic.ASN1UTF8StringType;
 import club.callistohouse.asn1.types.constructed.ASN1ChoiceType;
 import club.callistohouse.asn1.types.constructed.ASN1MappedSequenceType;
 import club.callistohouse.asn1.types.constructed.ASN1SequenceOfType;
+import club.callistohouse.session.payload_v3_7.Hello_v3_7;
+import club.callistohouse.session.payload_v3_7.Response_v3_7;
+import club.callistohouse.session.payload_v3_7.Signature_v3_7;
 
 public class SessionASN1Bootstrap {
 
@@ -25,6 +28,9 @@ public class SessionASN1Bootstrap {
 		defineASN1NotMe();
 		defineASN1DupConn();
 		defineASN1RawData();
+		defineASN1Hello_v3_7();
+		defineASN1Response_v3_7();
+		defineASN1Signature_v3_7();
 		defineASN1InternalChangeEncryption();
 		defineASN1PhaseHeaderChoice();
 	}
@@ -101,6 +107,32 @@ public class SessionASN1Bootstrap {
 		type.addTypeString("signature", "ASN1ByteArrayType");
 	}
 
+	private static void defineASN1Hello_v3_7() {
+		ASN1MappedSequenceType<Hello_v3_7> type = ASN1Module.name("Session").sequenceMappingClass("Hello_v3_7", Hello_v3_7.class);
+		type.addTypeString("vatId", "ASN1UTF8StringType");
+		type.addTypeString("domain", "ASN1UTF8StringType");
+		type.addTypeString("publicKey", "RSAPublicKey");
+		type.addTypeString("cryptoProtocols", "SequenceOfString");
+		type.addTypeString("dataEncoders", "SequenceOfString");
+		type.addTypeString("diffieHellmanParam", "ASN1ByteArrayType");
+	}
+
+	private static void defineASN1Response_v3_7() {
+		ASN1MappedSequenceType<Response_v3_7> type = ASN1Module.name("Session").sequenceMappingClass("Response_v3_7", Response_v3_7.class);
+		type.addTypeString("vatId", "ASN1UTF8StringType");
+		type.addTypeString("domain", "ASN1UTF8StringType");
+		type.addTypeString("publicKey", "RSAPublicKey");
+		type.addTypeString("cryptoProtocol", "ASN1UTF8StringType");
+		type.addTypeString("dataEncoder", "ASN1UTF8StringType");
+		type.addTypeString("diffieHellmanParam", "ASN1ByteArrayType");
+		type.addTypeString("signature", "ASN1ByteArrayType");
+	}
+
+	private static void defineASN1Signature_v3_7() {
+		ASN1MappedSequenceType<Signature_v3_7> type = ASN1Module.name("Session").sequenceMappingClass("Signature_v3_7", Signature_v3_7.class);
+		type.addTypeString("signature", "ASN1ByteArrayType");
+	}
+
 	@SuppressWarnings("unused")
 	private static void defineASN1NotMe() {
 		ASN1MappedSequenceType<NotMe> type = ASN1Module.name("Session").sequenceMappingClass("NotMe", NotMe.class);
@@ -137,6 +169,9 @@ public class SessionASN1Bootstrap {
 		type.addTypeStringExplicit("not-me", "NotMe", new NotMe().getId());
 		type.addTypeStringExplicit("duplicate-connection", "DuplicateConnection", new DuplicateConnection().getId());
 		type.addTypeStringExplicit("raw-data", "RawData", new RawData().getId());
+		type.addTypeStringExplicit("hello-v3.7", "RawData", new Hello_v3_7().getId());
+		type.addTypeStringExplicit("response-v3.7", "RawData", new Response_v3_7().getId());
+		type.addTypeStringExplicit("signature-v3.7", "RawData", new Signature_v3_7().getId());
 		type.addTypeStringExplicit("internal-change-encryption", "InternalChangeEncryption", new InternalChangeEncryption().getId());
 	}
 }

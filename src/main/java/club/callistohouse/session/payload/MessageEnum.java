@@ -59,6 +59,12 @@ public enum MessageEnum implements Serializable {
 		public String description() { return "duplicate-connection"; }},
     NOT_ME(15) {
 			public String description() { return "not-me"; }},
+    HELLO_V3_7(16) {
+			public String description() { return "hello-v3.7"; }},
+    RESPONSE_V3_7(17) {
+			public String description() { return "response-v3.7"; }},
+    SIGNATURE_V3_7(18) {
+			public String description() { return "signature-v3.7"; }},
 	INTERNAL_CHANGE_ENCRYPTION(31) {
 		public boolean isInternalChange() { return true; }
 		public String description() { return "internal change encryption"; } };
