@@ -62,6 +62,6 @@ public enum State {
 	IdentifiedStartupSendingGoToo,
 	// Connected and Encrypted
 	EncryptedConnected,
-	Closed;
+	Closed, ProtocolSelected;
 }
  

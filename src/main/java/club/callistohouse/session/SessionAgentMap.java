@@ -1,7 +1,9 @@
 	package club.callistohouse.session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SessionAgentMap {
 
@@ -9,6 +11,8 @@ public class SessionAgentMap {
 	private String selectedEncoderName;
 	private List<CipherThunkMaker> cryptoProtocols = new ArrayList<CipherThunkMaker>();
 	private List<EncoderThunkMaker> dataEncoders = new ArrayList<EncoderThunkMaker>();
+	private Map<String,Class<?>> protocolMap = new HashMap<String, Class<?>>(); 
+	private String preferredProtocol;
 
 	public SessionAgentMap() {
 		this(new ArrayList<CipherThunkMaker>(), new ArrayList<EncoderThunkMaker>());
@@ -34,6 +38,10 @@ public class SessionAgentMap {
 		return lookupDataEncoder(selectedEncoderName).makeThunkOnFarKey(farKey);
 	}
 
+	public Map<String, Class<?>> getProtocolMap() { return protocolMap; }
+	public String getPreferredProtocol() { return preferredProtocol; }
+	public void setPreferredProtocol(String string) { preferredProtocol = string; }
+	
 	public CipherThunkMaker lookupCryptoProtocol(String proto) {
 		for (CipherThunkMaker crypto : cryptoProtocols) {
 			if (crypto.shortCryptoProtocol.equals(proto))

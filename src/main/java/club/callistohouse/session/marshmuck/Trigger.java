@@ -55,5 +55,5 @@ public enum Trigger {
 	SendBye,
 	SendYouChoose,
 	ExpectYouChoose,
-	Disconnect;
+	Disconnect, SentProtocolAccepted;
 }
