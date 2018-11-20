@@ -56,11 +56,14 @@ The new SessionOperaations_v3_7 will have an updated stateMap to handle the 3-wa
 The SecurityOps and all other thunks are the same between each version. That's freaking cool, I think. That just that one Operations thunk is the difference between versions. If I decide to implement SSL on the ThunKStack, the other change will need to be the ReceivingFrameBuffer, since the SSL frames are fundamentally different from ParrotTalk's frames. Ditto with SSH. Anyways, I needed to share my thoughts on the changes I am making. Thanks for your consideration! Thanks for reading my ramblings!
 
 It works in Squeak (https://squeak.org/) and Pharo (http://pharo.org/). In any image, load these packages, please
+
 http://www.squeaksource.com/Cryptography/Cryptography-rww.115.mcz
+
 http://www.squeaksource.com/Cryptography/ParrotTalk-rww.25.mcz
 
 Then check out the ParrotTalk tests.
 
 For Java, currently supporting version 3.6 only yet still able to connect to a Squeak/Pharo agent, clone these repositories:
+
 https://github.com/CallistoHouseLtd/ASN1
 https://github.com/CallistoHouseLtd/ParrotTalk
