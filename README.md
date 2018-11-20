@@ -27,7 +27,7 @@ For as to use cases, this encrypted connection has no third party, man-in-the-mi
 
 http://www.squeaksource.com/Cryptography/Cryptography-rww.115.mcz
 
-http://www.squeaksource.com/Cryptography/ParrotTalk-rww.22.mcz
+http://www.squeaksource.com/Cryptography/ParrotTalk-rww.25.mcz
 
 The current use is with my Raven system, a promise-based distributed object implementation. I am working to bring ParrotTalk to Java and allow Raven to operate interdependently between Squeak, Pharo, Java and any other languages which can support ParrotTalk and STON. My latest efforts with Raven are to bring STON as the Layer 6 encoding. 
 
@@ -37,11 +37,12 @@ http://www.squeaksource.com/Oceanside/STON-Text%20support-TheIntegrator.2.mcz
 
 http://www.squeaksource.com/Oceanside/Ston-Tests-SvenVanCaekenberghe.34.mcz
 
-http://www.squeaksource.com/Cryptography/Raven-rww.24.mcz
+http://www.squeaksource.com/Cryptography/Raven-rww.25.mcz
 
 Here is a log of the 2-vat test in Java:
 
 https://gist.github.com/RobWithers/2b428ff541bfdc9d85699c8c1729f34c
+
 I designed the next version of my ParrotTalk negotiation protocol, version 3,7 a 5 message exchange to build a 256-bit AESede connection, with an user specified encoding. This is an advance from the 8 messaging version 3.6. I took inspiration from the new TLS 1.3 message exchange, which is a 3 message exchange.
 
 I decided to keep the 2 message protocol negotiation messages, ProtocolOffered and ProtocolAccepted. This allows one to specify in the SessionAgentMap, the versions supported, v3.6 and v3.7, as well as the preferred protocol version to use.
@@ -55,8 +56,8 @@ The new SessionOperaations_v3_7 will have an updated stateMap to handle the 3-wa
 The SecurityOps and all other thunks are the same between each version. That's freaking cool, I think. That just that one Operations thunk is the difference between versions. If I decide to implement SSL on the ThunKStack, the other change will need to be the ReceivingFrameBuffer, since the SSL frames are fundamentally different from ParrotTalk's frames. Ditto with SSH. Anyways, I needed to share my thoughts on the changes I am making. Thanks for your consideration! Thanks for reading my ramblings!
 
 It works in Squeak (https://squeak.org/) and Pharo (http://pharo.org/). In any image, load these packages, please
-http://www.squeaksource.com/Crypto…/Cryptography-rww.115.mcz
-http://www.squeaksource.com/Cryptogra…/ParrotTalk-rww.25.mcz
+http://www.squeaksource.com/Cryptography/Cryptography-rww.115.mcz
+http://www.squeaksource.com/Cryptography/ParrotTalk-rww.25.mcz
 
 Then check out the ParrotTalk tests.
 
