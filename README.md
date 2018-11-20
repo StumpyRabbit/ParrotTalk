@@ -15,7 +15,7 @@ https://github.com/CallistoHouseLtd/ParrotTalk/blob/master/docs/ParrotTalkFrameD
 Here is the previous yet still supported, version 3.6 protocol:
 https://github.com/CallistoHouseLtd/ParrotTalk/blob/master/docs/ParrotTalkFrameDesign-3.6.pdf
 
-and an IETF draft document
+and an IETF draft document, specific to version 3.6
 
 https://github.com/CallistoHouseLtd/ParrotTalk/blob/master/docs/draft-withers-parrot-talk-v36-00.pdf
 
