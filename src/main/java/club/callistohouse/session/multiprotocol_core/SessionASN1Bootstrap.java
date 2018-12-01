@@ -57,19 +57,6 @@ public class SessionASN1Bootstrap {
 		type.addTypeString("accepted", "ASN1UTF8StringType");
 	}
 
-	@SuppressWarnings("unused")
-	private static void defineASN1Encoded() {
-		ASN1MappedSequenceType<Encoded> type = ASN1Module.name("Session").sequenceMappingClass("Encoded", Encoded.class);
-	}
-	private static void defineASN1Encrypted() {
-		ASN1MappedSequenceType<Encrypted> type = ASN1Module.name("Session").sequenceMappingClass("Encrypted", Encrypted.class);
-		type.addTypeString("ivSequence", "ASN1ByteArrayType");
-	}
-	private static void defineASN1MAC() {
-		ASN1MappedSequenceType<MAC> type = ASN1Module.name("Session").sequenceMappingClass("MAC", MAC.class);
-		type.addTypeString("mac", "ASN1ByteArrayType");
-	}
-
 	private static void defineASN1IWant() {
 		ASN1MappedSequenceType<IWant> type = ASN1Module.name("Session").sequenceMappingClass("IWant", IWant.class);
 		type.addTypeString("vatId", "ASN1UTF8StringType");
@@ -152,6 +139,19 @@ public class SessionASN1Bootstrap {
 	@SuppressWarnings("unused")
 	private static void defineASN1RawData() {
 		ASN1MappedSequenceType<RawData> type = ASN1Module.name("Session").sequenceMappingClass("RawData", RawData.class);
+	}
+
+	@SuppressWarnings("unused")
+	private static void defineASN1Encoded() {
+		ASN1MappedSequenceType<Encoded> type = ASN1Module.name("Session").sequenceMappingClass("Encoded", Encoded.class);
+	}
+	private static void defineASN1Encrypted() {
+		ASN1MappedSequenceType<Encrypted> type = ASN1Module.name("Session").sequenceMappingClass("Encrypted", Encrypted.class);
+		type.addTypeString("ivSequence", "ASN1ByteArrayType");
+	}
+	private static void defineASN1MAC() {
+		ASN1MappedSequenceType<MAC> type = ASN1Module.name("Session").sequenceMappingClass("MAC", MAC.class);
+		type.addTypeString("mac", "ASN1ByteArrayType");
 	}
 
 	@SuppressWarnings("unused")
