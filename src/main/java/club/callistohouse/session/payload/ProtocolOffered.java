@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class ProtocolOffered extends PhaseHeader {
+public class ProtocolOffered extends ProtocolNegotiation {
 
 	private String offered = "";
 	private String preferred = "";

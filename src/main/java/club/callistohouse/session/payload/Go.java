@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class Go extends PhaseHeader {
+public class Go extends Version36 {
 
 	private String cryptoProtocol = "";
 	private String dataEncoder = "";

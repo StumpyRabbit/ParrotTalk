@@ -31,7 +31,7 @@ package club.callistohouse.session.payload;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReplyInfo extends PhaseHeader {
+public class ReplyInfo extends Version36 {
 
 	private List<String> cryptoProtocols;
 	private List<String> dataEncoders;

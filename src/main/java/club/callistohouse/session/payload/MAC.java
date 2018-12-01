@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class MAC extends PhaseHeader {
+public class MAC extends Payload {
 
 	private byte[] mac = new byte[20];
 

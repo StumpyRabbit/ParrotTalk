@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class IWant extends PhaseHeader {
+public class IWant extends Version36 {
 
 	private String vatId;
 	private String domain;

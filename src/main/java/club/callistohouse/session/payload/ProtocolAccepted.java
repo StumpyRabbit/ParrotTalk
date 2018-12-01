@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class ProtocolAccepted extends PhaseHeader {
+public class ProtocolAccepted extends ProtocolNegotiation {
 
 	private String accepted;
 

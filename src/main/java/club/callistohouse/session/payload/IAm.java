@@ -34,7 +34,7 @@ import java.security.spec.InvalidKeySpecException;
 
 import club.callistohouse.session.SessionIdentity;
 
-public class IAm extends PhaseHeader {
+public class IAm extends Version36 {
 
 	private String vatId;
 	private String domain;

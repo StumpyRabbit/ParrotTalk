@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class GoToo extends PhaseHeader {
+public class GoToo extends Version36 {
 
 	private String cryptoProtocol;
 	private String dataEncoder;

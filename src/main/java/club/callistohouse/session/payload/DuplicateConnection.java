@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class DuplicateConnection extends PhaseHeader {
+public class DuplicateConnection extends Rendezvous {
 
 	public DuplicateConnection() {}
 

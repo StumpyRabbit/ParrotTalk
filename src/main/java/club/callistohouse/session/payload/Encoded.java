@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class Encoded extends PhaseHeader {
+public class Encoded extends Payload {
 
 	public Encoded() {}
 

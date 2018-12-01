@@ -37,8 +37,9 @@ import java.util.List;
 import club.callistohouse.session.payload.MessageEnum;
 import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.RSAPublicKey;
+import club.callistohouse.session.payload.Version37;
 
-public class Hello_v3_7 extends PhaseHeader {
+public class Hello_v3_7 extends Version37 {
 
 	private String vatId;
 	private String domain;

@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class Encrypted extends PhaseHeader {
+public class Encrypted extends Payload {
 
 	private byte[] ivSequence;
 

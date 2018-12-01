@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class RawData extends PhaseHeader {
+public class RawData extends Payload {
 
 	public RawData() {}
 

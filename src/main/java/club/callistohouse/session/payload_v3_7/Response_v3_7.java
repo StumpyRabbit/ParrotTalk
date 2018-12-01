@@ -35,8 +35,9 @@ import java.security.spec.InvalidKeySpecException;
 import club.callistohouse.session.payload.MessageEnum;
 import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.RSAPublicKey;
+import club.callistohouse.session.payload.Version37;
 
-public class Response_v3_7 extends PhaseHeader {
+public class Response_v3_7 extends Version37 {
 
 	private String vatId;
 	private String domain;

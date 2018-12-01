@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload;
 
-public class NotMe extends PhaseHeader {
+public class NotMe extends Rendezvous {
 
 	public NotMe() {}
 

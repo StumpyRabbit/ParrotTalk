@@ -30,7 +30,7 @@ package club.callistohouse.session.payload;
 
 import club.callistohouse.session.SecurityOps;
 
-public class InternalChangeEncryption extends PhaseHeader {
+public class InternalChangeEncryption extends Rendezvous {
 
 	private SecurityOps encryptionSecrets;
 
