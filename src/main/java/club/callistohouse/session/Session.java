@@ -41,11 +41,11 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import club.callistohouse.session.payload.Frame;
-import club.callistohouse.session.payload.InternalChangeEncryption;
-import club.callistohouse.session.payload.MessageEnum;
-import club.callistohouse.session.payload.PhaseHeader;
-import club.callistohouse.session.payload.RawData;
+import club.callistohouse.session.payload_core.Frame;
+import club.callistohouse.session.payload_core.InternalChangeEncryption;
+import club.callistohouse.session.payload_core.MessageEnum;
+import club.callistohouse.session.payload_core.PhaseHeader;
+import club.callistohouse.session.payload_core.RawData;
 import club.callistohouse.session.protocol.ReceivingFrameBuffer;
 import club.callistohouse.session.protocol.SendFramesBuffer;
 import club.callistohouse.session.protocol.SocketThunk;

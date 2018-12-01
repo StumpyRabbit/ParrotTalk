@@ -26,13 +26,22 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
-public class NotMe extends Rendezvous {
+import club.callistohouse.session.SecurityOps;
 
-	public NotMe() {}
+public class InternalChangeEncryption extends Rendezvous {
 
-	public MessageEnum getType() { return MessageEnum.NOT_ME; }
+	private SecurityOps encryptionSecrets;
 
-	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
+	public InternalChangeEncryption() {}
+	public InternalChangeEncryption(SecurityOps secrets) {
+		this.encryptionSecrets = secrets;
+	}
+
+    public SecurityOps getEncryptionSecrets() { return encryptionSecrets; }
+
+	public MessageEnum getType() { return MessageEnum.INTERNAL_CHANGE_ENCRYPTION; }
+
+	public String toString() { return getClass().getSimpleName() + "(" + getEncryptionSecrets() + ")"; }
 }

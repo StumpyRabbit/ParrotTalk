@@ -26,10 +26,12 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_v3_6;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import club.callistohouse.session.payload_core.MessageEnum;
 
 public class ReplyInfo extends Version36 {
 

@@ -2,9 +2,9 @@ package club.callistohouse.session;
 
 import java.io.IOException;
 
-import club.callistohouse.session.payload.Encoded;
-import club.callistohouse.session.payload.Frame;
-import club.callistohouse.session.payload.RawData;
+import club.callistohouse.session.payload_core.Encoded;
+import club.callistohouse.session.payload_core.Frame;
+import club.callistohouse.session.payload_core.RawData;
 import club.callistohouse.session.protocol.ThunkLayer;
 import club.callistohouse.session.protocol.ThunkRoot;
 

@@ -22,14 +22,14 @@ import org.junit.Test;
 
 import club.callistohouse.session.TestSessionServer;
 import club.callistohouse.session.marshmuck.DiffieHellman;
-import club.callistohouse.session.payload.Frame;
-import club.callistohouse.session.payload.GiveInfo;
-import club.callistohouse.session.payload.Go;
-import club.callistohouse.session.payload.GoToo;
-import club.callistohouse.session.payload.IAm;
-import club.callistohouse.session.payload.IWant;
-import club.callistohouse.session.payload.ReplyInfo;
-import club.callistohouse.session.payload.SessionASN1Bootstrap;
+import club.callistohouse.session.payload_core.Frame;
+import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
+import club.callistohouse.session.payload_v3_6.GiveInfo;
+import club.callistohouse.session.payload_v3_6.Go;
+import club.callistohouse.session.payload_v3_6.GoToo;
+import club.callistohouse.session.payload_v3_6.IAm;
+import club.callistohouse.session.payload_v3_6.IWant;
+import club.callistohouse.session.payload_v3_6.ReplyInfo;
 
 public class TestASN1HeaderEncoding {
 	private static Logger log = Logger.getLogger(TestASN1HeaderEncoding.class);

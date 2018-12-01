@@ -26,31 +26,21 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPublicKeySpec;
+public class MAC extends Payload {
 
-public class RSAPublicKey {
+	private byte[] mac = new byte[20];
 
-	private BigInteger exponent;
-	private BigInteger modulo;
-
-	public RSAPublicKey() {}
-	public RSAPublicKey(BigInteger modulo, BigInteger exponent) { this.modulo = modulo; this.exponent = exponent; }
-	public RSAPublicKey(java.security.interfaces.RSAPublicKey key) { this.modulo = key.getModulus(); this.exponent = key.getPublicExponent(); }
-
-	public BigInteger getExponent() { return exponent; }
-	public void setExponent(BigInteger exponent) { this.exponent = exponent; }
-	public BigInteger getModulo() { return modulo; }
-	public void setModulo(BigInteger modulo) { this.modulo = modulo; }
-
-	public java.security.interfaces.RSAPublicKey asImpl() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		RSAPublicKeySpec keySpec = new RSAPublicKeySpec(modulo, exponent);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		return (java.security.interfaces.RSAPublicKey) kf.generatePublic(keySpec);
+	public MAC() {}
+	public MAC(byte[] mac) {
+		this.mac = mac;
 	}
+
+	public byte[] getMac() { return mac; }
+	public void setMac(byte[] mac) { this.mac = mac; }
+
+	public MessageEnum getType() { return MessageEnum.MAC_DATA; }
+
+	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

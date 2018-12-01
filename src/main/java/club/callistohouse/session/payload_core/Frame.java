@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -42,7 +42,7 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-import club.callistohouse.session.payload.SessionASN1Bootstrap;
+import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.EventEngine;
 import club.callistohouse.utils.events.Listener;
 import club.callistohouse.utils.transport.NIOConnection;

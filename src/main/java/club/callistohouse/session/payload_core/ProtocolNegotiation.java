@@ -1,4 +1,4 @@
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
 public class ProtocolNegotiation extends PhaseHeader {
 

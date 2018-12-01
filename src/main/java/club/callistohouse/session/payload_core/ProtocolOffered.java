@@ -26,19 +26,22 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
-public class Encrypted extends Payload {
+public class ProtocolOffered extends ProtocolNegotiation {
 
-	private byte[] ivSequence;
+	private String offered = "";
+	private String preferred = "";
 
-	public Encrypted() { this(new byte[0]); }
-	public Encrypted(byte[] iv) { this.ivSequence = iv; }
+	public ProtocolOffered() {}
+	public ProtocolOffered(String offered, String preferred) { this.offered = offered; this.preferred = preferred; }
 
-	public byte[] getIvSequence() { return ivSequence; }
-	public void setIvSequence(byte[] iv) { ivSequence = iv; }
+	public String getOffered() { return offered; }
+	public void setOffered(String offered) { this.offered = offered; }
+	public String getPreferred() { return preferred; }
+	public void setPreferred(String preferred) { this.preferred = preferred; }
 
-	public MessageEnum getType() { return MessageEnum.ENCRYPTED_DATA; }
+	public MessageEnum getType() { return MessageEnum.PROTOCOL_OFFERED; }
 
-	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
+	public String toString() { return getClass().getSimpleName() + "(" + getOffered() + ", " + getPreferred() + ")"; }
 }

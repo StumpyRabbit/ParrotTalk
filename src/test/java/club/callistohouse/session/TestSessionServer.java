@@ -37,7 +37,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
-import club.callistohouse.session.payload.SessionASN1Bootstrap;
+import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.Listener;
 
 public class TestSessionServer {

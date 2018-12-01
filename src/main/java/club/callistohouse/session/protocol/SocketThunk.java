@@ -2,8 +2,8 @@ package club.callistohouse.session.protocol;
 
 import java.io.IOException;
 
-import club.callistohouse.session.payload.Frame;
-import club.callistohouse.session.payload.RawData;
+import club.callistohouse.session.payload_core.Frame;
+import club.callistohouse.session.payload_core.RawData;
 import club.callistohouse.utils.events.Listener;
 import club.callistohouse.utils.transport.NIOConnection;
 import club.callistohouse.utils.transport.NIOConnection.DataReceived;

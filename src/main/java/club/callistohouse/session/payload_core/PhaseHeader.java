@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,6 +37,12 @@ import club.callistohouse.asn1.ASN1InputStream;
 import club.callistohouse.asn1.ASN1Module;
 import club.callistohouse.asn1.ASN1OutputStream;
 import club.callistohouse.asn1.types.ASN1Type;
+import club.callistohouse.session.payload_v3_6.GiveInfo;
+import club.callistohouse.session.payload_v3_6.Go;
+import club.callistohouse.session.payload_v3_6.GoToo;
+import club.callistohouse.session.payload_v3_6.IAm;
+import club.callistohouse.session.payload_v3_6.IWant;
+import club.callistohouse.session.payload_v3_6.ReplyInfo;
 import club.callistohouse.utils.events.EventEngine;
 
 public abstract class PhaseHeader extends EventEngine {

@@ -26,54 +26,31 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_core;
 
+import java.math.BigInteger;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 
-import club.callistohouse.session.SessionIdentity;
+public class RSAPublicKey {
 
-public class GiveInfo extends Version36 {
+	private BigInteger exponent;
+	private BigInteger modulo;
 
-	private String vatId;
-	private String domain;
-	private RSAPublicKey publicKey;
+	public RSAPublicKey() {}
+	public RSAPublicKey(BigInteger modulo, BigInteger exponent) { this.modulo = modulo; this.exponent = exponent; }
+	public RSAPublicKey(java.security.interfaces.RSAPublicKey key) { this.modulo = key.getModulus(); this.exponent = key.getPublicExponent(); }
 
-	public GiveInfo() {}
-	public GiveInfo(SessionIdentity localId) {
-		this(localId.getVatId(), "", localId.getPublicKey());
-	}
-	public GiveInfo(String vatId, String domain, PublicKey publicKey) {
-		this.vatId = vatId;
-		this.domain = domain;
-		setPublicKeyImpl(publicKey);
-	}
+	public BigInteger getExponent() { return exponent; }
+	public void setExponent(BigInteger exponent) { this.exponent = exponent; }
+	public BigInteger getModulo() { return modulo; }
+	public void setModulo(BigInteger modulo) { this.modulo = modulo; }
 
-	public String getVatId() { return vatId; }
-    public String getDomain() { return domain; }
-    public RSAPublicKey getPublicKey() { return publicKey; }
-    public PublicKey getPublicKeyImpl() {
-    	try {
-			return publicKey.asImpl();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			e.printStackTrace();
-		}
-    	return null;
-    }
-    public void setVatId(String vatId) { this.vatId = vatId; }
-	public void setDomain(String domain) { this.domain = domain; }
-    public void setPublicKey(RSAPublicKey publicKey) { this.publicKey = publicKey; }
-    public void setPublicKeyImpl(PublicKey publicKey) { this.publicKey = new RSAPublicKey((java.security.interfaces.RSAPublicKey) publicKey); }
-
-	public MessageEnum getType() { return MessageEnum.GIVE_INFO; }
-
-	public String toString() { 
-		return getClass().getSimpleName() + "(" 
-				+ getVatId() + ", " 
-				+ getDomain() + ", " 
-				+ getPublicKey() + ")";
+	public java.security.interfaces.RSAPublicKey asImpl() throws NoSuchAlgorithmException, InvalidKeySpecException {
+		RSAPublicKeySpec keySpec = new RSAPublicKeySpec(modulo, exponent);
+		KeyFactory kf = KeyFactory.getInstance("RSA");
+		return (java.security.interfaces.RSAPublicKey) kf.generatePublic(keySpec);
 	}
 }

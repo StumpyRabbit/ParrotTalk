@@ -26,22 +26,25 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_v3_6;
 
-public class ProtocolOffered extends ProtocolNegotiation {
+import club.callistohouse.session.payload_core.MessageEnum;
 
-	private String offered = "";
-	private String preferred = "";
+public class IWant extends Version36 {
 
-	public ProtocolOffered() {}
-	public ProtocolOffered(String offered, String preferred) { this.offered = offered; this.preferred = preferred; }
+	private String vatId;
+	private String domain;
 
-	public String getOffered() { return offered; }
-	public void setOffered(String offered) { this.offered = offered; }
-	public String getPreferred() { return preferred; }
-	public void setPreferred(String preferred) { this.preferred = preferred; }
+	public IWant() {}
+	public IWant(String vatId) { this(vatId, ""); }
+	public IWant(String vatId, String domain) { this.vatId = vatId; this.domain = domain; }
 
-	public MessageEnum getType() { return MessageEnum.PROTOCOL_OFFERED; }
+    public String getVatId() { return vatId; }
+    public void setVatId(String vatId) { this.vatId = vatId; }
+	public String getDomain() { return domain; }
+	public void setDomain(String domain) { this.domain = domain; }
 
-	public String toString() { return getClass().getSimpleName() + "(" + getOffered() + ", " + getPreferred() + ")"; }
+	public MessageEnum getType() { return MessageEnum.I_WANT; }
+
+	public String toString() { return getClass().getSimpleName() + "(" + getVatId() + ", " + getDomain() + ")"; }
 }

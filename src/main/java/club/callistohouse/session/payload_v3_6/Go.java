@@ -26,13 +26,42 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_v3_6;
 
-public class RawData extends Payload {
+import club.callistohouse.session.payload_core.MessageEnum;
 
-	public RawData() {}
+public class Go extends Version36 {
 
-	public MessageEnum getType() { return MessageEnum.RAW_DATA; }
+	private String cryptoProtocol = "";
+	private String dataEncoder = "";
+    private byte[] diffieHellmanParam;
+    private byte[] signature;
 
-	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
+	public Go() {
+	}
+
+	public Go(String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
+		this.cryptoProtocol = defaultAlgorithm;
+		this.dataEncoder = defaultEncoder;
+		this.diffieHellmanParam = dhParam;
+		this.signature = signature;
+	}
+
+	public String getCryptoProtocol() { return cryptoProtocol; }
+	public String getDataEncoder() { return dataEncoder; }
+    public byte[] getDiffieHellmanParam() { return diffieHellmanParam; }
+    public byte[] getSignature() { return signature; }
+    public void setCryptoProtocol(String s) { this.cryptoProtocol = s; }
+    public void setDataEncoder(String s) { this.dataEncoder = s; }
+    public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
+    public void setSignature(byte[] bytes) { this.signature = bytes; recomputeSpec(); }
+
+	public MessageEnum getType() { return MessageEnum.GO; }
+
+	public String toString() { return getClass().getSimpleName() + "(" 
+			+ getCryptoProtocol() + ", " 
+			+ getDataEncoder() + ", " 
+			+ getDiffieHellmanParam() + ", " 
+			+ getSignature() + ")"; 
+	}
 }

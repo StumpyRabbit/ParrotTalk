@@ -26,23 +26,56 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload;
+package club.callistohouse.session.payload_v3_6;
 
-public class IWant extends Version36 {
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+
+import club.callistohouse.session.SessionIdentity;
+import club.callistohouse.session.payload_core.MessageEnum;
+import club.callistohouse.session.payload_core.RSAPublicKey;
+
+public class GiveInfo extends Version36 {
 
 	private String vatId;
 	private String domain;
+	private RSAPublicKey publicKey;
 
-	public IWant() {}
-	public IWant(String vatId) { this(vatId, ""); }
-	public IWant(String vatId, String domain) { this.vatId = vatId; this.domain = domain; }
+	public GiveInfo() {}
+	public GiveInfo(SessionIdentity localId) {
+		this(localId.getVatId(), "", localId.getPublicKey());
+	}
+	public GiveInfo(String vatId, String domain, PublicKey publicKey) {
+		this.vatId = vatId;
+		this.domain = domain;
+		setPublicKeyImpl(publicKey);
+	}
 
-    public String getVatId() { return vatId; }
+	public String getVatId() { return vatId; }
+    public String getDomain() { return domain; }
+    public RSAPublicKey getPublicKey() { return publicKey; }
+    public PublicKey getPublicKeyImpl() {
+    	try {
+			return publicKey.asImpl();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
     public void setVatId(String vatId) { this.vatId = vatId; }
-	public String getDomain() { return domain; }
 	public void setDomain(String domain) { this.domain = domain; }
+    public void setPublicKey(RSAPublicKey publicKey) { this.publicKey = publicKey; }
+    public void setPublicKeyImpl(PublicKey publicKey) { this.publicKey = new RSAPublicKey((java.security.interfaces.RSAPublicKey) publicKey); }
 
-	public MessageEnum getType() { return MessageEnum.I_WANT; }
+	public MessageEnum getType() { return MessageEnum.GIVE_INFO; }
 
-	public String toString() { return getClass().getSimpleName() + "(" + getVatId() + ", " + getDomain() + ")"; }
+	public String toString() { 
+		return getClass().getSimpleName() + "(" 
+				+ getVatId() + ", " 
+				+ getDomain() + ", " 
+				+ getPublicKey() + ")";
+	}
 }
