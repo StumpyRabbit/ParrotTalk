@@ -26,22 +26,19 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol_core;
+package club.callistohouse.session.multiprotocol_core;
 
-import club.callistohouse.session.parrotttalk.SecurityOps;
+public class Encrypted extends Payload {
 
-public class InternalChangeEncryption extends Rendezvous {
+	private byte[] ivSequence;
 
-	private SecurityOps encryptionSecrets;
+	public Encrypted() { this(new byte[0]); }
+	public Encrypted(byte[] iv) { this.ivSequence = iv; }
 
-	public InternalChangeEncryption() {}
-	public InternalChangeEncryption(SecurityOps secrets) {
-		this.encryptionSecrets = secrets;
-	}
+	public byte[] getIvSequence() { return ivSequence; }
+	public void setIvSequence(byte[] iv) { ivSequence = iv; }
 
-    public SecurityOps getEncryptionSecrets() { return encryptionSecrets; }
+	public MessageEnum getType() { return MessageEnum.ENCRYPTED_DATA; }
 
-	public MessageEnum getType() { return MessageEnum.INTERNAL_CHANGE_ENCRYPTION; }
-
-	public String toString() { return getClass().getSimpleName() + "(" + getEncryptionSecrets() + ")"; }
+	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

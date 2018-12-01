@@ -26,11 +26,11 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol_core;
+package club.callistohouse.session.multiprotocol_core;
 
-public class DuplicateConnection extends Rendezvous {
+public class NotMe extends Rendezvous {
 
-	public DuplicateConnection() {}
+	public NotMe() {}
 
 	public MessageEnum getType() { return MessageEnum.NOT_ME; }
 

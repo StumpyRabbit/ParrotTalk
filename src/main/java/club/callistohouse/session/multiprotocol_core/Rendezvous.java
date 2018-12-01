@@ -1,6 +1,6 @@
-package club.callistohouse.session.protocol_core;
+package club.callistohouse.session.multiprotocol_core;
 
-public class Payload extends PhaseHeader {
+public class Rendezvous extends PhaseHeader {
 
 	@Override
 	public MessageEnum getType() {

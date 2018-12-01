@@ -26,13 +26,13 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol_core;
+package club.callistohouse.session.multiprotocol_core;
 
-public class NotMe extends Rendezvous {
+public class RawData extends Payload {
 
-	public NotMe() {}
+	public RawData() {}
 
-	public MessageEnum getType() { return MessageEnum.NOT_ME; }
+	public MessageEnum getType() { return MessageEnum.RAW_DATA; }
 
 	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

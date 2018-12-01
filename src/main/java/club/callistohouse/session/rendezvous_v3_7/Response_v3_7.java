@@ -32,9 +32,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 
-import club.callistohouse.session.protocol_core.MessageEnum;
-import club.callistohouse.session.protocol_core.PhaseHeader;
-import club.callistohouse.session.protocol_core.RSAPublicKey;
+import club.callistohouse.session.multiprotocol_core.MessageEnum;
+import club.callistohouse.session.multiprotocol_core.PhaseHeader;
+import club.callistohouse.session.multiprotocol_core.RSAPublicKey;
 
 public class Response_v3_7 extends Version37 {
 

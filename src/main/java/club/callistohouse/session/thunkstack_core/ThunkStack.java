@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import club.callistohouse.session.protocol_core.Frame;
+import club.callistohouse.session.multiprotocol_core.Frame;
 
 public class ThunkStack extends Stack<ThunkRoot> {
 	private static final long serialVersionUID = -5274871473439808424L;

@@ -34,9 +34,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.callistohouse.session.protocol_core.MessageEnum;
-import club.callistohouse.session.protocol_core.PhaseHeader;
-import club.callistohouse.session.protocol_core.RSAPublicKey;
+import club.callistohouse.session.multiprotocol_core.MessageEnum;
+import club.callistohouse.session.multiprotocol_core.PhaseHeader;
+import club.callistohouse.session.multiprotocol_core.RSAPublicKey;
 
 public class Hello_v3_7 extends Version37 {
 

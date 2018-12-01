@@ -26,13 +26,21 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol_core;
+package club.callistohouse.session.multiprotocol_core;
 
-public class Encoded extends Payload {
+public class MAC extends Payload {
 
-	public Encoded() {}
+	private byte[] mac = new byte[20];
 
-	public MessageEnum getType() { return MessageEnum.ENCODED_DATA; }
+	public MAC() {}
+	public MAC(byte[] mac) {
+		this.mac = mac;
+	}
+
+	public byte[] getMac() { return mac; }
+	public void setMac(byte[] mac) { this.mac = mac; }
+
+	public MessageEnum getType() { return MessageEnum.MAC_DATA; }
 
 	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

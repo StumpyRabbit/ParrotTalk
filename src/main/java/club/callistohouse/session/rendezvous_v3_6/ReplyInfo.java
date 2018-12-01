@@ -31,7 +31,7 @@ package club.callistohouse.session.rendezvous_v3_6;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.callistohouse.session.protocol_core.MessageEnum;
+import club.callistohouse.session.multiprotocol_core.MessageEnum;
 
 public class ReplyInfo extends Version36 {
 

@@ -26,31 +26,22 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol_core;
+package club.callistohouse.session.multiprotocol_core;
 
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPublicKeySpec;
+import club.callistohouse.session.parrotttalk.SecurityOps;
 
-public class RSAPublicKey {
+public class InternalChangeEncryption extends Rendezvous {
 
-	private BigInteger exponent;
-	private BigInteger modulo;
+	private SecurityOps encryptionSecrets;
 
-	public RSAPublicKey() {}
-	public RSAPublicKey(BigInteger modulo, BigInteger exponent) { this.modulo = modulo; this.exponent = exponent; }
-	public RSAPublicKey(java.security.interfaces.RSAPublicKey key) { this.modulo = key.getModulus(); this.exponent = key.getPublicExponent(); }
-
-	public BigInteger getExponent() { return exponent; }
-	public void setExponent(BigInteger exponent) { this.exponent = exponent; }
-	public BigInteger getModulo() { return modulo; }
-	public void setModulo(BigInteger modulo) { this.modulo = modulo; }
-
-	public java.security.interfaces.RSAPublicKey asImpl() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		RSAPublicKeySpec keySpec = new RSAPublicKeySpec(modulo, exponent);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		return (java.security.interfaces.RSAPublicKey) kf.generatePublic(keySpec);
+	public InternalChangeEncryption() {}
+	public InternalChangeEncryption(SecurityOps secrets) {
+		this.encryptionSecrets = secrets;
 	}
+
+    public SecurityOps getEncryptionSecrets() { return encryptionSecrets; }
+
+	public MessageEnum getType() { return MessageEnum.INTERNAL_CHANGE_ENCRYPTION; }
+
+	public String toString() { return getClass().getSimpleName() + "(" + getEncryptionSecrets() + ")"; }
 }

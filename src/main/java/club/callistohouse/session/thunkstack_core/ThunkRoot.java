@@ -3,8 +3,8 @@ package club.callistohouse.session.thunkstack_core;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import club.callistohouse.session.protocol_core.Frame;
-import club.callistohouse.session.protocol_core.PhaseHeader;
+import club.callistohouse.session.multiprotocol_core.Frame;
+import club.callistohouse.session.multiprotocol_core.PhaseHeader;
 
 public class ThunkRoot {
 

@@ -32,9 +32,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 
+import club.callistohouse.session.multiprotocol_core.MessageEnum;
+import club.callistohouse.session.multiprotocol_core.RSAPublicKey;
 import club.callistohouse.session.parrotttalk.SessionIdentity;
-import club.callistohouse.session.protocol_core.MessageEnum;
-import club.callistohouse.session.protocol_core.RSAPublicKey;
 
 public class GiveInfo extends Version36 {
 
