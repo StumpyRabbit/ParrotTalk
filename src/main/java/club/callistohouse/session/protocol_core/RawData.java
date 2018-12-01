@@ -26,19 +26,13 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_core;
+package club.callistohouse.session.protocol_core;
 
-public class ProtocolAccepted extends ProtocolNegotiation {
+public class RawData extends Payload {
 
-	private String accepted;
+	public RawData() {}
 
-	public ProtocolAccepted() {}
-	public ProtocolAccepted(String protocol) { this.accepted = protocol; }
+	public MessageEnum getType() { return MessageEnum.RAW_DATA; }
 
-	public String getAccepted() { return accepted; }
-	public void setAccepted(String protocol) { this.accepted = protocol; }
-
-	public MessageEnum getType() { return MessageEnum.PROTOCOL_ACCEPTED; }
-
-	public String toString() { return getClass().getSimpleName() + "(" + getAccepted() + ")"; }
+	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

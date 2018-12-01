@@ -28,8 +28,8 @@
 
 package club.callistohouse.session.rendezvous_v3_7;
 
-import club.callistohouse.session.payload_core.MessageEnum;
-import club.callistohouse.session.payload_core.PhaseHeader;
+import club.callistohouse.session.protocol_core.MessageEnum;
+import club.callistohouse.session.protocol_core.PhaseHeader;
 
 public class Signature_v3_7 extends Version37 {
 

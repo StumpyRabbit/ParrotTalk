@@ -15,9 +15,9 @@ import club.callistohouse.asn1.ASN1InputStream;
 import club.callistohouse.asn1.ASN1Module;
 import club.callistohouse.asn1.ASN1OutputStream;
 import club.callistohouse.asn1.types.ASN1Type;
-import club.callistohouse.session.payload_core.Frame;
-import club.callistohouse.session.payload_core.ProtocolOffered;
-import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
+import club.callistohouse.session.protocol_core.Frame;
+import club.callistohouse.session.protocol_core.ProtocolOffered;
+import club.callistohouse.session.protocol_core.SessionASN1Bootstrap;
 
 public class TestHeaders {
 	@Before

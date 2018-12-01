@@ -44,7 +44,7 @@ import club.callistohouse.session.parrotttalk.Session;
 import club.callistohouse.session.parrotttalk.SessionAgent;
 import club.callistohouse.session.parrotttalk.SessionAgentMap;
 import club.callistohouse.session.parrotttalk.SessionIdentity;
-import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
+import club.callistohouse.session.protocol_core.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.Listener;
 
 public class TestSessionServer {

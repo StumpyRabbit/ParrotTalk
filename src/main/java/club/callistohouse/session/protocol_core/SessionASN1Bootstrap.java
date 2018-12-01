@@ -1,4 +1,4 @@
-package club.callistohouse.session.payload_core;
+package club.callistohouse.session.protocol_core;
 
 import club.callistohouse.asn1.ASN1Module;
 import club.callistohouse.asn1.types.basic.ASN1UTF8StringType;

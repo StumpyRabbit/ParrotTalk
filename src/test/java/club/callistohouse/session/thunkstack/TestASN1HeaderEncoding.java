@@ -22,8 +22,8 @@ import org.junit.Test;
 
 import club.callistohouse.session.marshmuck.DiffieHellman;
 import club.callistohouse.session.parrotttalk.TestSessionServer;
-import club.callistohouse.session.payload_core.Frame;
-import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
+import club.callistohouse.session.protocol_core.Frame;
+import club.callistohouse.session.protocol_core.SessionASN1Bootstrap;
 import club.callistohouse.session.rendezvous_v3_6.GiveInfo;
 import club.callistohouse.session.rendezvous_v3_6.Go;
 import club.callistohouse.session.rendezvous_v3_6.GoToo;

@@ -26,31 +26,13 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_core;
+package club.callistohouse.session.protocol_core;
 
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPublicKeySpec;
+public class Encoded extends Payload {
 
-public class RSAPublicKey {
+	public Encoded() {}
 
-	private BigInteger exponent;
-	private BigInteger modulo;
+	public MessageEnum getType() { return MessageEnum.ENCODED_DATA; }
 
-	public RSAPublicKey() {}
-	public RSAPublicKey(BigInteger modulo, BigInteger exponent) { this.modulo = modulo; this.exponent = exponent; }
-	public RSAPublicKey(java.security.interfaces.RSAPublicKey key) { this.modulo = key.getModulus(); this.exponent = key.getPublicExponent(); }
-
-	public BigInteger getExponent() { return exponent; }
-	public void setExponent(BigInteger exponent) { this.exponent = exponent; }
-	public BigInteger getModulo() { return modulo; }
-	public void setModulo(BigInteger modulo) { this.modulo = modulo; }
-
-	public java.security.interfaces.RSAPublicKey asImpl() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		RSAPublicKeySpec keySpec = new RSAPublicKeySpec(modulo, exponent);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		return (java.security.interfaces.RSAPublicKey) kf.generatePublic(keySpec);
-	}
+	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

@@ -15,9 +15,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import club.callistohouse.session.payload_core.Encrypted;
-import club.callistohouse.session.payload_core.Frame;
-import club.callistohouse.session.payload_core.PhaseHeader;
+import club.callistohouse.session.protocol_core.Encrypted;
+import club.callistohouse.session.protocol_core.Frame;
+import club.callistohouse.session.protocol_core.PhaseHeader;
 import club.callistohouse.session.thunkstack_core.Thunk;
 import club.callistohouse.utils.ArrayUtil;
 

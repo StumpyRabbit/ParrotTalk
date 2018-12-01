@@ -3,9 +3,9 @@ package club.callistohouse.session.thunkstack_core;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import club.callistohouse.session.payload_core.Frame;
-import club.callistohouse.session.payload_core.PhaseHeader;
-import club.callistohouse.session.payload_core.RawData;
+import club.callistohouse.session.protocol_core.Frame;
+import club.callistohouse.session.protocol_core.PhaseHeader;
+import club.callistohouse.session.protocol_core.RawData;
 import club.callistohouse.utils.BufferStream;
 
 public class ReceivingFrameBuffer extends ThunkLayer {

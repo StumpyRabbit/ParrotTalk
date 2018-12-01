@@ -2,9 +2,9 @@ package club.callistohouse.session.parrotttalk;
 
 import java.io.IOException;
 
-import club.callistohouse.session.payload_core.Encoded;
-import club.callistohouse.session.payload_core.Frame;
-import club.callistohouse.session.payload_core.RawData;
+import club.callistohouse.session.protocol_core.Encoded;
+import club.callistohouse.session.protocol_core.Frame;
+import club.callistohouse.session.protocol_core.RawData;
 import club.callistohouse.session.thunkstack_core.ThunkLayer;
 import club.callistohouse.session.thunkstack_core.ThunkRoot;
 

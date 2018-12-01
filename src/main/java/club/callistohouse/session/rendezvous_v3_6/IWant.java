@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.rendezvous_v3_6;
 
-import club.callistohouse.session.payload_core.MessageEnum;
+import club.callistohouse.session.protocol_core.MessageEnum;
 
 public class IWant extends Version36 {
 

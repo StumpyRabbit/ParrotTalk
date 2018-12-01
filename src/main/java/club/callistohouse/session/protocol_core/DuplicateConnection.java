@@ -26,13 +26,13 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_core;
+package club.callistohouse.session.protocol_core;
 
-public class Encoded extends Payload {
+public class DuplicateConnection extends Rendezvous {
 
-	public Encoded() {}
+	public DuplicateConnection() {}
 
-	public MessageEnum getType() { return MessageEnum.ENCODED_DATA; }
+	public MessageEnum getType() { return MessageEnum.NOT_ME; }
 
 	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }

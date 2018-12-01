@@ -3,7 +3,7 @@ package club.callistohouse.session.thunkstack_core;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.callistohouse.session.payload_core.Frame;
+import club.callistohouse.session.protocol_core.Frame;
 
 public class SendFramesBuffer extends ThunkLayer {
 	private List<Frame> frameList = new ArrayList<Frame>();

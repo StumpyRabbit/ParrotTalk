@@ -26,19 +26,13 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_core;
+package club.callistohouse.session.protocol_core;
 
-public class Encrypted extends Payload {
+public class NotMe extends Rendezvous {
 
-	private byte[] ivSequence;
+	public NotMe() {}
 
-	public Encrypted() { this(new byte[0]); }
-	public Encrypted(byte[] iv) { this.ivSequence = iv; }
-
-	public byte[] getIvSequence() { return ivSequence; }
-	public void setIvSequence(byte[] iv) { ivSequence = iv; }
-
-	public MessageEnum getType() { return MessageEnum.ENCRYPTED_DATA; }
+	public MessageEnum getType() { return MessageEnum.NOT_ME; }
 
 	public String toString() { return getClass().getSimpleName() + "(" + ")"; }
 }
