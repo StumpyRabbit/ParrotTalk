@@ -1,4 +1,4 @@
-package club.callistohouse.session.protocol;
+package club.callistohouse.session.thunkstack_core;
 
 public class ThunkFinishedException extends RuntimeException {
 

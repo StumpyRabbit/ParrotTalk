@@ -1,4 +1,4 @@
-package club.callistohouse.session.protocol;
+package club.callistohouse.session.thunkstack_core;
 
 public abstract class Thunk extends ThunkRoot {
 	public boolean isFrameEmbedded = true;

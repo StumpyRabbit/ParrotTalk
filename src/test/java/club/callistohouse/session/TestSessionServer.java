@@ -37,6 +37,13 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
+import club.callistohouse.session.parrotttalk.CipherThunkMaker;
+import club.callistohouse.session.parrotttalk.EncoderThunk;
+import club.callistohouse.session.parrotttalk.EncoderThunkMaker;
+import club.callistohouse.session.parrotttalk.Session;
+import club.callistohouse.session.parrotttalk.SessionAgent;
+import club.callistohouse.session.parrotttalk.SessionAgentMap;
+import club.callistohouse.session.parrotttalk.SessionIdentity;
 import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
 import club.callistohouse.utils.events.Listener;
 

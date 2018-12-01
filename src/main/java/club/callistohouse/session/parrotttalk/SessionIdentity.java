@@ -35,7 +35,7 @@
 	        Kevin Reid
 ********************************************************************************/
 
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import java.io.Serializable;
 import java.net.InetAddress;

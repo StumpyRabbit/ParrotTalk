@@ -1,4 +1,4 @@
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 import club.callistohouse.session.payload_core.Encrypted;
 import club.callistohouse.session.payload_core.Frame;
 import club.callistohouse.session.payload_core.PhaseHeader;
-import club.callistohouse.session.protocol.Thunk;
+import club.callistohouse.session.thunkstack_core.Thunk;
 import club.callistohouse.utils.ArrayUtil;
 
 public class CipherThunkMaker implements Cloneable {

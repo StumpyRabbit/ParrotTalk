@@ -1,4 +1,4 @@
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -10,9 +10,9 @@ import com.github.oxo42.stateless4j.StateMachine;
 import com.github.oxo42.stateless4j.StateMachineConfig;
 import com.github.oxo42.stateless4j.delegates.Action;
 
-import club.callistohouse.session.Session.Identified;
 import club.callistohouse.session.marshmuck.State;
 import club.callistohouse.session.marshmuck.Trigger;
+import club.callistohouse.session.parrotttalk.Session.Identified;
 import club.callistohouse.session.payload_core.DuplicateConnection;
 import club.callistohouse.session.payload_core.Frame;
 import club.callistohouse.session.payload_core.InternalChangeEncryption;
@@ -28,13 +28,13 @@ import club.callistohouse.session.payload_v3_6.GoToo;
 import club.callistohouse.session.payload_v3_6.IAm;
 import club.callistohouse.session.payload_v3_6.IWant;
 import club.callistohouse.session.payload_v3_6.ReplyInfo;
-import club.callistohouse.session.protocol.ThunkFinishedException;
-import club.callistohouse.session.protocol.ThunkLayer;
-import club.callistohouse.session.protocol.ThunkStack;
+import club.callistohouse.session.thunkstack_core.ThunkFinishedException;
+import club.callistohouse.session.thunkstack_core.ThunkLayer;
+import club.callistohouse.session.thunkstack_core.ThunkStack;
 import club.callistohouse.utils.ClassUtil;
 
-public class SessionOperations extends ThunkLayer {
-	public static Logger log = Logger.getLogger(SessionOperations.class);
+public class SessionOperations_v3_7 extends ThunkLayer {
+	public static Logger log = Logger.getLogger(SessionOperations_v3_7.class);
 
 	private ThunkStack stack; 
 	private Session session; 
@@ -42,7 +42,7 @@ public class SessionOperations extends ThunkLayer {
 	StateMachine<State, Trigger> stateMachine;
 	boolean isIncoming = false;
 
-	public SessionOperations(Session session, SessionAgentMap map) {
+	public SessionOperations_v3_7(Session session, SessionAgentMap map) {
 		super();
 		this.session = session;
 		this.securityOps = new SecurityOps(map);
@@ -74,7 +74,7 @@ public class SessionOperations extends ThunkLayer {
 		stack.downcall(header.toFrame(), this); }
 
 	void sendProtocolOffered() {
-		PhaseHeader header = new ProtocolOffered("ParrotTalk-v3.6", "ParrotTalk-v3.6");
+		PhaseHeader header = new ProtocolOffered("ParrotTalk-3.6", "ParrotTalk-3.6");
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectProtocolAccepted);
 		try {
@@ -84,7 +84,7 @@ public class SessionOperations extends ThunkLayer {
 		}
 	}
 	void sendProtocolAccepted() {
-		PhaseHeader header = new ProtocolAccepted("ParrotTalk-v3.6");
+		PhaseHeader header = new ProtocolAccepted("ParrotTalk-3.6");
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIWant);
 		try {

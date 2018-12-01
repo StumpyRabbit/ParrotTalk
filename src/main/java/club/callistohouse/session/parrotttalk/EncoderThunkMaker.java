@@ -1,4 +1,4 @@
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 public class EncoderThunkMaker implements Cloneable {
 	protected String encoderName;

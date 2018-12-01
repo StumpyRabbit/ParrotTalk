@@ -1,4 +1,4 @@
-	package club.callistohouse.session;
+	package club.callistohouse.session.parrotttalk;
 
 import java.util.ArrayList;
 import java.util.List;

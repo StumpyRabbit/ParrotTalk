@@ -32,7 +32,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 
-import club.callistohouse.session.SessionIdentity;
+import club.callistohouse.session.parrotttalk.SessionIdentity;
 import club.callistohouse.session.payload_core.MessageEnum;
 import club.callistohouse.session.payload_core.RSAPublicKey;
 

@@ -1,12 +1,12 @@
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import java.io.IOException;
 
 import club.callistohouse.session.payload_core.Encoded;
 import club.callistohouse.session.payload_core.Frame;
 import club.callistohouse.session.payload_core.RawData;
-import club.callistohouse.session.protocol.ThunkLayer;
-import club.callistohouse.session.protocol.ThunkRoot;
+import club.callistohouse.session.thunkstack_core.ThunkLayer;
+import club.callistohouse.session.thunkstack_core.ThunkRoot;
 
 public abstract class EncoderThunk extends ThunkRoot implements Cloneable {
 	protected String encoderName;

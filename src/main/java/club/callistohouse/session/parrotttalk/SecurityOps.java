@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -51,9 +51,9 @@ import club.callistohouse.session.marshmuck.MessageLogger;
 import club.callistohouse.session.payload_core.Frame;
 import club.callistohouse.session.payload_core.MAC;
 import club.callistohouse.session.payload_core.PhaseHeader;
-import club.callistohouse.session.protocol.SendFramesBuffer;
-import club.callistohouse.session.protocol.Thunk;
-import club.callistohouse.session.protocol.ThunkStack;
+import club.callistohouse.session.thunkstack_core.SendFramesBuffer;
+import club.callistohouse.session.thunkstack_core.Thunk;
+import club.callistohouse.session.thunkstack_core.ThunkStack;
 import club.callistohouse.utils.ArrayUtil;
 
 public class SecurityOps implements Cloneable {

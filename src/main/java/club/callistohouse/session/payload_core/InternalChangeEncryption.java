@@ -28,7 +28,7 @@
 
 package club.callistohouse.session.payload_core;
 
-import club.callistohouse.session.SecurityOps;
+import club.callistohouse.session.parrotttalk.SecurityOps;
 
 public class InternalChangeEncryption extends Rendezvous {
 

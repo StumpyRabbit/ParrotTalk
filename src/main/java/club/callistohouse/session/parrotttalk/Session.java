@@ -35,7 +35,7 @@
 	        Kevin Reid
  *******************************************************************************/
 
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
@@ -46,11 +46,11 @@ import club.callistohouse.session.payload_core.InternalChangeEncryption;
 import club.callistohouse.session.payload_core.MessageEnum;
 import club.callistohouse.session.payload_core.PhaseHeader;
 import club.callistohouse.session.payload_core.RawData;
-import club.callistohouse.session.protocol.ReceivingFrameBuffer;
-import club.callistohouse.session.protocol.SendFramesBuffer;
-import club.callistohouse.session.protocol.SocketThunk;
-import club.callistohouse.session.protocol.ThunkLayer;
-import club.callistohouse.session.protocol.ThunkStack;
+import club.callistohouse.session.thunkstack_core.ReceivingFrameBuffer;
+import club.callistohouse.session.thunkstack_core.SendFramesBuffer;
+import club.callistohouse.session.thunkstack_core.SocketThunk;
+import club.callistohouse.session.thunkstack_core.ThunkLayer;
+import club.callistohouse.session.thunkstack_core.ThunkStack;
 import club.callistohouse.utils.ClassUtil;
 import club.callistohouse.utils.events.EventEngine;
 import club.callistohouse.utils.events.EventEngineInterface;
