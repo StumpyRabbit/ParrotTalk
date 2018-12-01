@@ -34,7 +34,7 @@
  *         Tyler Close 
  *         Kevin Reid
  *******************************************************************************/
-package club.callistohouse.utils;
+package club.callistohouse.utils.events;
 
 import static org.junit.Assert.assertEquals;
 

@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session;
+package club.callistohouse.session.parrotttalk;
 
 import static org.junit.Assert.assertTrue;
 

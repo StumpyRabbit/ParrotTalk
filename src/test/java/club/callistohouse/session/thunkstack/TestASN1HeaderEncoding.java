@@ -1,4 +1,4 @@
-package club.callistohouse.session.protocol;
+package club.callistohouse.session.thunkstack;
 
 import static org.junit.Assert.assertTrue;
 
@@ -20,8 +20,8 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
-import club.callistohouse.session.TestSessionServer;
 import club.callistohouse.session.marshmuck.DiffieHellman;
+import club.callistohouse.session.parrotttalk.TestSessionServer;
 import club.callistohouse.session.payload_core.Frame;
 import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
 import club.callistohouse.session.payload_v3_6.GiveInfo;

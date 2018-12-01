@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.utils;
+package club.callistohouse.utils.transport;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

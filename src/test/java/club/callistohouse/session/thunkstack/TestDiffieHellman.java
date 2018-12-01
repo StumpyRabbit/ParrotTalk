@@ -26,7 +26,7 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.protocol;
+package club.callistohouse.session.thunkstack;
 
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;

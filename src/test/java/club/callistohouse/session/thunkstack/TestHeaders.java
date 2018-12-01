@@ -1,4 +1,4 @@
-package club.callistohouse.session.protocol;
+package club.callistohouse.session.thunkstack;
 
 import static org.junit.Assert.assertTrue;
 
