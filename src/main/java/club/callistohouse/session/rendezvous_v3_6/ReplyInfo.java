@@ -26,71 +26,31 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_v3_7;
+package club.callistohouse.session.rendezvous_v3_6;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
 import club.callistohouse.session.payload_core.MessageEnum;
-import club.callistohouse.session.payload_core.PhaseHeader;
-import club.callistohouse.session.payload_core.RSAPublicKey;
 
-public class Hello_v3_7 extends Version37 {
+public class ReplyInfo extends Version36 {
 
-	private String vatId;
-	private String domain;
-	private RSAPublicKey publicKey;
 	private List<String> cryptoProtocols;
 	private List<String> dataEncoders;
-    private byte[] diffieHellmanParam;
 
-	public Hello_v3_7() {
-	}
+	public ReplyInfo() {}
+    public ReplyInfo(List<String> cryptoProtocols, List<String> dataEncoders) { this.cryptoProtocols = cryptoProtocols; this.dataEncoders = dataEncoders; }
 
-	public Hello_v3_7(String vatId, String domain, PublicKey publicKey, List<String> cryptoProtocols, List<String> dataEncoders, byte[] dhParam, byte[] signature) {
-		this.vatId = vatId;
-		this.domain = domain;
-		setPublicKeyImpl(publicKey);
-		this.cryptoProtocols = cryptoProtocols;
-		this.dataEncoders = dataEncoders;
-		this.diffieHellmanParam = dhParam;
-	}
-
-	public String getVatId() { return vatId; }
-    public String getDomain() { return domain; }
-    public RSAPublicKey getPublicKey() { return publicKey; }
-    public PublicKey getPublicKeyImpl() {
-    	try {
-			return publicKey.asImpl();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			e.printStackTrace();
-		}
-    	return null;
-    }
     public List<String> getCryptoProtocols() { return cryptoProtocols; }
-    public List<String> getDataEncoders() { return dataEncoders; }
-    public byte[] getDiffieHellmanParam() { return diffieHellmanParam; }
-    public void setVatId(String id) { this.vatId = id; }
-	public void setDomain(String domain) { this.domain = domain; }
-    public void setPublicKey(RSAPublicKey publicKey) { this.publicKey = publicKey; }
-    public void setPublicKeyImpl(PublicKey publicKey) { this.publicKey = new RSAPublicKey((java.security.interfaces.RSAPublicKey) publicKey); }
     public void setCryptoProtocols(ArrayList<String> cryptoProtocols) { this.cryptoProtocols = cryptoProtocols; }
+    public List<String> getDataEncoders() { return dataEncoders; }
     public void setDataEncoders(ArrayList<String> dataEncoders) { this.dataEncoders = dataEncoders; }
-    public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
 
-	public MessageEnum getType() { return MessageEnum.HELLO_V3_7; }
+	public MessageEnum getType() { return MessageEnum.REPLY_INFO; }
 
-	public String toString() { return getClass().getSimpleName() + "(" 
-			+ getVatId() + ", " 
-			+ getDomain() + ", " 
-			+ getPublicKey() + ", " 
+	public String toString() {
+		return getClass().getSimpleName() + "("
 			+ getCryptoProtocols() + ", "
-			+ getDataEncoders() + ", "
-			+ getDiffieHellmanParam() + ")"; 
+			+ getDataEncoders() + ")";
 	}
 }

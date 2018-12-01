@@ -1,4 +1,4 @@
-package club.callistohouse.session.payload_v3_6;
+package club.callistohouse.session.rendezvous_v3_6;
 
 import club.callistohouse.session.payload_core.Rendezvous;
 

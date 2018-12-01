@@ -26,31 +26,42 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_v3_6;
-
-import java.util.ArrayList;
-import java.util.List;
+package club.callistohouse.session.rendezvous_v3_6;
 
 import club.callistohouse.session.payload_core.MessageEnum;
 
-public class ReplyInfo extends Version36 {
+public class GoToo extends Version36 {
 
-	private List<String> cryptoProtocols;
-	private List<String> dataEncoders;
+	private String cryptoProtocol;
+	private String dataEncoder;
+    private byte[] diffieHellmanParam;
+    private byte[] signature;
 
-	public ReplyInfo() {}
-    public ReplyInfo(List<String> cryptoProtocols, List<String> dataEncoders) { this.cryptoProtocols = cryptoProtocols; this.dataEncoders = dataEncoders; }
+	public GoToo() {
+	}
 
-    public List<String> getCryptoProtocols() { return cryptoProtocols; }
-    public void setCryptoProtocols(ArrayList<String> cryptoProtocols) { this.cryptoProtocols = cryptoProtocols; }
-    public List<String> getDataEncoders() { return dataEncoders; }
-    public void setDataEncoders(ArrayList<String> dataEncoders) { this.dataEncoders = dataEncoders; }
+	public GoToo(String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
+		this.cryptoProtocol = defaultAlgorithm;
+		this.dataEncoder = defaultEncoder;
+		this.diffieHellmanParam = dhParam;
+		this.signature = signature;
+	}
 
-	public MessageEnum getType() { return MessageEnum.REPLY_INFO; }
+    public String getCryptoProtocol() { return cryptoProtocol; }
+    public String getDataEncoder() { return dataEncoder; }
+    public byte[] getDiffieHellmanParam() { return diffieHellmanParam; }
+    public byte[] getSignature() { return signature; }
+    public void setCryptoProtocol(String s) { this.cryptoProtocol = s; }
+    public void setDataEncoder(String s) { this.dataEncoder = s; }
+    public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
+    public void setSignature(byte[] bytes) { this.signature = bytes; recomputeSpec(); }
 
-	public String toString() {
-		return getClass().getSimpleName() + "("
-			+ getCryptoProtocols() + ", "
-			+ getDataEncoders() + ")";
+	public MessageEnum getType() { return MessageEnum.GO_TOO; }
+
+	public String toString() { return getClass().getSimpleName() + "(" 
+			+ getCryptoProtocol() + ", " 
+			+ getDataEncoder() + ", " 
+			+ getDiffieHellmanParam() + ", " 
+			+ getSignature() + ")"; 
 	}
 }

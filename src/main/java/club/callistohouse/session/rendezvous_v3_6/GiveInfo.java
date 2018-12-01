@@ -26,42 +26,56 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_v3_6;
+package club.callistohouse.session.rendezvous_v3_6;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+
+import club.callistohouse.session.parrotttalk.SessionIdentity;
 import club.callistohouse.session.payload_core.MessageEnum;
+import club.callistohouse.session.payload_core.RSAPublicKey;
 
-public class Go extends Version36 {
+public class GiveInfo extends Version36 {
 
-	private String cryptoProtocol = "";
-	private String dataEncoder = "";
-    private byte[] diffieHellmanParam;
-    private byte[] signature;
+	private String vatId;
+	private String domain;
+	private RSAPublicKey publicKey;
 
-	public Go() {
+	public GiveInfo() {}
+	public GiveInfo(SessionIdentity localId) {
+		this(localId.getVatId(), "", localId.getPublicKey());
+	}
+	public GiveInfo(String vatId, String domain, PublicKey publicKey) {
+		this.vatId = vatId;
+		this.domain = domain;
+		setPublicKeyImpl(publicKey);
 	}
 
-	public Go(String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
-		this.cryptoProtocol = defaultAlgorithm;
-		this.dataEncoder = defaultEncoder;
-		this.diffieHellmanParam = dhParam;
-		this.signature = signature;
-	}
+	public String getVatId() { return vatId; }
+    public String getDomain() { return domain; }
+    public RSAPublicKey getPublicKey() { return publicKey; }
+    public PublicKey getPublicKeyImpl() {
+    	try {
+			return publicKey.asImpl();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    public void setVatId(String vatId) { this.vatId = vatId; }
+	public void setDomain(String domain) { this.domain = domain; }
+    public void setPublicKey(RSAPublicKey publicKey) { this.publicKey = publicKey; }
+    public void setPublicKeyImpl(PublicKey publicKey) { this.publicKey = new RSAPublicKey((java.security.interfaces.RSAPublicKey) publicKey); }
 
-	public String getCryptoProtocol() { return cryptoProtocol; }
-	public String getDataEncoder() { return dataEncoder; }
-    public byte[] getDiffieHellmanParam() { return diffieHellmanParam; }
-    public byte[] getSignature() { return signature; }
-    public void setCryptoProtocol(String s) { this.cryptoProtocol = s; }
-    public void setDataEncoder(String s) { this.dataEncoder = s; }
-    public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
-    public void setSignature(byte[] bytes) { this.signature = bytes; recomputeSpec(); }
+	public MessageEnum getType() { return MessageEnum.GIVE_INFO; }
 
-	public MessageEnum getType() { return MessageEnum.GO; }
-
-	public String toString() { return getClass().getSimpleName() + "(" 
-			+ getCryptoProtocol() + ", " 
-			+ getDataEncoder() + ", " 
-			+ getDiffieHellmanParam() + ", " 
-			+ getSignature() + ")"; 
+	public String toString() { 
+		return getClass().getSimpleName() + "(" 
+				+ getVatId() + ", " 
+				+ getDomain() + ", " 
+				+ getPublicKey() + ")";
 	}
 }

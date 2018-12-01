@@ -26,39 +26,71 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_v3_6;
+package club.callistohouse.session.rendezvous_v3_7;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 
 import club.callistohouse.session.payload_core.MessageEnum;
+import club.callistohouse.session.payload_core.PhaseHeader;
+import club.callistohouse.session.payload_core.RSAPublicKey;
 
-public class GoToo extends Version36 {
+public class Response_v3_7 extends Version37 {
 
+	private String vatId;
+	private String domain;
+	private RSAPublicKey publicKey;
 	private String cryptoProtocol;
 	private String dataEncoder;
     private byte[] diffieHellmanParam;
     private byte[] signature;
 
-	public GoToo() {
+	public Response_v3_7() {
 	}
 
-	public GoToo(String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
+	public Response_v3_7(String vatId, String domain, PublicKey publicKey, String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
+		this.vatId = vatId;
+		this.domain = domain;
+		setPublicKeyImpl(publicKey);
 		this.cryptoProtocol = defaultAlgorithm;
 		this.dataEncoder = defaultEncoder;
 		this.diffieHellmanParam = dhParam;
 		this.signature = signature;
 	}
 
+	public String getVatId() { return vatId; }
+    public String getDomain() { return domain; }
+    public RSAPublicKey getPublicKey() { return publicKey; }
+    public PublicKey getPublicKeyImpl() {
+    	try {
+			return publicKey.asImpl();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
     public String getCryptoProtocol() { return cryptoProtocol; }
     public String getDataEncoder() { return dataEncoder; }
     public byte[] getDiffieHellmanParam() { return diffieHellmanParam; }
     public byte[] getSignature() { return signature; }
+    public void setVatId(String id) { this.vatId = id; }
+	public void setDomain(String domain) { this.domain = domain; }
+    public void setPublicKey(RSAPublicKey publicKey) { this.publicKey = publicKey; }
+    public void setPublicKeyImpl(PublicKey publicKey) { this.publicKey = new RSAPublicKey((java.security.interfaces.RSAPublicKey) publicKey); }
     public void setCryptoProtocol(String s) { this.cryptoProtocol = s; }
     public void setDataEncoder(String s) { this.dataEncoder = s; }
     public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
     public void setSignature(byte[] bytes) { this.signature = bytes; recomputeSpec(); }
 
-	public MessageEnum getType() { return MessageEnum.GO_TOO; }
+	public MessageEnum getType() { return MessageEnum.RESPONSE_V3_7; }
 
 	public String toString() { return getClass().getSimpleName() + "(" 
+			+ getVatId() + ", " 
+			+ getDomain() + ", " 
+			+ getPublicKey() + ", " 
 			+ getCryptoProtocol() + ", " 
 			+ getDataEncoder() + ", " 
 			+ getDiffieHellmanParam() + ", " 

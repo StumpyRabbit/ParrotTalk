@@ -24,12 +24,12 @@ import club.callistohouse.session.marshmuck.DiffieHellman;
 import club.callistohouse.session.parrotttalk.TestSessionServer;
 import club.callistohouse.session.payload_core.Frame;
 import club.callistohouse.session.payload_core.SessionASN1Bootstrap;
-import club.callistohouse.session.payload_v3_6.GiveInfo;
-import club.callistohouse.session.payload_v3_6.Go;
-import club.callistohouse.session.payload_v3_6.GoToo;
-import club.callistohouse.session.payload_v3_6.IAm;
-import club.callistohouse.session.payload_v3_6.IWant;
-import club.callistohouse.session.payload_v3_6.ReplyInfo;
+import club.callistohouse.session.rendezvous_v3_6.GiveInfo;
+import club.callistohouse.session.rendezvous_v3_6.Go;
+import club.callistohouse.session.rendezvous_v3_6.GoToo;
+import club.callistohouse.session.rendezvous_v3_6.IAm;
+import club.callistohouse.session.rendezvous_v3_6.IWant;
+import club.callistohouse.session.rendezvous_v3_6.ReplyInfo;
 
 public class TestASN1HeaderEncoding {
 	private static Logger log = Logger.getLogger(TestASN1HeaderEncoding.class);

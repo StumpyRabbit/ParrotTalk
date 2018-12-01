@@ -5,15 +5,15 @@ import club.callistohouse.asn1.types.basic.ASN1UTF8StringType;
 import club.callistohouse.asn1.types.constructed.ASN1ChoiceType;
 import club.callistohouse.asn1.types.constructed.ASN1MappedSequenceType;
 import club.callistohouse.asn1.types.constructed.ASN1SequenceOfType;
-import club.callistohouse.session.payload_v3_6.GiveInfo;
-import club.callistohouse.session.payload_v3_6.Go;
-import club.callistohouse.session.payload_v3_6.GoToo;
-import club.callistohouse.session.payload_v3_6.IAm;
-import club.callistohouse.session.payload_v3_6.IWant;
-import club.callistohouse.session.payload_v3_6.ReplyInfo;
-import club.callistohouse.session.payload_v3_7.Hello_v3_7;
-import club.callistohouse.session.payload_v3_7.Response_v3_7;
-import club.callistohouse.session.payload_v3_7.Signature_v3_7;
+import club.callistohouse.session.rendezvous_v3_6.GiveInfo;
+import club.callistohouse.session.rendezvous_v3_6.Go;
+import club.callistohouse.session.rendezvous_v3_6.GoToo;
+import club.callistohouse.session.rendezvous_v3_6.IAm;
+import club.callistohouse.session.rendezvous_v3_6.IWant;
+import club.callistohouse.session.rendezvous_v3_6.ReplyInfo;
+import club.callistohouse.session.rendezvous_v3_7.Hello_v3_7;
+import club.callistohouse.session.rendezvous_v3_7.Response_v3_7;
+import club.callistohouse.session.rendezvous_v3_7.Signature_v3_7;
 
 public class SessionASN1Bootstrap {
 

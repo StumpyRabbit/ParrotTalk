@@ -26,28 +26,42 @@
  * team, which are this software's foundation.
  *******************************************************************************/
 
-package club.callistohouse.session.payload_v3_7;
+package club.callistohouse.session.rendezvous_v3_6;
 
 import club.callistohouse.session.payload_core.MessageEnum;
-import club.callistohouse.session.payload_core.PhaseHeader;
 
-public class Signature_v3_7 extends Version37 {
+public class Go extends Version36 {
 
+	private String cryptoProtocol = "";
+	private String dataEncoder = "";
+    private byte[] diffieHellmanParam;
     private byte[] signature;
 
-	public Signature_v3_7() {
+	public Go() {
 	}
 
-	public Signature_v3_7(byte[] signature) {
+	public Go(String defaultAlgorithm, String defaultEncoder, byte[] dhParam, byte[] signature) {
+		this.cryptoProtocol = defaultAlgorithm;
+		this.dataEncoder = defaultEncoder;
+		this.diffieHellmanParam = dhParam;
 		this.signature = signature;
 	}
 
+	public String getCryptoProtocol() { return cryptoProtocol; }
+	public String getDataEncoder() { return dataEncoder; }
+    public byte[] getDiffieHellmanParam() { return diffieHellmanParam; }
     public byte[] getSignature() { return signature; }
+    public void setCryptoProtocol(String s) { this.cryptoProtocol = s; }
+    public void setDataEncoder(String s) { this.dataEncoder = s; }
+    public void setDiffieHellmanParam(byte[] bytes) { this.diffieHellmanParam = bytes; }
     public void setSignature(byte[] bytes) { this.signature = bytes; recomputeSpec(); }
 
-	public MessageEnum getType() { return MessageEnum.SIGNATURE_V3_7; }
+	public MessageEnum getType() { return MessageEnum.GO; }
 
 	public String toString() { return getClass().getSimpleName() + "(" 
+			+ getCryptoProtocol() + ", " 
+			+ getDataEncoder() + ", " 
+			+ getDiffieHellmanParam() + ", " 
 			+ getSignature() + ")"; 
 	}
 }
