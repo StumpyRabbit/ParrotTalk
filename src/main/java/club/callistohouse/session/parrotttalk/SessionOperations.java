@@ -394,8 +394,8 @@ public class SessionOperations extends ThunkLayer {
 		StateMachineConfig<State, Trigger> sessionConnectionConfig = new StateMachineConfig<State, Trigger>();
 
 		sessionConnectionConfig.configure(State.Initial)
-			.permit(Trigger.Calling, State.CallInProgress)
-			.permit(Trigger.Answering, State.AnswerInProgress);
+			.permit(Trigger.Calling, State.StartupSendingIWant)
+			.permit(Trigger.Answering, State.StartupReceiveIWant);
 		sessionConnectionConfig.configure(State.EncryptedConnected)
 			.permit(Trigger.Disconnect, State.Closed);
 		sessionConnectionConfig.configure(State.Closed)
@@ -425,16 +425,6 @@ public class SessionOperations extends ThunkLayer {
 		/** 
 		 * Calling states
 		 */
-		sessionConnectionConfig.configure(State.CallInProgress)
-			.substateOf(State.Initial)
-			.onEntry(new Action() {
-				public void doIt() {
-					sendProtocolOffered();
-				}})
-			.permit(Trigger.ExpectProtocolAccepted, State.CallReceiveProtocolAccepted);
-		sessionConnectionConfig.configure(State.CallReceiveProtocolAccepted)
-			.substateOf(State.CallInProgress)
-			.permit(Trigger.ReceivedProtocolAccepted, State.StartupSendingIWant);
 		sessionConnectionConfig.configure(State.StartupSendingIWant)
 			.substateOf(State.Startup)
 			.onEntry(new Action() {
@@ -478,23 +468,6 @@ public class SessionOperations extends ThunkLayer {
 		/** 
 		 * Answering states
 		 */
-		sessionConnectionConfig.configure(State.AnswerInProgress)
-			.substateOf(State.Initial)
-			.onEntry(new Action() {
-				public void doIt() {
-					stateMachine.fire(Trigger.ExpectProtocolOffered);
-				}})
-			.permit(Trigger.ExpectProtocolOffered, State.AnswerReceiveProtocolOffered);
-		sessionConnectionConfig.configure(State.AnswerReceiveProtocolOffered)
-			.substateOf(State.AnswerInProgress)
-			.permit(Trigger.ReceivedProtocolOffered, State.AnswerSendingProtocolAccepted);
-		sessionConnectionConfig.configure(State.AnswerSendingProtocolAccepted)
-			.substateOf(State.AnswerInProgress)
-			.onEntry(new Action() {
-				public void doIt() {
-					sendProtocolAccepted();
-				}})
-			.permit(Trigger.ExpectIWant, State.StartupReceiveIWant);
 		sessionConnectionConfig.configure(State.StartupReceiveIWant)
 			.substateOf(State.Startup)
 			.permit(Trigger.SendNotMe, State.StartupSendingNotMe)
