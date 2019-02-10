@@ -13,17 +13,14 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
-import club.callistohouse.session.marshmuck.DiffieHellman;
 import club.callistohouse.session.multiprotocol_core.Frame;
 import club.callistohouse.session.multiprotocol_core.SessionASN1Bootstrap;
-import club.callistohouse.session.parrotttalk.TestSessionServer;
 import club.callistohouse.session.rendezvous_v3_6.GiveInfo;
 import club.callistohouse.session.rendezvous_v3_6.Go;
 import club.callistohouse.session.rendezvous_v3_6.GoToo;
@@ -32,6 +29,7 @@ import club.callistohouse.session.rendezvous_v3_6.IWant;
 import club.callistohouse.session.rendezvous_v3_6.ReplyInfo;
 
 public class TestASN1HeaderEncoding {
+	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(TestASN1HeaderEncoding.class);
 
 	@Before
@@ -122,8 +120,6 @@ public class TestASN1HeaderEncoding {
 		hdr.setSignature(dhBytes);
 		Frame frame = hdr.toFrame();
 		byte[] bytes = frame.toByteArray();
-		log.info("check bytes size: " + encodedBytes.length + " last byte: " + encodedBytes[encodedBytes.length - 1]);
-		log.info("encoded bytes size: " + bytes.length + " last byte: " + bytes[bytes.length - 1]);
 		assertTrue(Arrays.equals(encodedBytes, bytes));
 		Frame newFrame = Frame.readFromStream(new ByteArrayInputStream(bytes));
 		Go in = (Go) newFrame.getHeader();

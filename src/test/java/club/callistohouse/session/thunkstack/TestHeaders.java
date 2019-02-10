@@ -44,6 +44,7 @@ public class TestHeaders {
 	@Test
 	public void testFrameHeaders() throws IOException, InstantiationException, IllegalAccessException {
 
+		@SuppressWarnings("unused")
 		ASN1Type type = (ASN1Type) ASN1Module.name("Session").find("PhaseHeader");
 		ProtocolOffered offered = new ProtocolOffered();
 		offered.setOffered("Hello");
@@ -55,6 +56,7 @@ public class TestHeaders {
 		newFrame.readRemainderFrom(new ByteArrayInputStream((Arrays.copyOfRange(bytes, 8, bytes.length))));
 
 		assertTrue(frame.getHeader() instanceof ProtocolOffered);
+		assertTrue(newFrame.getHeader() instanceof ProtocolOffered);
 		assertTrue(((ProtocolOffered) frame.getHeader()).getOffered().equals(((ProtocolOffered) newFrame.getHeader()).getOffered()));
 	}
 }

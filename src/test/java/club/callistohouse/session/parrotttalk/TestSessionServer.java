@@ -34,17 +34,10 @@ import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import club.callistohouse.session.multiprotocol_core.SessionASN1Bootstrap;
-import club.callistohouse.session.parrotttalk.CipherThunkMaker;
-import club.callistohouse.session.parrotttalk.EncoderThunk;
-import club.callistohouse.session.parrotttalk.EncoderThunkMaker;
-import club.callistohouse.session.parrotttalk.Session;
-import club.callistohouse.session.parrotttalk.SessionAgent;
-import club.callistohouse.session.parrotttalk.SessionAgentMap;
-import club.callistohouse.session.parrotttalk.SessionIdentity;
 import club.callistohouse.utils.events.Listener;
 
 public class TestSessionServer {
@@ -68,16 +61,20 @@ public class TestSessionServer {
 		server1Identity = new SessionIdentity("first", 10001);
 		server2Identity = new SessionIdentity("second", 10002);
 	}
-
-	@Test(timeout=250000)
+	@After
+	public void tearDown() {
+		server1.stop();
+		server2.stop();
+	}
+	@Test(timeout=35000)
 	public void test2ServersWithSingleConnect() {
-		startServers();
+		startServers(10001, 10002);
 		assertTrue(server1Started);
 		assertTrue(server2Started);
 
 		try {
 			term1 = server1.connect(server2Identity);
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			assertTrue(term1Connected);
 			assertTrue(term2Connected);
 			assertTrue(term1Identified);
@@ -106,16 +103,16 @@ public class TestSessionServer {
 			assertTrue(false);
 		}
 	}
-	@Test(timeout=250000)
+	@Test(timeout=35000)
 	public void test2ServersWithSingleConnectSendBuffered() {
-		startServers();
+		startServers(10003, 10004);
 		assertTrue(server1Started);
 		assertTrue(server2Started);
 
 		try {
 			term1 = server1.connect(server2Identity);
 			term1.send("hello world".getBytes());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			assertTrue(term1Connected);
 			assertTrue(term2Connected);
 			assertTrue(term1Identified);
@@ -165,8 +162,10 @@ public class TestSessionServer {
 						return chunk;
 					}}));
 	}
-	private void startServers() {
+	private void startServers(int port1, int port2) {
 		try {
+			server1Identity = new SessionIdentity("first", port1);
+			server2Identity = new SessionIdentity("second", port2);
 			server1 = new SessionAgent(server1Identity, buildServer1Map());
 			server1.addListener(new Listener<SessionAgent.Started>(SessionAgent.Started.class) {
 				protected void handle(SessionAgent.Started event) {
