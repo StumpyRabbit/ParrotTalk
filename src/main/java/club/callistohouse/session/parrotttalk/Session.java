@@ -46,6 +46,7 @@ import club.callistohouse.session.multiprotocol_core.InternalChangeEncryption;
 import club.callistohouse.session.multiprotocol_core.MessageEnum;
 import club.callistohouse.session.multiprotocol_core.PhaseHeader;
 import club.callistohouse.session.multiprotocol_core.RawData;
+import club.callistohouse.session.rendezvous_v3_6.SessionOperations;
 import club.callistohouse.session.thunkstack_core.ReceivingFrameBuffer;
 import club.callistohouse.session.thunkstack_core.SendFramesBuffer;
 import club.callistohouse.session.thunkstack_core.SocketThunk;

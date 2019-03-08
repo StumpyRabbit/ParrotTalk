@@ -92,7 +92,7 @@ public class SecurityOps implements Cloneable {
 	IvParameterSpec receiveIv = null;
 	// byte[] pbePassword;
 	SecretKeySpec secretKeySpec;
-	SessionAgentMap map;
+	public SessionAgentMap map;
 
 	public SecurityOps(String proto) {
 		this.cryptoProtocol = lookupCryptoProtocol(proto);

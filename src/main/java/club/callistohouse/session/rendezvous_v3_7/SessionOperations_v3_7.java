@@ -1,4 +1,4 @@
-package club.callistohouse.session.parrotttalk;
+package club.callistohouse.session.rendezvous_v3_7;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +21,10 @@ import club.callistohouse.session.multiprotocol_core.NotMe;
 import club.callistohouse.session.multiprotocol_core.PhaseHeader;
 import club.callistohouse.session.multiprotocol_core.ProtocolAccepted;
 import club.callistohouse.session.multiprotocol_core.ProtocolOffered;
+import club.callistohouse.session.parrotttalk.SecurityOps;
+import club.callistohouse.session.parrotttalk.Session;
+import club.callistohouse.session.parrotttalk.SessionAgentMap;
+import club.callistohouse.session.parrotttalk.SessionIdentity;
 import club.callistohouse.session.parrotttalk.Session.Identified;
 import club.callistohouse.session.rendezvous_v3_6.GiveInfo;
 import club.callistohouse.session.rendezvous_v3_6.Go;
