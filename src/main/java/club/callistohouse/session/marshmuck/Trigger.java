@@ -38,6 +38,8 @@ public enum Trigger {
 	ReceivedReplyInfo,
 	ExpectGoToo,
 	ReceivedGoToo,
+	ExpectResponse,
+	ReceivedResponse,
 
 	Answering,
 	ExpectProtocolOffered,
@@ -48,6 +50,10 @@ public enum Trigger {
 	ReceivedGiveInfo,
 	ExpectGo,
 	ReceivedGo,
+	ExpectHello,
+	ReceivedHello,
+	ExpectSignature,
+	ReceivedSignature,
 
 	Connect,
 

@@ -259,7 +259,9 @@ public class SessionProtocolSelector extends ThunkLayer {
 			.permit(Trigger.ExpectProtocolAccepted, State.CallReceiveProtocolAccepted);
 		sessionConnectionConfig.configure(State.CallReceiveProtocolAccepted)
 			.substateOf(State.CallInProgress)
-			.permit(Trigger.ReceivedProtocolAccepted, State.StartupSendingIWant);
+			.permit(Trigger.ReceivedProtocolAccepted, State.StartupSendingIWant)
+			.permit(Trigger.ReceivedIWant, State.Closed)
+			.permit(Trigger.ReceivedHello, State.Closed);
 		sessionConnectionConfig.configure(State.StartupSendingIWant)
 			.substateOf(State.Startup)
 			.onEntry(new Action() {
@@ -290,7 +292,9 @@ public class SessionProtocolSelector extends ThunkLayer {
 			.permit(Trigger.ExpectProtocolOffered, State.AnswerReceiveProtocolOffered);
 		sessionConnectionConfig.configure(State.AnswerReceiveProtocolOffered)
 			.substateOf(State.AnswerInProgress)
-			.permit(Trigger.ReceivedProtocolOffered, State.AnswerSendingProtocolAccepted);
+			.permit(Trigger.ReceivedProtocolOffered, State.AnswerSendingProtocolAccepted)
+			.permit(Trigger.ReceivedIWant, State.Closed)
+			.permit(Trigger.ReceivedHello, State.Closed);
 		sessionConnectionConfig.configure(State.AnswerSendingProtocolAccepted)
 			.substateOf(State.AnswerInProgress)
 			.onEntry(new Action() {

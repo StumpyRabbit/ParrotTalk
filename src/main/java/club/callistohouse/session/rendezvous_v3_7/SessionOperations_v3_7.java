@@ -98,7 +98,7 @@ public class SessionOperations_v3_7 extends ThunkLayer {
 		}
 	}
 	void sendIWant() {
-		PhaseHeader header = new IWant(getRemoteIdentity().getVatId());
+		PhaseHeader header = new Hello_v3_7(getRemoteIdentity().getVatId());
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIAm);
 		try {
@@ -198,18 +198,12 @@ public class SessionOperations_v3_7 extends ThunkLayer {
 			handleMessage((ProtocolAccepted) header);
 		} else if(ClassUtil.isAssignableFrom(header, MAC.class)) {
 			handleMessage((MAC) header);
-		} else if(ClassUtil.isAssignableFrom(header, IWant.class)) {
-			handleMessage((IWant) header);
-		} else if(ClassUtil.isAssignableFrom(header, IAm.class)) {
-			handleMessage((IAm) header);
-		} else if(ClassUtil.isAssignableFrom(header, GiveInfo.class)) {
-			handleMessage((GiveInfo) header);
-		} else if(ClassUtil.isAssignableFrom(header, ReplyInfo.class)) {
-			handleMessage((ReplyInfo) header);
-		} else if(ClassUtil.isAssignableFrom(header, Go.class)) {
-			handleMessage((Go) header);
-		} else if(ClassUtil.isAssignableFrom(header, GoToo.class)) {
-			handleMessage((GoToo) header);
+		} else if(ClassUtil.isAssignableFrom(header, Hello_v3_7.class)) {
+			handleMessage((Hello_v3_7) header);
+		} else if(ClassUtil.isAssignableFrom(header, Response_v3_7.class)) {
+			handleMessage((Response_v3_7) header);
+		} else if(ClassUtil.isAssignableFrom(header, Signature_v3_7.class)) {
+			handleMessage((Signature_v3_7) header);
 		} else if(ClassUtil.isAssignableFrom(header, DuplicateConnection.class)) {
 			handleMessage((DuplicateConnection) header);
 		} else if(ClassUtil.isAssignableFrom(header, NotMe.class)) {
@@ -248,7 +242,7 @@ public class SessionOperations_v3_7 extends ThunkLayer {
     	}
 	}
 
-	public void handleMessage(IWant body) {
+	public void handleMessage(Hello_v3_7 body) {
 		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveIWant)) {
     		isIncoming = true;
@@ -263,7 +257,7 @@ public class SessionOperations_v3_7 extends ThunkLayer {
     		throw new RuntimeException("Terminal in wrong connection state for IWant msg; in state: " + stateMachine.getState() + "; expecting: StartupReceiveIWant");
     	}
 	}
-	public void handleMessage(IAm body) {
+	public void handleMessage(Response_v3_7 body) {
 		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveIAm)) {
     		isIncoming = false;
@@ -277,7 +271,7 @@ public class SessionOperations_v3_7 extends ThunkLayer {
     		throw new RuntimeException("Terminal in wrong connection state for IAm msg; in state: " + stateMachine.getState() + "; expecting: StartupReceiveIAm");
     	}
 	}
-	public void handleMessage(GiveInfo body) {
+	public void handleMessage(Signature_v3_7 body) {
 		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveGiveInfo)) {
     		getRemoteIdentity().setVatId(body.getVatId());
