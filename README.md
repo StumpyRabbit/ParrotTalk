@@ -26,8 +26,13 @@ Here is a diagram of the protocol stack
 For as to use cases, this encrypted connection has no third party, man-in-the-middle situation by not using Certificates. As such, this is a tight implementation of NSA-proof encryption without explicit authorization beyond knowledge of a host:port. The use cases involve any communication desired to be encrypted with such high encryption. The support will last my lifetime, so we have a settled solution, here in the third version, provided here. It requires version 115 of Cryptography, as a prerequisite. Both run on Squeak and Pharo.
 
 http://www.squeaksource.com/Cryptography/Cryptography-rww.115.mcz
-https://github.com/CallistoHouseLtd/ASN1
+
 http://www.squeaksource.com/Cryptography/ParrotTalk-rww.25.mcz
+For Java, currently supporting version 3.6 only yet still able to connect to a Squeak/Pharo agent, clone these repositories:
+
+https://github.com/CallistoHouseLtd/ASN1
+
+https://github.com/CallistoHouseLtd/ParrotTalk
 
 The current use is with my Raven system, a promise-based distributed object implementation. I am working to bring ParrotTalk to Java and allow Raven to operate interdependently between Squeak, Pharo, Java and any other languages which can support ParrotTalk and STON. My latest efforts with Raven are to bring STON as the Layer 6 encoding. 
 
