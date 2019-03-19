@@ -28,6 +28,7 @@ For as to use cases, this encrypted connection has no third party, man-in-the-mi
 http://www.squeaksource.com/Cryptography/Cryptography-rww.115.mcz
 
 http://www.squeaksource.com/Cryptography/ParrotTalk-rww.25.mcz
+
 For Java, currently supporting version 3.6 only yet still able to connect to a Squeak/Pharo agent, clone these repositories:
 
 https://github.com/CallistoHouseLtd/ASN1
