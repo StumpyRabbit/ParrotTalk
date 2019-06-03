@@ -98,7 +98,16 @@ public class SessionOperations_v3_7 extends ThunkLayer {
 		}
 	}
 	void sendIWant() {
-		PhaseHeader header = new Hello_v3_7(getRemoteIdentity().getVatId());
+		PhaseHeader header = null;
+		try {
+			header = new Hello_v3_7(getRemoteIdentity().getVatId(), getRemoteIdentity().getDomain(), getRemoteIdentity().getPublicKey(), securityOps.getCryptoProtocols(), securityOps.getDataEncoders(), securityOps.getDhParam(), getRemoteIdentity().getSignatureBytes(securityOps.getLocalMessagesBytes()));
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SignatureException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		securityOps.addLocalFrame(header.toFrame());
 		stateMachine.fire(Trigger.ExpectIAm);
 		try {
@@ -274,8 +283,6 @@ public class SessionOperations_v3_7 extends ThunkLayer {
 	public void handleMessage(Signature_v3_7 body) {
 		securityOps.addRemoteFrame(body.toFrame());
     	if(stateMachine.isInState(State.StartupReceiveGiveInfo)) {
-    		getRemoteIdentity().setVatId(body.getVatId());
-    		getRemoteIdentity().setPublicKey(body.getPublicKeyImpl());
     		session.fire(new Identified());
     		stateMachine.fire(Trigger.ReceivedGiveInfo);
     	} else {
