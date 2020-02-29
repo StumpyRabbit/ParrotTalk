@@ -43,9 +43,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import javax.xml.bind.annotation.XmlTransient;
-
-@XmlTransient
 public class ThreadedEventEngine extends EventEngine {
 	private ExecutorService executorService;
 	private int threadCount;
@@ -87,13 +84,11 @@ public class ThreadedEventEngine extends EventEngine {
 		}
 	}
 
-	@XmlTransient
 	public class EventThreadFactory implements ThreadFactory {
 		public Thread newThread(final Runnable r) {
 			return new Thread(r, threadNameBase);
 		}
 	}
-	@XmlTransient
 	public class EventRejectedExecutionHandler implements RejectedExecutionHandler {
 		public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
 			System.out.println("rejected execution: " + r);
