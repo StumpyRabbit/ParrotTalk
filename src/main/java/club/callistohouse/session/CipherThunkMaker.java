@@ -3,7 +3,6 @@ package club.callistohouse.session;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +18,6 @@ import club.callistohouse.session.payload.Encrypted;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.protocol.Thunk;
-import club.callistohouse.utils.ArrayUtil;
 
 public class CipherThunkMaker implements Cloneable {
 	public String shortCryptoProtocol;

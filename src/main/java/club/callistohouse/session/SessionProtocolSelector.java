@@ -1,8 +1,6 @@
 package club.callistohouse.session;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 
 import org.apache.log4j.Logger;
 
@@ -10,24 +8,15 @@ import com.github.oxo42.stateless4j.StateMachine;
 import com.github.oxo42.stateless4j.StateMachineConfig;
 import com.github.oxo42.stateless4j.delegates.Action;
 
-import club.callistohouse.session.Session.Identified;
 import club.callistohouse.session.marshmuck.State;
 import club.callistohouse.session.marshmuck.Trigger;
-import club.callistohouse.session.payload.DuplicateConnection;
 import club.callistohouse.session.payload.Frame;
-import club.callistohouse.session.payload.GiveInfo;
-import club.callistohouse.session.payload.Go;
-import club.callistohouse.session.payload.GoToo;
-import club.callistohouse.session.payload.IAm;
-import club.callistohouse.session.payload.IWant;
-import club.callistohouse.session.payload.InternalChangeEncryption;
 import club.callistohouse.session.payload.MAC;
 import club.callistohouse.session.payload.MessageEnum;
 import club.callistohouse.session.payload.NotMe;
 import club.callistohouse.session.payload.PhaseHeader;
 import club.callistohouse.session.payload.ProtocolAccepted;
 import club.callistohouse.session.payload.ProtocolOffered;
-import club.callistohouse.session.payload.ReplyInfo;
 import club.callistohouse.session.protocol.ThunkFinishedException;
 import club.callistohouse.session.protocol.ThunkLayer;
 import club.callistohouse.session.protocol.ThunkStack;

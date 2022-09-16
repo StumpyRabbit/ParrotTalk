@@ -5,7 +5,6 @@ import java.io.IOException;
 import club.callistohouse.session.payload.Encoded;
 import club.callistohouse.session.payload.Frame;
 import club.callistohouse.session.payload.RawData;
-import club.callistohouse.session.protocol.ThunkLayer;
 import club.callistohouse.session.protocol.ThunkRoot;
 
 public abstract class EncoderThunk extends ThunkRoot implements Cloneable {
