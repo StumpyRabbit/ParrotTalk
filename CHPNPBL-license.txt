@@ -1,6 +1,6 @@
-﻿The Callisto House Profit Non-Profit Bipolar License 1.10 (CHPNPB 1.10)
+﻿The Callisto House Profit Non-Profit Bipolar License 1.11 (CHPNPBL 1.11)
 
-Copyright (c) 2017, 2016 Robert Withers
+Copyright (c) 2022, 2023 Robert Withers
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ thereof, are used for NON-PROFIT ACTIVITES, without charge.
 
 All use and study and learning of said software system, as well as any modifications 
 thereof, are used for PROFIT ACTIVITIES, require 2.5% royalty charges to 
-CALLISTO ENTERPRISES, LLC.
+CALLISTO HOUSE in renumeration.
 
 ******************************************************************************
 murmur/whisper/hubbub/ParrotTalk would not be possible without the ideas, 
@@ -39,8 +39,7 @@ We would like to thank the following individuals:
         Kevin Reid
 ******************************************************************************
 murmur/whisper/hubbub/ParrotTalk would not be possible without the ideas, 
-implementation, brilliance and passion of the Squeak/Pharo communities and the 
+implementation, brilliance and passion of the Squeak community and the 
 cryptography team and the virtual machine team, which are this software's 
 implementation foundation. Thank you. 
-'..' 
 ******************************************************************************
